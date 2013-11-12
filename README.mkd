@@ -1,0 +1,3 @@
+# Simple Compression for long array.
+
+WIP
