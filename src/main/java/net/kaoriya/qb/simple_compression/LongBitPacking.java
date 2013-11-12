@@ -28,7 +28,6 @@ public class LongBitPacking implements LongCompressor, LongDecompressor
         return 64 - Long.numberOfLeadingZeros(n);
     }
 
-    // TODO: test
     public static void pack(
             LongBuffer src,
             LongBuffer dst,
@@ -78,8 +77,8 @@ public class LongBitPacking implements LongCompressor, LongDecompressor
                 int remain = validBits - capacity;
                 current |= (n >> remain) & MASKS[capacity];
                 dst.put(current);
-                current = (n & MASKS[remain]) << (64 - remain);
-                capacity = 64;
+                capacity = 64 - remain;
+                current = (n & MASKS[remain]) << capacity;
             }
         }
         if (capacity < 64) {
