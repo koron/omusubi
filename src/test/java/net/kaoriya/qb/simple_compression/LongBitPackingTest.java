@@ -17,6 +17,38 @@ public class LongBitPackingTest
         }
     }
 
+    private void checkCountMaxBits(long[] src, int expected) {
+        LongBuffer buf = LongBuffer.wrap(src);
+        assertEquals(expected, LongBitPacking.countMaxBits(buf, src.length));
+    }
+
+    @Test
+    public void countMaxBits() {
+        checkCountMaxBits(new long[] {
+            0L,
+        }, 0);
+        checkCountMaxBits(new long[] {
+            0L, 1L,
+        }, 1);
+        checkCountMaxBits(new long[] {
+            0L, 1L, 2L,
+        }, 2);
+        checkCountMaxBits(new long[] {
+            0L, 1L, 2L, 4L,
+        }, 3);
+        checkCountMaxBits(new long[] {
+            0L, 1L, 2L, 4L, 8L,
+        }, 4);
+
+        checkCountMaxBits(new long[] {
+            0L, 1L, 2L, 4L, 8L, 0xffffffffffffffffL,
+        }, 64);
+
+        checkCountMaxBits(new long[] {
+            0x80000000L, 0x80000000L, 0x80000000L, 0x80000000L,
+        }, 32);
+    }
+
     private void checkPack(long[] src, int validBits, long[] expected) {
         LongBuffer buf = LongBuffer.allocate(expected.length);
         LongBitPacking.pack(LongBuffer.wrap(src), buf, validBits, src.length);
@@ -69,5 +101,17 @@ public class LongBitPackingTest
             0x5555555555555555L,
             0x5555555555555555L,
         });
+    }
+
+    private void checkPackAny(long[] src, int validBits, long[] expected) {
+        LongBuffer buf = LongBuffer.allocate(expected.length);
+        LongBitPacking.packAny(LongBuffer.wrap(src), buf, validBits,
+                src.length);
+        assertArrayEquals(expected, buf.array());
+    }
+
+    @Test
+    public void packAny() {
+        checkPackAny(new long[] { 1L }, 1, new long[] { 0x8000000000000000L });
     }
 }
