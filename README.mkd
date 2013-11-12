@@ -1,5 +1,6 @@
 # Simple Compression for Array
 
 [![Build Status](https://travis-ci.org/koron/simple-compression.png?branch=master)](https://travis-ci.org/koron/simple-compression)
+[![Coverage Status](https://coveralls.io/repos/koron/simple-compression/badge.png?branch=master)](https://coveralls.io/r/koron/simple-compression)
 
 WIP
