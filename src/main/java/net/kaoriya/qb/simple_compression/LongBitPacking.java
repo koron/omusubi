@@ -7,6 +7,19 @@ public class LongBitPacking implements LongCompressor, LongDecompressor
     public static final int BLOCK_LEN = 16;
     public static final int BLOCK_NUM = 4;
 
+    private static final long[] MASKS = newMasks();
+
+    public static long[] newMasks() {
+        long[] masks = new long[65];
+        long m = 0xffffffffffffffffL;
+        for (int i = 64; i >= 0; --i) {
+            masks[i] = m;
+            m >>>= 1;
+        }
+        return masks;
+    }
+
+    // TODO: test
     public static int countMaxBits(LongBuffer buf, int len) {
         long n = 0;
         for (int i = len; i > 0; --i) {
@@ -15,30 +28,76 @@ public class LongBitPacking implements LongCompressor, LongDecompressor
         return 64 - Long.numberOfLeadingZeros(n);
     }
 
+    // TODO: test
     public static void pack(
             LongBuffer src,
             LongBuffer dst,
             int validBits,
             int len)
     {
-        long current = 0;
-        long capacity = 64;
-        for (int i = len; i > 0; --i) {
-            long n = src.get();
-            // TODO:
-            dst.put(n);
+        switch (validBits) {
+            case 0:
+                pack0(src, dst, len);
+                break;
+            default:
+                packAny(src, dst, validBits, len);
+                break;
         }
     }
 
+    // TODO: test
+    public static void pack0(
+            LongBuffer src,
+            LongBuffer dst,
+            int len)
+    {
+        src.position(src.position() + len);
+    }
+
+    // TODO: test
+    public static void packAny(
+            LongBuffer src,
+            LongBuffer dst,
+            int validBits,
+            int len)
+    {
+        long current = 0;
+        int capacity = 64;
+        long mask = MASKS[validBits];
+        for (int i = len; i > 0; --i) {
+            long n = src.get();
+            if (capacity >= validBits) {
+                current |= (n & mask) << (capacity - validBits);
+                capacity -= validBits;
+                if (capacity == 0) {
+                    dst.put(current);
+                    current = 0;
+                    capacity = 64;
+                }
+            } else {
+                int remain = validBits - capacity;
+                current |= (n >> remain) & MASKS[capacity];
+                dst.put(current);
+                current = (n & MASKS[remain]) << (64 - remain);
+                capacity = 64;
+            }
+        }
+        if (capacity < 64) {
+            dst.put(current);
+        }
+    }
+
+    // TODO: test
     public static void unpack(
             LongBuffer src,
             LongBuffer dst,
             int validBits,
             int len)
     {
-        // TODO:
+        // TODO: impl
     }
 
+    // TODO: test
     public void compress(LongBuffer src, LongBuffer dst) {
         int srclen = src.limit() - src.position();
         int[] maxBits = new int[BLOCK_NUM];
@@ -59,6 +118,7 @@ public class LongBitPacking implements LongCompressor, LongDecompressor
         return;
     }
 
+    // TODO: test
     public void decompress(LongBuffer src, LongBuffer dst) {
         int[] maxBits = new int[BLOCK_NUM];
         while (src.remaining() > 0) {
