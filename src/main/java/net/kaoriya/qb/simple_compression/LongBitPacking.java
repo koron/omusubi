@@ -19,7 +19,6 @@ public class LongBitPacking implements LongCompressor, LongDecompressor
         return masks;
     }
 
-    // TODO: test
     public static int countMaxBits(LongBuffer buf, int len) {
         long n = 0;
         for (int i = len; i > 0; --i) {
@@ -44,7 +43,6 @@ public class LongBitPacking implements LongCompressor, LongDecompressor
         }
     }
 
-    // TODO: test
     public static void pack0(
             LongBuffer src,
             LongBuffer dst,
@@ -53,7 +51,6 @@ public class LongBitPacking implements LongCompressor, LongDecompressor
         src.position(src.position() + len);
     }
 
-    // TODO: test
     public static void packAny(
             LongBuffer src,
             LongBuffer dst,
