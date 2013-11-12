@@ -114,4 +114,31 @@ public class LongBitPackingTest
     public void packAny() {
         checkPackAny(new long[] { 1L }, 1, new long[] { 0x8000000000000000L });
     }
+
+    private void checkUnpack(long[] src, int validBits, long[] expected)
+    {
+        LongBuffer buf = LongBuffer.allocate(expected.length);
+        LongBitPacking.unpack(LongBuffer.wrap(src), buf, validBits,
+                expected.length);
+        assertArrayEquals(expected, buf.array());
+    }
+
+    @Test
+    public void unpack() {
+        checkUnpack(new long[0], 0, new long[] {
+            0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L,
+        });
+        checkUnpack(new long[] { 0x0123456789abcdefL }, 1, new long[] {
+            0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1,
+            0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 1, 1, 1,
+            1, 0, 0, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1,
+            1, 1, 0, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1,
+        });
+        checkUnpack(new long[] {
+            0xffffffffffffffffL, 0xffffffffffffffffL, 0xffffffffffffffffL,
+        }, 48, new long[] {
+            0x0000ffffffffffffL, 0x0000ffffffffffffL, 0x0000ffffffffffffL,
+            0x0000ffffffffffffL,
+        });
+    }
 }

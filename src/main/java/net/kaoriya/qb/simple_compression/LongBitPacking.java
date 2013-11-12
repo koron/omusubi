@@ -83,17 +83,26 @@ public class LongBitPacking implements LongCompressor, LongDecompressor
         }
     }
 
-    // TODO: test
     public static void unpack(
             LongBuffer src,
             LongBuffer dst,
             int validBits,
             int len)
     {
-        // TODO: impl
-        long current = 0;
-        int capacity = 0;
-        for (int i = len; i > 0; ++i) {
+        long fetchedData = 0;
+        int fetchedBits = 0;
+        long mask = MASKS[validBits];
+        for (int i = len; i > 0; --i) {
+            if (fetchedBits < validBits) {
+                long n0 = fetchedBits > 0 ?
+                    fetchedData << (validBits - fetchedBits) : 0;
+                fetchedData = src.get();
+                fetchedBits += 64 - validBits;
+                dst.put((n0 | (fetchedData >>> fetchedBits)) & mask);
+            } else {
+                fetchedBits -= validBits;
+                dst.put((fetchedData >>> fetchedBits) & mask);
+            }
         }
     }
 
