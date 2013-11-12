@@ -93,6 +93,10 @@ public class LongBitPacking implements LongCompressor, LongDecompressor
             int validBits,
             int len)
     {
+        long current = 0;
+        int capacity = 0;
+        for (int i = len; i > 0; ++i) {
+        }
         // TODO: impl
     }
 
