@@ -1,3 +1,5 @@
 # Simple Compression for Array
 
+[![Build Status](https://travis-ci.org/koron/simple-compression.png?branch=master)](https://travis-ci.org/koron/simple-compression)
+
 WIP
