@@ -30,6 +30,15 @@ public class LongBitPacking implements LongCompressor, LongDecompressor
         }
     }
 
+    public static void unpack(
+            LongBuffer src,
+            LongBuffer dst,
+            int validBits,
+            int len)
+    {
+        // TODO:
+    }
+
     public void compress(LongBuffer src, LongBuffer dst) {
         int srclen = src.limit() - src.position();
         int[] maxBits = new int[BLOCK_NUM];
@@ -51,7 +60,15 @@ public class LongBitPacking implements LongCompressor, LongDecompressor
     }
 
     public void decompress(LongBuffer src, LongBuffer dst) {
-        // TODO:
+        int[] maxBits = new int[BLOCK_NUM];
+        while (src.remaining() > 0) {
+            long head = src.get();
+            for (int i = BLOCK_NUM - 1; i >= 0; ++i) {
+                int validBits = (int)(head & 0xff);
+                head >>= 8;
+                unpack(src, dst, validBits, BLOCK_LEN);
+            }
+        }
         return;
     }
 }
