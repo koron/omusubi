@@ -1,0 +1,13 @@
+// vim:set sts=4 sw=4 tw=0 et ft=groovy:
+
+apply plugin: 'java'
+
+version = '0.1'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.+'
+}
