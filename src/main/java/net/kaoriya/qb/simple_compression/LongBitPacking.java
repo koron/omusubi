@@ -132,7 +132,7 @@ public class LongBitPacking implements LongCompressor, LongDecompressor
         int[] maxBits = new int[BLOCK_NUM];
         while (src.remaining() > 0) {
             long head = src.get();
-            for (int i = BLOCK_NUM - 1; i >= 0; ++i) {
+            for (int i = BLOCK_NUM; i > 0; --i) {
                 int validBits = (int)(head & 0xff);
                 head >>= 8;
                 unpack(src, dst, validBits, BLOCK_LEN);

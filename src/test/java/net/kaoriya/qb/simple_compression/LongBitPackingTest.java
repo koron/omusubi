@@ -141,4 +141,40 @@ public class LongBitPackingTest
             0x0000ffffffffffffL,
         });
     }
+
+    private long[] padding(long[] src) {
+        final int chunkLen =
+            LongBitPacking.BLOCK_LEN * LongBitPacking.BLOCK_NUM;
+        int over = src.length % chunkLen;
+        if (src.length > 0 && over == 0) {
+            return src;
+        }
+
+        long[] dst = new long[src.length - over + chunkLen];
+        System.arraycopy(src, 0, dst, 0, src.length);
+        return dst;
+    }
+
+    private void checkCompress(long[] orig, long[] compressed) {
+        LongBitPacking p = new LongBitPacking();
+
+        LongBuffer origBuf = LongBuffer.wrap(orig);
+        LongBuffer buf1 = LongBuffer.allocate(compressed.length);
+        p.compress(origBuf, buf1);
+        assertArrayEquals(compressed, buf1.array());
+        buf1.rewind();
+
+        LongBuffer buf2 = LongBuffer.allocate(orig.length);
+        p.decompress(buf1, buf2);
+        assertArrayEquals(orig, buf2.array());
+    }
+
+    private void checkCompressPadded(long[] orig, long[] compressed) {
+        checkCompress(padding(orig), compressed);
+    }
+
+    @Test
+    public void compress() {
+        checkCompressPadded(new long[0], new long[] { 0L });
+    }
 }
