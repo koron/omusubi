@@ -48,4 +48,25 @@ public class LongDZBPTest
         df.resetContext();
         assertEquals(0, df.getContextValue());
     }
+
+    private static long[] padding(long[] src) {
+        return TestUtils.padding(src, 
+            LongBitPacking.BLOCK_LEN * LongBitPacking.BLOCK_NUM, 1);
+    }
+
+    private static void checkCompress(long[] src, long[] dst) {
+        LongDZBP codec = new LongDZBP();
+        codec.setDebug(true);
+        LongBuffer srcBuf = LongBuffer.wrap(src);
+        LongBuffer dstBuf = LongBuffer.allocate(dst.length);
+        codec.compress(srcBuf, dstBuf);
+        assertArrayEquals(dst, dstBuf.array());
+    }
+
+    @Test
+    public void compress() {
+        checkCompress(
+                padding(new long[] { 10, 11, 12, 13, 14, 15, 16, 17, 18 }),
+                padding(new long[] { 10, 0xaa00000000000000L }));
+    }
 }

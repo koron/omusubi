@@ -13,6 +13,14 @@ public class LongDZBP implements LongCompressor, LongDecompressor
     {
         private long savedContext = 0;
 
+        public DZEncodeFilter(long contextValue) {
+            super(contextValue);
+        }
+
+        public DZEncodeFilter() {
+            this(0L);
+        }
+
         public long filterLong(long value) {
             return encodeLong(value);
         }
@@ -37,6 +45,14 @@ public class LongDZBP implements LongCompressor, LongDecompressor
     {
         private long savedContext = 0;
 
+        public DZDecodeFilter(long contextValue) {
+            super(contextValue);
+        }
+
+        public DZDecodeFilter() {
+            this(0L);
+        }
+
         public long filterLong(long value) {
             return decodeLong(value);
         }
@@ -57,9 +73,13 @@ public class LongDZBP implements LongCompressor, LongDecompressor
 
     private final LongBitPacking bitPack;
 
-    private final DZEncodeFilter encodeFilter = new DZEncodeFilter();
+    public void setDebug(boolean value) {
+        this.bitPack.setDebug(value);
+    }
 
-    private final DZDecodeFilter decodeFilter = new DZDecodeFilter();
+    public boolean getDebug() {
+        return this.bitPack.getDebug();
+    }
 
     public LongDZBP(LongBitPacking bitPack) {
         this.bitPack = bitPack;
@@ -74,12 +94,24 @@ public class LongDZBP implements LongCompressor, LongDecompressor
     }
 
     public void compress(LongBuffer src, LongBuffer dst) {
-        // TODO:
-        this.bitPack.compress(src, dst, this.encodeFilter);
+        // TODO: Output length of original array.
+        // Output first int, and set it as delta's initial context.
+        long first = src.get();
+        dst.put(first);
+        DZEncodeFilter filter = new DZEncodeFilter(first);
+        // Compress intermediate blocks.
+        this.bitPack.compress(src, dst, filter);
+        // TODO: Compress last block.
     }
 
     public void decompress(LongBuffer src, LongBuffer dst) {
-        // TODO:
-        this.bitPack.decompress(src, dst, this.decodeFilter);
+        // TODO: Fetch length of original array.
+        // Fetch and output first int, and set it as delta's initial context.
+        long first = src.get();
+        dst.put(first);
+        DZDecodeFilter filter = new DZDecodeFilter(first);
+        // Decompress intermediate blocks.
+        this.bitPack.decompress(src, dst, filter);
+        // TODO: Decompress last block.
     }
 }

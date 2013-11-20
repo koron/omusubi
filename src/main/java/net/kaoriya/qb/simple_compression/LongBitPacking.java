@@ -11,6 +11,8 @@ public class LongBitPacking implements LongCompressor, LongDecompressor
 
     private static final LongFilter THROUGH_FILTER = new ThroughLongFilter();
 
+    private boolean debug = false;
+
     private final int blockLen;
 
     private final int blockNum;
@@ -22,6 +24,14 @@ public class LongBitPacking implements LongCompressor, LongDecompressor
 
     public LongBitPacking() {
         this(BLOCK_LEN, BLOCK_NUM);
+    }
+
+    public void setDebug(boolean value) {
+        this.debug = value;
+    }
+
+    public boolean getDebug() {
+        return this.debug;
     }
 
     public static long[] newMasks() {
@@ -174,6 +184,7 @@ public class LongBitPacking implements LongCompressor, LongDecompressor
             long head = 0;
             for (int i = 0; i < this.blockNum; ++i) {
                 long n = maxBits[i] = countMaxBits(src, this.blockLen, filter);
+                System.out.println(n);
                 head = (head << 8) | n;
             }
             filter.restoreContext();
