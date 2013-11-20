@@ -9,6 +9,19 @@ public class LongBitPacking implements LongCompressor, LongDecompressor
 
     private static final long[] MASKS = newMasks();
 
+    private int blockLen;
+
+    private int blockNum;
+
+    public LongBitPacking(int blockLen, int blockNum) {
+        this.blockLen = blockLen;
+        this.blockNum = blockNum;
+    }
+
+    public LongBitPacking() {
+        this(BLOCK_LEN, BLOCK_NUM);
+    }
+
     public static long[] newMasks() {
         long[] masks = new long[65];
         long m = 0xffffffffffffffffL;
@@ -108,32 +121,32 @@ public class LongBitPacking implements LongCompressor, LongDecompressor
 
     public void compress(LongBuffer src, LongBuffer dst) {
         int srclen = src.limit() - src.position();
-        int[] maxBits = new int[BLOCK_NUM];
-        while (src.remaining() >= BLOCK_LEN * BLOCK_NUM) {
+        int[] maxBits = new int[this.blockNum];
+        while (src.remaining() >= this.blockLen * this.blockNum) {
             src.mark();
             long head = 0;
-            for (int i = 0; i < BLOCK_NUM; ++i) {
-                long n = maxBits[i] = countMaxBits(src, BLOCK_LEN);
+            for (int i = 0; i < this.blockNum; ++i) {
+                long n = maxBits[i] = countMaxBits(src, this.blockLen);
                 head = (head << 8) | n;
             }
             src.reset();
 
             dst.put(head);
-            for (int i = 0; i < BLOCK_NUM; ++i) {
-                pack(src, dst, maxBits[i], BLOCK_LEN);
+            for (int i = 0; i < this.blockNum; ++i) {
+                pack(src, dst, maxBits[i], this.blockLen);
             }
         }
         return;
     }
 
     public void decompress(LongBuffer src, LongBuffer dst) {
-        int[] maxBits = new int[BLOCK_NUM];
+        int[] maxBits = new int[this.blockNum];
         while (src.remaining() > 0) {
             long head = src.get();
-            for (int i = BLOCK_NUM; i > 0; --i) {
+            for (int i = this.blockNum; i > 0; --i) {
                 int validBits = (int)(head & 0xff);
                 head >>= 8;
-                unpack(src, dst, validBits, BLOCK_LEN);
+                unpack(src, dst, validBits, this.blockLen);
             }
         }
         return;
