@@ -9,9 +9,9 @@ public class LongBitPacking implements LongCompressor, LongDecompressor
 
     private static final long[] MASKS = newMasks();
 
-    private int blockLen;
+    private final int blockLen;
 
-    private int blockNum;
+    private final int blockNum;
 
     public LongBitPacking(int blockLen, int blockNum) {
         this.blockLen = blockLen;
