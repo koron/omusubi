@@ -96,4 +96,17 @@ public class DeltaZigzagEncodingTest {
         int[] r2 = d.decodeArray(r1);
         assertArrayEquals(new int[]{ 10, 11, 10, 12, 10 }, r2);
     }
+
+    @Test
+    public void checkLongContext() {
+        DeltaZigzagEncoding.LongContext c =
+            new DeltaZigzagEncoding.LongContext(123);
+        assertEquals(123, c.getContextValue());
+
+        c.setContextValue(456);
+        assertEquals(456, c.getContextValue());
+
+        c.setContextValue(789);
+        assertEquals(789, c.getContextValue());
+    }
 }

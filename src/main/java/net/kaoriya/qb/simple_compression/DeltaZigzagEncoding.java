@@ -104,4 +104,23 @@ public final class DeltaZigzagEncoding {
             return decodeArray(src, 0, src.length, new int[src.length], 0);
         }
     }
+
+    /**
+     * Context for long value.
+     */
+    public static class LongContext {
+        protected long contextValue;
+
+        protected LongContext(long contextValue) {
+            this.contextValue = contextValue;
+        }
+
+        public void setContextValue(long contextValue) {
+            this.contextValue = contextValue;
+        }
+
+        public long getContextValue() {
+            return this.contextValue;
+        }
+    }
 }
