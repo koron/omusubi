@@ -109,4 +109,19 @@ public class DeltaZigzagEncodingTest {
         c.setContextValue(789);
         assertEquals(789, c.getContextValue());
     }
+
+    @Test
+    public void checkLongEncoder() {
+        DeltaZigzagEncoding.LongEncoder e1 =
+            new DeltaZigzagEncoding.LongEncoder();
+        long[] r1 = e1.encodeArray(new long[] { 0, 1, 0, 2, 0 });
+        assertArrayEquals(new long[]{ 0, 2, 1, 4, 3 }, r1);
+        assertEquals(0, e1.getContextValue());
+
+        DeltaZigzagEncoding.LongEncoder e2 =
+            new DeltaZigzagEncoding.LongEncoder(10);
+        long[] r2 = e2.encodeArray(new long[] { 10, 11, 10, 12, 10 });
+        assertArrayEquals(new long[]{ 0, 2, 1, 4, 3 }, r2);
+        assertEquals(10, e2.getContextValue());
+    }
 }
