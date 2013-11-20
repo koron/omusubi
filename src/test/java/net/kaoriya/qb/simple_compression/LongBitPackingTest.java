@@ -176,5 +176,6 @@ public class LongBitPackingTest
     @Test
     public void compress() {
         checkCompressPadded(new long[0], new long[] { 0L });
+        // TODO: check againt many series of input.
     }
 }

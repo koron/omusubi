@@ -106,7 +106,6 @@ public class LongBitPacking implements LongCompressor, LongDecompressor
         }
     }
 
-    // TODO: test
     public void compress(LongBuffer src, LongBuffer dst) {
         int srclen = src.limit() - src.position();
         int[] maxBits = new int[BLOCK_NUM];
@@ -127,7 +126,6 @@ public class LongBitPacking implements LongCompressor, LongDecompressor
         return;
     }
 
-    // TODO: test
     public void decompress(LongBuffer src, LongBuffer dst) {
         int[] maxBits = new int[BLOCK_NUM];
         while (src.remaining() > 0) {
