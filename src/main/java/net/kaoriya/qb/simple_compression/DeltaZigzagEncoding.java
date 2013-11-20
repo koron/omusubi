@@ -155,4 +155,37 @@ public final class DeltaZigzagEncoding {
             return encodeArray(src, 0, src.length, new long[src.length], 0);
         }
     }
+
+    /**
+     * Long value decoder.
+     */
+    public static class LongDecoder extends LongContext {
+        public LongDecoder(long contextValue) {
+            super(contextValue);
+        }
+
+        public LongDecoder() {
+            super(0L);
+        }
+
+        public long decodeLong(long value) {
+            long n = (value >> 1) ^ ((value & 1L) * -1L);
+            n += this.contextValue;
+            this.contextValue = n;
+            return n;
+        }
+
+        public long[] decodeArray(long[] src, int srcoff, int length,
+                long[] dst, int dstoff)
+        {
+            for (int i = 0; i < length; ++i) {
+                dst[dstoff + i] = decodeLong(src[srcoff + i]);
+            }
+            return dst;
+        }
+
+        public long[] decodeArray(long[] src) {
+            return decodeArray(src, 0, src.length, new long[src.length], 0);
+        }
+    }
 }
