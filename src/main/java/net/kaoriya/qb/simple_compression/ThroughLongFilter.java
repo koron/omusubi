@@ -3,7 +3,7 @@ package net.kaoriya.qb.simple_compression;
 /**
  * Through origin values.
  */
-public final class ThroughLongFilter {
+public final class ThroughLongFilter implements LongFilter {
 
     public long filterLong(long value) {
         return value;
