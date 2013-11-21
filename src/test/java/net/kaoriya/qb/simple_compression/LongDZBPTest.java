@@ -77,10 +77,20 @@ public class LongDZBPTest
 
     @Test
     public void compress() {
+        checkCompress(new LongDZBP(), new long[0], new long[0]);
+
         checkCompress(
                 new LongDZBP(),
-                padding(new long[] { 10, 11, 12, 13, 14, 15, 16, 17, 18 }),
-                padding(new long[] { 10, 0x6000000, 0x0820820820828C00L }));
+                new long[] { 10, 11, 12, 13, 14, 15, 16, 17, 18 },
+                new long[] { 9, 10, 0x2000000, 0xaaaa000000000000L });
+
+        checkCompress(
+                new LongDZBP(),
+                padding(new long[] { 0 }),
+                new long[] {
+                    LongBitPacking.BLOCK_LEN * LongBitPacking.BLOCK_NUM + 1,
+                    0, 0
+                });
     }
 
     private static void checkDecompress(

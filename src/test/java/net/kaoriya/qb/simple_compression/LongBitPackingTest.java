@@ -176,9 +176,12 @@ public class LongBitPackingTest
         LongBitPacking p1 = new LongBitPacking();
         assertEquals(LongBitPacking.BLOCK_LEN, p1.getBlockLen());
         assertEquals(LongBitPacking.BLOCK_NUM, p1.getBlockNum());
+        assertEquals(LongBitPacking.BLOCK_LEN * LongBitPacking.BLOCK_NUM,
+                p1.getBlockSize());
 
         LongBitPacking p2 = new LongBitPacking(123, 456);
         assertEquals(123, p2.getBlockLen());
         assertEquals(456, p2.getBlockNum());
+        assertEquals(56088, p2.getBlockSize());
     }
 }

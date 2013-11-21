@@ -1,6 +1,7 @@
 package net.kaoriya.qb.simple_compression;
 
 import java.nio.LongBuffer;
+import java.util.Arrays;
 
 /**
  * Long Delta Zigzag Encoded Bit Packing.
@@ -95,14 +96,37 @@ public class LongDZBP implements LongCompressor, LongDecompressor
     }
 
     public void compress(LongBuffer src, LongBuffer dst) {
-        // TODO: Output length of original array.
+        // Output length of original array.  When input array is empty, make
+        // empty output for memory efficiency.
+        final int srcLen = src.remaining();
+        if (srcLen == 0) {
+            return;
+        }
+        dst.put(srcLen);
+
         // Output first int, and set it as delta's initial context.
-        long first = src.get();
+        final long first = src.get();
         dst.put(first);
         DZEncodeFilter filter = new DZEncodeFilter(first);
+
         // Compress intermediate blocks.
-        this.bitPack.compress(src, dst, filter);
-        // TODO: Compress last block.
+        final int blockSize = this.bitPack.getBlockSize();
+        final int nonblockLen = src.remaining() % blockSize;
+        LongBuffer window = src.slice();
+        window.limit(window.limit() - nonblockLen);
+        this.bitPack.compress(window, dst, filter);
+        src.position(src.position() + window.position());
+
+        // Compress last block.
+        if (nonblockLen > 0) {
+            long[] last = new long[blockSize];
+            src.get(last, 0, nonblockLen);
+            // Padding extended area by last value.  It make delta zigzag
+            // efficient.
+            Arrays.fill(last, nonblockLen, last.length,
+                    last[nonblockLen - 1]);
+            this.bitPack.compress(LongBuffer.wrap(last), dst, filter);
+        }
     }
 
     public void decompress(LongBuffer src, LongBuffer dst) {
