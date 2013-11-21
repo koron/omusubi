@@ -184,9 +184,6 @@ public class LongBitPacking implements LongCompressor, LongDecompressor
             long head = 0;
             for (int i = 0; i < this.blockNum; ++i) {
                 long n = maxBits[i] = countMaxBits(src, this.blockLen, filter);
-                if (this.deubg) {
-                    System.out.println(n);
-                }
                 head = (head << 8) | n;
             }
             filter.restoreContext();
