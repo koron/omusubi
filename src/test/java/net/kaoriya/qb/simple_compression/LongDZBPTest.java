@@ -64,8 +64,11 @@ public class LongDZBPTest
             LongBitPacking.BLOCK_LEN * LongBitPacking.BLOCK_NUM, 1);
     }
 
-    private static void checkCompress(long[] src, long[] dst) {
-        LongDZBP codec = new LongDZBP();
+    private static void checkCompress(
+            LongDZBP codec,
+            long[] src,
+            long[] dst)
+    {
         LongBuffer srcBuf = LongBuffer.wrap(src);
         LongBuffer dstBuf = LongBuffer.allocate(dst.length);
         codec.compress(srcBuf, dstBuf);
@@ -75,13 +78,16 @@ public class LongDZBPTest
     @Test
     public void compress() {
         checkCompress(
+                new LongDZBP(),
                 padding(new long[] { 10, 11, 12, 13, 14, 15, 16, 17, 18 }),
                 padding(new long[] { 10, 0x6000000, 0x0820820820828C00L }));
     }
 
-    private static void checkDecompress(long[] src, long[] dst) {
-        LongDZBP codec = new LongDZBP();
-        codec.setDebug(true);
+    private static void checkDecompress(
+            LongDZBP codec,
+            long[] src,
+            long[] dst)
+    {
         LongBuffer srcBuf = LongBuffer.wrap(src);
         LongBuffer dstBuf = LongBuffer.allocate(dst.length);
         codec.decompress(srcBuf, dstBuf);
@@ -91,6 +97,7 @@ public class LongDZBPTest
     @Test
     public void decompress() {
         checkDecompress(
+                new LongDZBP(),
                 new long[] { 10, 0x6000000, 0x0820820820828C00L, 0 },
                 padding(new long[] { 10, 11, 12, 13, 14, 15, 16, 17, 18 }));
     }

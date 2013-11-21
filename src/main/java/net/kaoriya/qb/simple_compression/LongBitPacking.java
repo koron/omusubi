@@ -26,8 +26,9 @@ public class LongBitPacking implements LongCompressor, LongDecompressor
         this(BLOCK_LEN, BLOCK_NUM);
     }
 
-    public void setDebug(boolean value) {
+    public LongBitPacking setDebug(boolean value) {
         this.debug = value;
+        return this;
     }
 
     public boolean getDebug() {

@@ -73,8 +73,9 @@ public class LongDZBP implements LongCompressor, LongDecompressor
 
     private final LongBitPacking bitPack;
 
-    public void setDebug(boolean value) {
+    public LongDZBP setDebug(boolean value) {
         this.bitPack.setDebug(value);
+        return this;
     }
 
     public boolean getDebug() {
