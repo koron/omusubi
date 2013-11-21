@@ -170,4 +170,15 @@ public class LongBitPackingTest
         checkCompressPadded(new long[0], new long[] { 0L });
         // TODO: check againt many series of input.
     }
+
+    @Test
+    public void getBlockProps() {
+        LongBitPacking p1 = new LongBitPacking();
+        assertEquals(LongBitPacking.BLOCK_LEN, p1.getBlockLen());
+        assertEquals(LongBitPacking.BLOCK_NUM, p1.getBlockNum());
+
+        LongBitPacking p2 = new LongBitPacking(123, 456);
+        assertEquals(123, p2.getBlockLen());
+        assertEquals(456, p2.getBlockNum());
+    }
 }

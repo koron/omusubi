@@ -35,6 +35,14 @@ public class LongBitPacking implements LongCompressor, LongDecompressor
         return this.debug;
     }
 
+    public int getBlockLen() {
+        return this.blockLen;
+    }
+
+    public int getBlockNum() {
+        return this.blockNum;
+    }
+
     public static long[] newMasks() {
         long[] masks = new long[65];
         long m = 0xffffffffffffffffL;
