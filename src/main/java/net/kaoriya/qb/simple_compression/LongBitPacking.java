@@ -217,10 +217,27 @@ public class LongBitPacking implements LongCompressor, LongDecompressor
     public void decompress(
             LongBuffer src,
             LongBuffer dst,
+            LongFilter filter,
+            int numOfChunks)
+    {
+        int[] maxBits = new int[this.blockNum];
+        for (int i = numOfChunks; i > 0; --i) {
+            long head = src.get();
+            for (int j = (this.blockNum - 1) * 8; j >= 0; j -= 8) {
+                int validBits = (int)((head >> j) & 0xff);
+                unpack(src, dst, validBits, this.blockLen, filter);
+            }
+        }
+        return;
+    }
+
+    public void decompress(
+            LongBuffer src,
+            LongBuffer dst,
             LongFilter filter)
     {
         int[] maxBits = new int[this.blockNum];
-        while (src.remaining() > 0) {
+        while (src.hasRemaining()) {
             long head = src.get();
             for (int i = (this.blockNum - 1) * 8; i >= 0; i -= 8) {
                 int validBits = (int)((head >> i) & 0xff);

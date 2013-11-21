@@ -110,33 +110,51 @@ public class LongDZBP implements LongCompressor, LongDecompressor
         DZEncodeFilter filter = new DZEncodeFilter(first);
 
         // Compress intermediate blocks.
-        final int blockSize = this.bitPack.getBlockSize();
-        final int nonblockLen = src.remaining() % blockSize;
+        final int chunkSize = this.bitPack.getBlockSize();
+        final int chunkRemain = src.remaining() % chunkSize;
         LongBuffer window = src.slice();
-        window.limit(window.limit() - nonblockLen);
+        window.limit(window.limit() - chunkRemain);
         this.bitPack.compress(window, dst, filter);
         src.position(src.position() + window.position());
 
         // Compress last block.
-        if (nonblockLen > 0) {
-            long[] last = new long[blockSize];
-            src.get(last, 0, nonblockLen);
+        if (chunkRemain > 0) {
+            long[] last = new long[chunkSize];
+            src.get(last, 0, chunkRemain);
             // Padding extended area by last value.  It make delta zigzag
             // efficient.
-            Arrays.fill(last, nonblockLen, last.length,
-                    last[nonblockLen - 1]);
+            Arrays.fill(last, chunkRemain, last.length,
+                    last[chunkRemain - 1]);
             this.bitPack.compress(LongBuffer.wrap(last), dst, filter);
         }
     }
 
     public void decompress(LongBuffer src, LongBuffer dst) {
-        // TODO: Fetch length of original array.
+        // Fetch length of original array.
+        if (!src.hasRemaining()) {
+            return;
+        }
+        final int outLen = (int)src.get() - 1;
+
         // Fetch and output first int, and set it as delta's initial context.
-        long first = src.get();
+        final long first = src.get();
         dst.put(first);
         DZDecodeFilter filter = new DZDecodeFilter(first);
+
         // Decompress intermediate blocks.
-        this.bitPack.decompress(src, dst, filter);
-        // TODO: Decompress last block.
+        final int chunkSize = this.bitPack.getBlockSize();
+        final int chunkNum = outLen / chunkSize;
+        if (chunkNum > 0) {
+            this.bitPack.decompress(src, dst, filter, chunkNum);
+        }
+
+        // Decompress last block.
+        final int chunkRemain = outLen % chunkSize;
+        if (chunkRemain > 0) {
+            long[] last = new long[chunkSize];
+            LongBuffer buf = LongBuffer.wrap(last);
+            this.bitPack.decompress(src, buf, filter, 1);
+            dst.put(last, 0, chunkRemain);
+        }
     }
 }
