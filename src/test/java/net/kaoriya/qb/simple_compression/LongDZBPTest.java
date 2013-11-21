@@ -78,4 +78,20 @@ public class LongDZBPTest
                 padding(new long[] { 10, 11, 12, 13, 14, 15, 16, 17, 18 }),
                 padding(new long[] { 10, 0x6000000, 0x0820820820828C00L }));
     }
+
+    private static void checkDecompress(long[] src, long[] dst) {
+        LongDZBP codec = new LongDZBP();
+        codec.setDebug(true);
+        LongBuffer srcBuf = LongBuffer.wrap(src);
+        LongBuffer dstBuf = LongBuffer.allocate(dst.length);
+        codec.decompress(srcBuf, dstBuf);
+        assertArrayEquals(dst, dstBuf.array());
+    }
+
+    @Test
+    public void decompress() {
+        checkDecompress(
+                new long[] { 10, 0x6000000, 0x0820820820828C00L, 0 },
+                padding(new long[] { 10, 11, 12, 13, 14, 15, 16, 17, 18 }));
+    }
 }

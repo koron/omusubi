@@ -136,6 +136,36 @@ public class LongBitPacking implements LongCompressor, LongDecompressor
         }
     }
 
+    public void compress(
+            LongBuffer src,
+            LongBuffer dst,
+            LongFilter filter)
+    {
+        int srclen = src.limit() - src.position();
+        int[] maxBits = new int[this.blockNum];
+        while (src.remaining() >= this.blockLen * this.blockNum) {
+            src.mark();
+            filter.saveContext();
+            long head = 0;
+            for (int i = 0; i < this.blockNum; ++i) {
+                long n = maxBits[i] = countMaxBits(src, this.blockLen, filter);
+                head = (head << 8) | n;
+            }
+            filter.restoreContext();
+            src.reset();
+
+            dst.put(head);
+            for (int i = 0; i < this.blockNum; ++i) {
+                pack(src, dst, maxBits[i], this.blockLen, filter);
+            }
+        }
+        return;
+    }
+
+    public void compress(LongBuffer src, LongBuffer dst) {
+        compress(src, dst, THROUGH_FILTER);
+    }
+
     public static void unpack(
             LongBuffer src,
             LongBuffer dst,
@@ -171,36 +201,6 @@ public class LongBitPacking implements LongCompressor, LongDecompressor
         }
     }
 
-    public void compress(
-            LongBuffer src,
-            LongBuffer dst,
-            LongFilter filter)
-    {
-        int srclen = src.limit() - src.position();
-        int[] maxBits = new int[this.blockNum];
-        while (src.remaining() >= this.blockLen * this.blockNum) {
-            src.mark();
-            filter.saveContext();
-            long head = 0;
-            for (int i = 0; i < this.blockNum; ++i) {
-                long n = maxBits[i] = countMaxBits(src, this.blockLen, filter);
-                head = (head << 8) | n;
-            }
-            filter.restoreContext();
-            src.reset();
-
-            dst.put(head);
-            for (int i = 0; i < this.blockNum; ++i) {
-                pack(src, dst, maxBits[i], this.blockLen, filter);
-            }
-        }
-        return;
-    }
-
-    public void compress(LongBuffer src, LongBuffer dst) {
-        compress(src, dst, THROUGH_FILTER);
-    }
-
     public void decompress(
             LongBuffer src,
             LongBuffer dst,
@@ -209,9 +209,8 @@ public class LongBitPacking implements LongCompressor, LongDecompressor
         int[] maxBits = new int[this.blockNum];
         while (src.remaining() > 0) {
             long head = src.get();
-            for (int i = this.blockNum; i > 0; --i) {
-                int validBits = (int)(head & 0xff);
-                head >>= 8;
+            for (int i = (this.blockNum - 1) * 8; i >= 0; i -= 8) {
+                int validBits = (int)((head >> i) & 0xff);
                 unpack(src, dst, validBits, this.blockLen, filter);
             }
         }
