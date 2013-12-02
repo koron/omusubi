@@ -75,7 +75,7 @@ public class LongBitPacking implements LongCompressor, LongDecompressor
 
     public static void pack(
             LongBuffer src,
-            LongBuffer dst,
+            LongOutputStream dst,
             int validBits,
             int len)
     {
@@ -84,7 +84,7 @@ public class LongBitPacking implements LongCompressor, LongDecompressor
 
     public static void pack(
             LongBuffer src,
-            LongBuffer dst,
+            LongOutputStream dst,
             int validBits,
             int len,
             LongFilter filter)
@@ -101,7 +101,7 @@ public class LongBitPacking implements LongCompressor, LongDecompressor
 
     public static void pack0(
             LongBuffer src,
-            LongBuffer dst,
+            LongOutputStream dst,
             int len)
     {
         src.position(src.position() + len);
@@ -109,7 +109,7 @@ public class LongBitPacking implements LongCompressor, LongDecompressor
 
     public static void packAny(
             LongBuffer src,
-            LongBuffer dst,
+            LongOutputStream dst,
             int validBits,
             int len)
     {
@@ -118,7 +118,7 @@ public class LongBitPacking implements LongCompressor, LongDecompressor
 
     public static void packAny(
             LongBuffer src,
-            LongBuffer dst,
+            LongOutputStream dst,
             int validBits,
             int len,
             LongFilter filter)
@@ -132,26 +132,26 @@ public class LongBitPacking implements LongCompressor, LongDecompressor
                 current |= (n & mask) << (capacity - validBits);
                 capacity -= validBits;
                 if (capacity == 0) {
-                    dst.put(current);
+                    dst.write(current);
                     current = 0;
                     capacity = 64;
                 }
             } else {
                 int remain = validBits - capacity;
                 current |= (n >> remain) & MASKS[capacity];
-                dst.put(current);
+                dst.write(current);
                 capacity = 64 - remain;
                 current = (n & MASKS[remain]) << capacity;
             }
         }
         if (capacity < 64) {
-            dst.put(current);
+            dst.write(current);
         }
     }
 
-    public void compress(
+    protected void compress(
             LongBuffer src,
-            LongBuffer dst,
+            LongOutputStream dst, 
             LongFilter filter)
     {
         int srclen = src.limit() - src.position();
@@ -167,12 +167,25 @@ public class LongBitPacking implements LongCompressor, LongDecompressor
             filter.restoreContext();
             src.reset();
 
-            dst.put(head);
+            dst.write(head);
             for (int i = 0; i < this.blockNum; ++i) {
                 pack(src, dst, maxBits[i], this.blockLen, filter);
             }
         }
         return;
+    }
+
+    // @Implemnets: LongCodec
+    public void compress(LongBuffer src, LongOutputStream dst) {
+        compress(src, dst, THROUGH_FILTER);
+    }
+
+    public void compress(
+            LongBuffer src,
+            LongBuffer dst,
+            LongFilter filter)
+    {
+        compress(src, new LongBufferOutputStream(dst), filter);
     }
 
     public void compress(LongBuffer src, LongBuffer dst) {
@@ -181,7 +194,7 @@ public class LongBitPacking implements LongCompressor, LongDecompressor
 
     public static void unpack(
             LongBuffer src,
-            LongBuffer dst,
+            LongOutputStream dst,
             int validBits,
             int len)
     {
@@ -190,7 +203,7 @@ public class LongBitPacking implements LongCompressor, LongDecompressor
 
     public static void unpack(
             LongBuffer src,
-            LongBuffer dst,
+            LongOutputStream dst,
             int validBits,
             int len,
             LongFilter filter)
@@ -210,13 +223,13 @@ public class LongBitPacking implements LongCompressor, LongDecompressor
                 fetchedBits -= validBits;
                 n = (fetchedData >>> fetchedBits) & mask;
             }
-            dst.put(filter.filterLong(n));
+            dst.write(filter.filterLong(n));
         }
     }
 
     public void decompress(
             LongBuffer src,
-            LongBuffer dst,
+            LongOutputStream dst,
             LongFilter filter,
             int numOfChunks)
     {
@@ -233,7 +246,7 @@ public class LongBitPacking implements LongCompressor, LongDecompressor
 
     public void decompress(
             LongBuffer src,
-            LongBuffer dst,
+            LongOutputStream dst,
             LongFilter filter)
     {
         int[] maxBits = new int[this.blockNum];
@@ -247,7 +260,30 @@ public class LongBitPacking implements LongCompressor, LongDecompressor
         return;
     }
 
+    public void decompress(
+            LongBuffer src,
+            LongBuffer dst,
+            LongFilter filter)
+    {
+        decompress(src, new LongBufferOutputStream(dst), filter);
+    }
+
+    public void decompress(
+            LongBuffer src,
+            LongBuffer dst,
+            LongFilter filter,
+            int numOfChunks)
+    {
+        decompress(src, new LongBufferOutputStream(dst), filter, numOfChunks);
+    }
+
     public void decompress(LongBuffer src, LongBuffer dst) {
+        decompress(src, new LongBufferOutputStream(dst), THROUGH_FILTER);
+    }
+
+    // @Implemnets: LongCodec
+    public void decompress(LongBuffer src, LongOutputStream dst) {
         decompress(src, dst, THROUGH_FILTER);
     }
+
 }
