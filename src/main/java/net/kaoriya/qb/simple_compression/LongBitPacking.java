@@ -2,7 +2,7 @@ package net.kaoriya.qb.simple_compression;
 
 import java.nio.LongBuffer;
 
-public class LongBitPacking implements LongCompressor, LongDecompressor
+public class LongBitPacking implements LongCodec
 {
     public static final int BLOCK_LEN = 16;
     public static final int BLOCK_NUM = 4;
@@ -180,18 +180,6 @@ public class LongBitPacking implements LongCompressor, LongDecompressor
         compress(src, dst, THROUGH_FILTER);
     }
 
-    public void compress(
-            LongBuffer src,
-            LongBuffer dst,
-            LongFilter filter)
-    {
-        compress(src, new LongBufferOutputStream(dst), filter);
-    }
-
-    public void compress(LongBuffer src, LongBuffer dst) {
-        compress(src, dst, THROUGH_FILTER);
-    }
-
     public static void unpack(
             LongBuffer src,
             LongOutputStream dst,
@@ -227,7 +215,7 @@ public class LongBitPacking implements LongCompressor, LongDecompressor
         }
     }
 
-    public void decompress(
+    protected void decompress(
             LongBuffer src,
             LongOutputStream dst,
             LongFilter filter,
@@ -244,7 +232,7 @@ public class LongBitPacking implements LongCompressor, LongDecompressor
         return;
     }
 
-    public void decompress(
+    protected void decompress(
             LongBuffer src,
             LongOutputStream dst,
             LongFilter filter)
@@ -258,27 +246,6 @@ public class LongBitPacking implements LongCompressor, LongDecompressor
             }
         }
         return;
-    }
-
-    public void decompress(
-            LongBuffer src,
-            LongBuffer dst,
-            LongFilter filter)
-    {
-        decompress(src, new LongBufferOutputStream(dst), filter);
-    }
-
-    public void decompress(
-            LongBuffer src,
-            LongBuffer dst,
-            LongFilter filter,
-            int numOfChunks)
-    {
-        decompress(src, new LongBufferOutputStream(dst), filter, numOfChunks);
-    }
-
-    public void decompress(LongBuffer src, LongBuffer dst) {
-        decompress(src, new LongBufferOutputStream(dst), THROUGH_FILTER);
     }
 
     // @Implemnets: LongCodec

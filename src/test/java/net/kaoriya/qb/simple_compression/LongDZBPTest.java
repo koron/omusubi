@@ -71,7 +71,7 @@ public class LongDZBPTest
     {
         LongBuffer srcBuf = LongBuffer.wrap(src);
         LongBuffer dstBuf = LongBuffer.allocate(dst.length);
-        codec.compress(srcBuf, dstBuf);
+        codec.compress(srcBuf, new LongBufferOutputStream(dstBuf));
         assertArrayEquals(dst, dstBuf.array());
     }
 
@@ -100,7 +100,7 @@ public class LongDZBPTest
     {
         LongBuffer srcBuf = LongBuffer.wrap(src);
         LongBuffer dstBuf = LongBuffer.allocate(dst.length);
-        codec.decompress(srcBuf, dstBuf);
+        codec.decompress(srcBuf, new LongBufferOutputStream(dstBuf));
         assertArrayEquals(dst, dstBuf.array());
     }
 

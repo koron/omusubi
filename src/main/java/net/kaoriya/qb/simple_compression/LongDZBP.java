@@ -6,8 +6,7 @@ import java.util.Arrays;
 /**
  * Long Delta Zigzag Encoded Bit Packing.
  */
-public class LongDZBP
-    implements LongCodec, LongCompressor, LongDecompressor
+public class LongDZBP implements LongCodec
 {
     public static class DZEncodeFilter
         extends DeltaZigzagEncoding.LongEncoder
@@ -96,10 +95,6 @@ public class LongDZBP
         return this.bitPack;
     }
 
-    public void compress(LongBuffer src, LongBuffer dst) {
-        compress(src, new LongBufferOutputStream(dst));
-    }
-
     // @Implemnets: LongCodec
     public void compress(LongBuffer src, LongOutputStream dst) {
         // Output length of original array.  When input array is empty, make
@@ -135,10 +130,6 @@ public class LongDZBP
         }
     }
 
-    public void decompress(LongBuffer src, LongBuffer dst) {
-        decompress(src, new LongBufferOutputStream(dst));
-    }
-
     // @Implemnets: LongCodec
     public void decompress(LongBuffer src, LongOutputStream dst) {
         // Fetch length of original array.
@@ -164,7 +155,8 @@ public class LongDZBP
         if (chunkRemain > 0) {
             long[] last = new long[chunkSize];
             LongBuffer buf = LongBuffer.wrap(last);
-            this.bitPack.decompress(src, buf, filter, 1);
+            this.bitPack.decompress(src, new LongBufferOutputStream(buf),
+                    filter, 1);
             dst.write(last, 0, chunkRemain);
         }
     }
