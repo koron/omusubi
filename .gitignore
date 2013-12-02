@@ -1,4 +1,5 @@
 *.sw?
-.gradle/
-build/
-tags
+/.gradle/
+/build/
+/tags
+/tmp/
