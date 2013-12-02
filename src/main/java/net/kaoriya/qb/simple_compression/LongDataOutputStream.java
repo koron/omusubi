@@ -3,7 +3,7 @@ package net.kaoriya.qb.simple_compression;
 import java.io.DataOutput;
 import java.io.IOException;
 
-public class LongDataOutputStream extends LongOutputStream
+public final class LongDataOutputStream extends LongOutputStream
 {
     private final DataOutput dataOutput;
 
