@@ -9,10 +9,18 @@ public final class ByteArrayLongOutputStream extends LongOutputStream
 
     private final LongDataOutputStream longStream;
 
-    public ByteArrayLongOutputStream() {
-        this.byteStream = new ByteArrayOutputStream();
+    public ByteArrayLongOutputStream(ByteArrayOutputStream s) {
+        this.byteStream = s;
         this.longStream = new LongDataOutputStream(
                 new DataOutputStream(this.byteStream));
+    }
+
+    public ByteArrayLongOutputStream(int size) {
+        this(new ByteArrayOutputStream(size));
+    }
+
+    public ByteArrayLongOutputStream() {
+        this(new ByteArrayOutputStream());
     }
 
     public void write(long n) {

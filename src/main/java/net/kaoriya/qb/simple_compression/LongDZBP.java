@@ -6,7 +6,7 @@ import java.util.Arrays;
 /**
  * Long Delta Zigzag Encoded Bit Packing.
  */
-public class LongDZBP implements LongCodec
+public class LongDZBP extends LongCodec
 {
     public static class DZEncodeFilter
         extends DeltaZigzagEncoding.LongEncoder

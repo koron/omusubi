@@ -2,7 +2,7 @@ package net.kaoriya.qb.simple_compression;
 
 import java.nio.LongBuffer;
 
-public class LongBitPacking implements LongCodec
+public class LongBitPacking extends LongCodec
 {
     public static final int BLOCK_LEN = 16;
     public static final int BLOCK_NUM = 4;
