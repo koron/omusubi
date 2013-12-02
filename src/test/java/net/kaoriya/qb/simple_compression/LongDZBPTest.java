@@ -121,4 +121,21 @@ public class LongDZBPTest
                 },
                 padding(new long[] { 0 }));
     }
+
+    @Test
+    public void utilities() {
+        long[] src = new long[] { 10, 11, 12, 13, 14, 15, 16, 17, 18 };
+        byte[] dst = new byte[] {
+            0, 0, 0, 0, 0, 0, 0, 9,
+            0, 0, 0, 0, 0, 0, 0, 10,
+            0, 0, 0, 0, 2, 0, 0, 0,
+            (byte)0xaa, (byte)0xaa, 0, 0, 0, 0, 0, 0,
+        };
+
+        LongDZBP codec = new LongDZBP();
+        byte[] compressed = codec.compress(src);
+        assertArrayEquals(dst, compressed);
+        long[] decompressed = codec.decompress(dst);
+        assertArrayEquals(src, decompressed);
+    }
 }
