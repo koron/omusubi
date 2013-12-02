@@ -9,31 +9,14 @@ WIP
 
 ```java
 // Main class
-import net.kaoriya.qb.simple_compression.LongBitPacking;
+import net.kaoriya.qb.simple_compression.LongDZBP;
 
-import java.nio.LongBuffer;
+// How to compress.
+LongDZBP codec = new LongDZBP();
+byte[] compressed = codec.compress(new long[] {
+  ... (source long array)
+});
 
-// (blah blah blah...) how to compress.
-
-public LongBuffer compress(long[] src) {
-  LongBitPacking p = new LongBitPacking();
-  LongBuffer srcBuf = LongBuffer.wrap(src);
-  LongBuffer dstBuf = LongBuffer.allocate(/*estimated length*/);
-  p.compress(srcBuf, dstBuf);
-  return dstBuf;
-}
-
-// (blah blah blah...) How to decompress.
-
-public LongBuffer decompress(long[] src) {
-  LongBitPacking p = new LongBitPacking();
-  LongBuffer srcBuf = LongBuffer.wrap(src);
-  LongBuffer dstBuf = LongBuffer.allocate(/*estimated length*/);
-  p.decompress(srcBuf, dstBuf);
-  return dstBuf;
-}
-```
-
-`LongBitPacking#compress` と `LongBitPacking#decompress()` の出力先に
-自動で領域の再確保をする `LongBuffer` を作って指定すれば
-`LongBuffer#allocate` での出力サイズ計算は不要になります。
+// How to decompress.
+long[] decompressed = codec.decompress(compressed);
+// decompressed is match with "source long array"

@@ -51,7 +51,8 @@ public class LongBitPackingTest
 
     private void checkPack(long[] src, int validBits, long[] expected) {
         LongBuffer buf = LongBuffer.allocate(expected.length);
-        LongBitPacking.pack(LongBuffer.wrap(src), buf, validBits, src.length);
+        LongBitPacking.pack(LongBuffer.wrap(src),
+                new LongBufferOutputStream(buf), validBits, src.length);
         assertArrayEquals(expected, buf.array());
     }
 
@@ -105,8 +106,8 @@ public class LongBitPackingTest
 
     private void checkPackAny(long[] src, int validBits, long[] expected) {
         LongBuffer buf = LongBuffer.allocate(expected.length);
-        LongBitPacking.packAny(LongBuffer.wrap(src), buf, validBits,
-                src.length);
+        LongBitPacking.packAny(LongBuffer.wrap(src),
+                new LongBufferOutputStream(buf), validBits, src.length);
         assertArrayEquals(expected, buf.array());
     }
 
@@ -118,8 +119,8 @@ public class LongBitPackingTest
     private void checkUnpack(long[] src, int validBits, long[] expected)
     {
         LongBuffer buf = LongBuffer.allocate(expected.length);
-        LongBitPacking.unpack(LongBuffer.wrap(src), buf, validBits,
-                expected.length);
+        LongBitPacking.unpack(LongBuffer.wrap(src),
+                new LongBufferOutputStream(buf), validBits, expected.length);
         assertArrayEquals(expected, buf.array());
     }
 
@@ -152,12 +153,12 @@ public class LongBitPackingTest
 
         LongBuffer origBuf = LongBuffer.wrap(orig);
         LongBuffer buf1 = LongBuffer.allocate(compressed.length);
-        p.compress(origBuf, buf1);
+        p.compress(origBuf, new LongBufferOutputStream(buf1));
         assertArrayEquals(compressed, buf1.array());
         buf1.rewind();
 
         LongBuffer buf2 = LongBuffer.allocate(orig.length);
-        p.decompress(buf1, buf2);
+        p.decompress(buf1, new LongBufferOutputStream(buf2));
         assertArrayEquals(orig, buf2.array());
     }
 

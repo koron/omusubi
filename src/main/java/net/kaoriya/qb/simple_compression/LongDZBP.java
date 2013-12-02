@@ -6,7 +6,7 @@ import java.util.Arrays;
 /**
  * Long Delta Zigzag Encoded Bit Packing.
  */
-public class LongDZBP implements LongCompressor, LongDecompressor
+public class LongDZBP extends LongCodec
 {
     public static class DZEncodeFilter
         extends DeltaZigzagEncoding.LongEncoder
@@ -95,18 +95,19 @@ public class LongDZBP implements LongCompressor, LongDecompressor
         return this.bitPack;
     }
 
-    public void compress(LongBuffer src, LongBuffer dst) {
+    // @Implemnets: LongCodec
+    public void compress(LongBuffer src, LongOutputStream dst) {
         // Output length of original array.  When input array is empty, make
         // empty output for memory efficiency.
         final int srcLen = src.remaining();
         if (srcLen == 0) {
             return;
         }
-        dst.put(srcLen);
+        dst.write(srcLen);
 
         // Output first int, and set it as delta's initial context.
         final long first = src.get();
-        dst.put(first);
+        dst.write(first);
         DZEncodeFilter filter = new DZEncodeFilter(first);
 
         // Compress intermediate blocks.
@@ -129,7 +130,8 @@ public class LongDZBP implements LongCompressor, LongDecompressor
         }
     }
 
-    public void decompress(LongBuffer src, LongBuffer dst) {
+    // @Implemnets: LongCodec
+    public void decompress(LongBuffer src, LongOutputStream dst) {
         // Fetch length of original array.
         if (!src.hasRemaining()) {
             return;
@@ -138,7 +140,7 @@ public class LongDZBP implements LongCompressor, LongDecompressor
 
         // Fetch and output first int, and set it as delta's initial context.
         final long first = src.get();
-        dst.put(first);
+        dst.write(first);
         DZDecodeFilter filter = new DZDecodeFilter(first);
 
         // Decompress intermediate blocks.
@@ -153,8 +155,9 @@ public class LongDZBP implements LongCompressor, LongDecompressor
         if (chunkRemain > 0) {
             long[] last = new long[chunkSize];
             LongBuffer buf = LongBuffer.wrap(last);
-            this.bitPack.decompress(src, buf, filter, 1);
-            dst.put(last, 0, chunkRemain);
+            this.bitPack.decompress(src, new LongBufferOutputStream(buf),
+                    filter, 1);
+            dst.write(last, 0, chunkRemain);
         }
     }
 }

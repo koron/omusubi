@@ -71,7 +71,7 @@ public class LongDZBPTest
     {
         LongBuffer srcBuf = LongBuffer.wrap(src);
         LongBuffer dstBuf = LongBuffer.allocate(dst.length);
-        codec.compress(srcBuf, dstBuf);
+        codec.compress(srcBuf, new LongBufferOutputStream(dstBuf));
         assertArrayEquals(dst, dstBuf.array());
     }
 
@@ -100,7 +100,7 @@ public class LongDZBPTest
     {
         LongBuffer srcBuf = LongBuffer.wrap(src);
         LongBuffer dstBuf = LongBuffer.allocate(dst.length);
-        codec.decompress(srcBuf, dstBuf);
+        codec.decompress(srcBuf, new LongBufferOutputStream(dstBuf));
         assertArrayEquals(dst, dstBuf.array());
     }
 
@@ -120,5 +120,22 @@ public class LongDZBPTest
                     0, 0
                 },
                 padding(new long[] { 0 }));
+    }
+
+    @Test
+    public void utilities() {
+        long[] src = new long[] { 10, 11, 12, 13, 14, 15, 16, 17, 18 };
+        byte[] dst = new byte[] {
+            0, 0, 0, 0, 0, 0, 0, 9,
+            0, 0, 0, 0, 0, 0, 0, 10,
+            0, 0, 0, 0, 2, 0, 0, 0,
+            (byte)0xaa, (byte)0xaa, 0, 0, 0, 0, 0, 0,
+        };
+
+        LongDZBP codec = new LongDZBP();
+        byte[] compressed = codec.compress(src);
+        assertArrayEquals(dst, compressed);
+        long[] decompressed = codec.decompress(dst);
+        assertArrayEquals(src, decompressed);
     }
 }
