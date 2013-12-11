@@ -1,6 +1,8 @@
 package net.kaoriya.omusubi;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import static org.junit.Assert.*;
 
 public class LongArrayOutputStreamTest
@@ -35,5 +37,22 @@ public class LongArrayOutputStreamTest
         s.write(new long[] { 1, 2, 3, 4, 5 });
         assertEquals(5, s.count());
         assertArrayEquals(new long[] { 1, 2, 3, 4, 5 }, s.toLongArray());
+    }
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    @Test
+    public void calcNewSize_minus() {
+        thrown.expect(RuntimeException.class);
+        thrown.expectMessage("Required length was minus");
+        LongArrayOutputStream.calcNewSize(0, -1, 10);
+    }
+
+    @Test
+    public void calcNewSize_overflow() {
+        thrown.expect(RuntimeException.class);
+        thrown.expectMessage("Buffer overflow");
+        LongArrayOutputStream.calcNewSize(0x40000000, 0x3fffffff, 0x40000000);
     }
 }
