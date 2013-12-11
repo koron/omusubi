@@ -20,6 +20,7 @@ byte[] compressed = LongDZBP.toBytes(new long[] { 0, 1, 2, ... });
 long[] decompressed = LongDZBP.fromBytes(compressed);
 ```
 
+
 ## Formats
 
 ### LongDZBP
@@ -38,7 +39,7 @@ long[] decompressed = LongDZBP.fromBytes(compressed);
 
 *   Length: length of original array.
 *   First value: First value of original array.
-*   Chunks: compressed chunks
+*   Chunks: compressed chunks.
 
 #### Chunk
 
@@ -52,4 +53,4 @@ long[] decompressed = LongDZBP.fromBytes(compressed);
 ```
 
 *   Header: holding length of each 4 blocks.
-*   Block: cotains compressed data, size is multiply of 8 bytes. (0-128)
+*   Block: cotains compressed data, size is multiply of 8 bytes. (0-128 bytes)
