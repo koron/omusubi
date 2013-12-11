@@ -1,9 +1,10 @@
-# Omusubi - numbers compression library.
+# Omusubi - Nums compression library.
 
 [![Build Status](https://travis-ci.org/koron/omusubi.png?branch=master)](https://travis-ci.org/koron/omusubi)
 [![Coverage Status](https://coveralls.io/repos/koron/omusubi/badge.png?branch=master)](https://coveralls.io/r/koron/omusubi)
 
-WIP
+Omusubi is compression library for Java.  It compress array of numbers.
+Currently support only long array.
 
 ## Sample code
 
