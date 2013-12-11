@@ -19,3 +19,37 @@ byte[] compressed = LongDZBP.toBytes(new long[] { 0, 1, 2, ... });
 // Decompress.
 long[] decompressed = LongDZBP.fromBytes(compressed);
 ```
+
+## Formats
+
+### LongDZBP
+
+
+#### Header
+
+```
+  +0  +1  +2  +3  +4  +5  +6  +7  +8  +9  +A  +B  +C  +D  +E  +F
++---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+
+|    Length     |            First value            |           |
++---+---+---+---+---+---+---+---+---+---+---+---+---+           |
+|                           (Chunks)                            |
++---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+
+```
+
+*   Length: length of original array.
+*   First value: First value of original array.
+*   Chunks: compressed chunks
+
+#### Chunk
+
+```
+  +0  +1  +2  +3  +4  +5  +6  +7  +8  +9  +A  +B  +C  +D  +E  +F
++---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+
+|            Header             |                               |
++---+---+---+---+---+---+---+---+                               |
+|                          (Block * 4)                          |
++---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+
+```
+
+*   Header: holding length of each 4 blocks.
+*   Block: cotains compressed data, size is multiply of 8 bytes. (0-128)
