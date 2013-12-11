@@ -1,4 +1,4 @@
-package net.kaoriya.qb.simple_compression;
+package net.kaoriya.omusubi;
 
 import java.nio.ByteBuffer;
 import java.nio.LongBuffer;

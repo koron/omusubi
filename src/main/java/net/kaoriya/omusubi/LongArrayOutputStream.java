@@ -1,4 +1,4 @@
-package net.kaoriya.qb.simple_compression;
+package net.kaoriya.omusubi;
 
 public class LongArrayOutputStream extends LongOutputStream
 {
