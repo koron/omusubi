@@ -8,16 +8,14 @@ Currently support only long array.
 
 ## Sample code
 
+Using LongDZBP (long delta-zigzag binary packing).
+
 ```java
-// Main class
 import net.kaoriya.omusubi.LongDZBP;
 
-// How to compress.
-LongDZBP codec = new LongDZBP();
-byte[] compressed = codec.compress(new long[] {
-  ... (source long array)
-});
+// Copress.
+byte[] compressed = LongDZBP.toBytes(new long[] { 0, 1, 2, ... });
 
-// How to decompress.
-long[] decompressed = codec.decompress(compressed);
-// decompressed is match with "source long array"
+// Decompress.
+long[] decompressed = LongDZBP.fromBytes(compressed);
+```

@@ -160,4 +160,12 @@ public class LongDZBP extends LongCodec
             dst.write(last, 0, chunkRemain);
         }
     }
+
+    public static byte[] toBytes(long[] src) {
+        return (new LongDZBP()).compress(src);
+    }
+
+    public static long[] fromBytes(byte[] src) {
+        return (new LongDZBP()).decompress(src);
+    }
 }

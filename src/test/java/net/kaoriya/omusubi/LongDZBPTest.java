@@ -132,10 +132,17 @@ public class LongDZBPTest
             (byte)0xaa, (byte)0xaa, 0, 0, 0, 0, 0, 0,
         };
 
+        // test class method.
         LongDZBP codec = new LongDZBP();
         byte[] compressed = codec.compress(src);
         assertArrayEquals(dst, compressed);
         long[] decompressed = codec.decompress(dst);
         assertArrayEquals(src, decompressed);
+
+        // test static methods.
+        byte[] compressed2 = LongDZBP.toBytes(src);
+        assertArrayEquals(dst, compressed2);
+        long[] decompressed2 = LongDZBP.fromBytes(dst);
+        assertArrayEquals(src, decompressed2);
     }
 }
