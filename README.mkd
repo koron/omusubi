@@ -1,7 +1,7 @@
-# Simple Compression for Array
+# Omusubi - pile of numbers compression library.
 
-[![Build Status](https://travis-ci.org/koron/simple-compression.png?branch=master)](https://travis-ci.org/koron/simple-compression)
-[![Coverage Status](https://coveralls.io/repos/koron/simple-compression/badge.png?branch=master)](https://coveralls.io/r/koron/simple-compression)
+[![Build Status](https://travis-ci.org/koron/omusubi.png?branch=master)](https://travis-ci.org/koron/omusubi)
+[![Coverage Status](https://coveralls.io/repos/koron/omusubi/badge.png?branch=master)](https://coveralls.io/r/koron/omusubi)
 
 WIP
 
@@ -9,7 +9,7 @@ WIP
 
 ```java
 // Main class
-import net.kaoriya.qb.simple_compression.LongDZBP;
+import net.kaoriya.omusubi.LongDZBP;
 
 // How to compress.
 LongDZBP codec = new LongDZBP();
