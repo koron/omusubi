@@ -1,4 +1,4 @@
-# Omusubi - pile of numbers compression library.
+# Omusubi - numbers compression library.
 
 [![Build Status](https://travis-ci.org/koron/omusubi.png?branch=master)](https://travis-ci.org/koron/omusubi)
 [![Coverage Status](https://coveralls.io/repos/koron/omusubi/badge.png?branch=master)](https://coveralls.io/r/koron/omusubi)
