@@ -7,8 +7,6 @@ public class IntBitPacking extends IntCodec
     public static final int BLOCK_LEN = 32;
     public static final int BLOCK_NUM = 4;
 
-    private static final int BYTE_SIZE = Integer.SIZE / 8;
-
     private static final int[] MASKS = newMasks();
 
     private static final IntFilter THROUGH_FILTER = new ThroughIntFilter();
@@ -226,8 +224,7 @@ public class IntBitPacking extends IntCodec
         int[] maxBits = new int[this.blockNum];
         for (int i = numOfChunks; i > 0; --i) {
             int head = src.get();
-            for (int j = (this.blockNum - 1) * BYTE_SIZE; j >= 0;
-                    j -= BYTE_SIZE) {
+            for (int j = (this.blockNum - 1) * 8; j >= 0; j -= 8) {
                 int validBits = (int)((head >> j) & 0xff);
                 unpack(src, dst, validBits, this.blockLen, filter);
             }
@@ -243,8 +240,7 @@ public class IntBitPacking extends IntCodec
         int[] maxBits = new int[this.blockNum];
         while (src.hasRemaining()) {
             int head = src.get();
-            for (int i = (this.blockNum - 1) * BYTE_SIZE; i >= 0;
-                    i -= BYTE_SIZE) {
+            for (int i = (this.blockNum - 1) * 8; i >= 0; i -= 8) {
                 int validBits = (int)((head >> i) & 0xff);
                 unpack(src, dst, validBits, this.blockLen, filter);
             }
