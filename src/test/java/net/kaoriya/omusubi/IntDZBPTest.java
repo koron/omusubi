@@ -148,4 +148,63 @@ public class IntDZBPTest
         int[] decompressed2 = IntDZBP.fromBytes(dst);
         assertArrayEquals(src, decompressed2);
     }
+
+    @Test
+    public void bigFew() {
+        IntDZBP codec = new IntDZBP();
+
+        assertArrayEquals(new byte[] {
+            0, 0, 0, 1, 0x7f, (byte)0xff, (byte)0xff, (byte)0xff,
+        }, codec.compress(new int[] {
+            Integer.MAX_VALUE,
+        }));
+        assertArrayEquals(new byte[] {
+            0, 0, 0, 2, 0x7f, (byte)0xff, (byte)0xff, (byte)0xff,
+            2, 0, 0, 0, (byte)0x80, 0, 0, 0, 0, 0, 0, 0,
+        }, codec.compress(new int[] {
+            Integer.MAX_VALUE, Integer.MAX_VALUE + 1,
+        }));
+        assertArrayEquals(new byte[] {
+            0, 0, 0, 2, 0x7f, (byte)0xff, (byte)0xff, (byte)0xff,
+            1, 0, 0, 0, (byte)0x80, 0, 0, 0,
+        }, codec.compress(new int[] {
+            Integer.MAX_VALUE, Integer.MAX_VALUE - 1,
+        }));
+
+        assertArrayEquals(new byte[] {
+            0, 0, 0, 1, (byte)0x80, 0, 0, 0,
+        }, codec.compress(new int[] {
+            Integer.MIN_VALUE,
+        }));
+        assertArrayEquals(new byte[] {
+            0, 0, 0, 2, (byte)0x80, 0, 0, 0,
+            2, 0, 0, 0, (byte)0x80, 0, 0, 0, 0, 0, 0, 0,
+        }, codec.compress(new int[] {
+            Integer.MIN_VALUE, Integer.MIN_VALUE + 1,
+        }));
+        assertArrayEquals(new byte[] {
+            0, 0, 0, 2, (byte)0x80, 0, 0, 0,
+            1, 0, 0, 0, (byte)0x80, 0, 0, 0,
+        }, codec.compress(new int[] {
+            Integer.MIN_VALUE, Integer.MIN_VALUE - 1,
+        }));
+
+        assertArrayEquals(new byte[] {
+            0, 0, 0, 1, (byte)0xff, (byte)0xff, (byte)0xff, (byte)0xff,
+        }, codec.compress(new int[] {
+            -1,
+        }));
+        assertArrayEquals(new byte[] {
+            0, 0, 0, 2, (byte)0xff, (byte)0xff, (byte)0xff, (byte)0xff,
+            2, 0, 0, 0, (byte)0x80, 0, 0, 0, 0, 0, 0, 0,
+        }, codec.compress(new int[] {
+            -1, 0,
+        }));
+        assertArrayEquals(new byte[] {
+            0, 0, 0, 2, (byte)0xff, (byte)0xff, (byte)0xff, (byte)0xff,
+            1, 0, 0, 0, (byte)0x80, 0, 0, 0,
+        }, codec.compress(new int[] {
+            -1, -2,
+        }));
+    }
 }

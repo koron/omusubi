@@ -145,4 +145,84 @@ public class LongDZBPTest
         long[] decompressed2 = LongDZBP.fromBytes(dst);
         assertArrayEquals(src, decompressed2);
     }
+
+    @Test
+    public void bigFew() {
+        LongDZBP codec = new LongDZBP();
+
+        assertArrayEquals(new byte[] {
+            0, 0, 0, 0, 0, 0, 0, 1,
+            0x7f, (byte)0xff, (byte)0xff, (byte)0xff,
+            (byte)0xff, (byte)0xff, (byte)0xff, (byte)0xff,
+        }, codec.compress(new long[] {
+            Long.MAX_VALUE,
+        }));
+        assertArrayEquals(new byte[] {
+            0, 0, 0, 0, 0, 0, 0, 2,
+            0x7f, (byte)0xff, (byte)0xff, (byte)0xff,
+            (byte)0xff, (byte)0xff, (byte)0xff, (byte)0xff,
+            0, 0, 0, 0, 2, 0, 0, 0,
+            (byte)0x80, 0, 0, 0, 0, 0, 0, 0,
+        }, codec.compress(new long[] {
+            Long.MAX_VALUE, Long.MAX_VALUE + 1,
+        }));
+        assertArrayEquals(new byte[] {
+            0, 0, 0, 0, 0, 0, 0, 2,
+            0x7f, (byte)0xff, (byte)0xff, (byte)0xff,
+            (byte)0xff, (byte)0xff, (byte)0xff, (byte)0xff,
+            0, 0, 0, 0, 1, 0, 0, 0,
+            (byte)0x80, 0, 0, 0, 0, 0, 0, 0,
+        }, codec.compress(new long[] {
+            Long.MAX_VALUE, Long.MAX_VALUE - 1,
+        }));
+
+        assertArrayEquals(new byte[] {
+            0, 0, 0, 0, 0, 0, 0, 1,
+            (byte)0x80, 0, 0, 0, 0, 0, 0, 0,
+        }, codec.compress(new long[] {
+            Long.MIN_VALUE,
+        }));
+        assertArrayEquals(new byte[] {
+            0, 0, 0, 0, 0, 0, 0, 2,
+            (byte)0x80, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 2, 0, 0, 0,
+            (byte)0x80, 0, 0, 0, 0, 0, 0, 0,
+        }, codec.compress(new long[] {
+            Long.MIN_VALUE, Long.MIN_VALUE + 1,
+        }));
+        assertArrayEquals(new byte[] {
+            0, 0, 0, 0, 0, 0, 0, 2,
+            (byte)0x80, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 1, 0, 0, 0,
+            (byte)0x80, 0, 0, 0, 0, 0, 0, 0,
+        }, codec.compress(new long[] {
+            Long.MIN_VALUE, Long.MIN_VALUE - 1,
+        }));
+
+        assertArrayEquals(new byte[] {
+            0, 0, 0, 0, 0, 0, 0, 1,
+            (byte)0xff, (byte)0xff, (byte)0xff, (byte)0xff,
+            (byte)0xff, (byte)0xff, (byte)0xff, (byte)0xff,
+        }, codec.compress(new long[] {
+            -1,
+        }));
+        assertArrayEquals(new byte[] {
+            0, 0, 0, 0, 0, 0, 0, 2,
+            (byte)0xff, (byte)0xff, (byte)0xff, (byte)0xff,
+            (byte)0xff, (byte)0xff, (byte)0xff, (byte)0xff,
+            0, 0, 0, 0, 2, 0, 0, 0,
+            (byte)0x80, 0, 0, 0, 0, 0, 0, 0,
+        }, codec.compress(new long[] {
+            -1, 0,
+        }));
+        assertArrayEquals(new byte[] {
+            0, 0, 0, 0, 0, 0, 0, 2,
+            (byte)0xff, (byte)0xff, (byte)0xff, (byte)0xff,
+            (byte)0xff, (byte)0xff, (byte)0xff, (byte)0xff,
+            0, 0, 0, 0, 1, 0, 0, 0,
+            (byte)0x80, 0, 0, 0, 0, 0, 0, 0,
+        }, codec.compress(new long[] {
+            -1, -2,
+        }));
+    }
 }
