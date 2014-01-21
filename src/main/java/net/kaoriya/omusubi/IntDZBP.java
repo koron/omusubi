@@ -161,6 +161,14 @@ public class IntDZBP extends IntCodec
         }
     }
 
+    @Override
+    protected int decompressLength(IntBuffer src) {
+        src.mark();
+        final int outLen = (int)src.get();
+        src.reset();
+        return outLen;
+    }
+
     public static byte[] toBytes(int[] src) {
         return (new IntDZBP()).compress(src);
     }

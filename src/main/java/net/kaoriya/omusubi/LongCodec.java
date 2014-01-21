@@ -14,6 +14,10 @@ public abstract class LongCodec {
 
     public abstract void decompress(LongBuffer src, LongOutputStream dst);
 
+    protected int decompressLength(LongBuffer src) {
+        return -1;
+    }
+
     public final byte[] compress(long[] src) {
         ByteArrayLongOutputStream dst =
             new ByteArrayLongOutputStream(src.length * 4);
@@ -23,13 +27,10 @@ public abstract class LongCodec {
 
     public final long[] decompress(byte[] src) {
         LongBuffer srcBuf = ByteBuffer.wrap(src).asLongBuffer();
-        // FIXME: create more efficient output buffer class.
-        ByteArrayLongOutputStream dst = new ByteArrayLongOutputStream();
+        int len = decompressLength(srcBuf);
+        LongArrayOutputStream dst = (len < 0)
+            ? new LongArrayOutputStream() : new LongArrayOutputStream(len);
         decompress(srcBuf, dst);
-        // Copy to return array.
-        LongBuffer dstBuf = ByteBuffer.wrap(dst.toByteArray()).asLongBuffer();
-        LongBuffer retval = LongBuffer.allocate(dstBuf.remaining());
-        retval.put(dstBuf);
-        return retval.array();
+        return dst.toLongArray();
     }
 }

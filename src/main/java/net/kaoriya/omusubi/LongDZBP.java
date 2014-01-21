@@ -161,6 +161,14 @@ public class LongDZBP extends LongCodec
         }
     }
 
+    @Override
+    protected int decompressLength(LongBuffer src) {
+        src.mark();
+        final int outLen = (int)src.get();
+        src.reset();
+        return outLen;
+    }
+
     public static byte[] toBytes(long[] src) {
         return (new LongDZBP()).compress(src);
     }

@@ -14,6 +14,10 @@ public abstract class IntCodec {
 
     public abstract void decompress(IntBuffer src, IntOutputStream dst);
 
+    protected int decompressLength(IntBuffer src) {
+        return -1;
+    }
+
     public final byte[] compress(int[] src) {
         ByteArrayIntOutputStream dst =
             new ByteArrayIntOutputStream(src.length * 4);
@@ -23,13 +27,10 @@ public abstract class IntCodec {
 
     public final int[] decompress(byte[] src) {
         IntBuffer srcBuf = ByteBuffer.wrap(src).asIntBuffer();
-        // FIXME: create more efficient output buffer class.
-        ByteArrayIntOutputStream dst = new ByteArrayIntOutputStream();
+        int len = decompressLength(srcBuf);
+        IntArrayOutputStream dst = (len < 0)
+            ? new IntArrayOutputStream() : new IntArrayOutputStream(len);
         decompress(srcBuf, dst);
-        // Copy to return array.
-        IntBuffer dstBuf = ByteBuffer.wrap(dst.toByteArray()).asIntBuffer();
-        IntBuffer retval = IntBuffer.allocate(dstBuf.remaining());
-        retval.put(dstBuf);
-        return retval.array();
+        return dst.toIntArray();
     }
 }
