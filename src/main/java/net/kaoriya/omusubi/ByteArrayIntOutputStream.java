@@ -1,28 +1,36 @@
 package net.kaoriya.omusubi;
 
 import java.io.ByteArrayOutputStream;
+import java.nio.ByteBuffer;
+import java.nio.IntBuffer;
 
 public final class ByteArrayIntOutputStream extends IntOutputStream
 {
     private final ByteArrayOutputStream byteStream;
 
-    public ByteArrayIntOutputStream(ByteArrayOutputStream s) {
+    private final ByteBuffer byteBuffer;
+
+    private final IntBuffer intBuffer;
+
+    public ByteArrayIntOutputStream(ByteArrayOutputStream s, int bufSize) {
         this.byteStream = s;
+        this.byteBuffer = ByteBuffer.allocate(bufSize * 4);
+        this.intBuffer = this.byteBuffer.asIntBuffer();
     }
 
-    public ByteArrayIntOutputStream(int size) {
-        this(new ByteArrayOutputStream(size));
+    public ByteArrayIntOutputStream(int size, int bufSize) {
+        this(new ByteArrayOutputStream(size), bufSize);
     }
 
     public ByteArrayIntOutputStream() {
-        this(new ByteArrayOutputStream());
+        this(new ByteArrayOutputStream(), 1024);
     }
 
     public void write(int n) {
-        this.byteStream.write((n >>> 24) & 0xff);
-        this.byteStream.write((n >>> 16) & 0xff);
-        this.byteStream.write((n >>>  8) & 0xff);
-        this.byteStream.write((n >>>  0) & 0xff);
+        if (this.intBuffer.remaining() == 0) {
+            flush();
+        }
+        this.intBuffer.put(n);
     }
 
     @Override
@@ -32,16 +40,29 @@ public final class ByteArrayIntOutputStream extends IntOutputStream
 
     @Override
     public void write(int[] array, int offset, int length) {
-        for (int i = offset, end = offset + length; i < end; ++i) {
-            int n = array[i];
-            this.byteStream.write((n >>> 24) & 0xff);
-            this.byteStream.write((n >>> 16) & 0xff);
-            this.byteStream.write((n >>>  8) & 0xff);
-            this.byteStream.write((n >>>  0) & 0xff);
+        while (length > 0) {
+            int outlen = this.intBuffer.remaining();
+            if (outlen == 0) {
+                flush();
+                continue;
+            }
+            if (outlen > length) {
+                outlen = length;
+            }
+            this.intBuffer.put(array, offset, outlen);
+            offset += outlen;
+            length -= outlen;
         }
     }
 
+    private void flush() {
+        this.byteStream.write(this.byteBuffer.array(), 0,
+                this.intBuffer.position() * 4);
+        this.intBuffer.rewind();
+    }
+
     public byte[] toByteArray() {
+        flush();
         return this.byteStream.toByteArray();
     }
 }
