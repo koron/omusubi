@@ -1,18 +1,13 @@
 package net.kaoriya.omusubi;
 
 import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
 
 public final class ByteArrayIntOutputStream extends IntOutputStream
 {
     private final ByteArrayOutputStream byteStream;
 
-    private final IntDataOutputStream intStream;
-
     public ByteArrayIntOutputStream(ByteArrayOutputStream s) {
         this.byteStream = s;
-        this.intStream = new IntDataOutputStream(
-                new DataOutputStream(this.byteStream));
     }
 
     public ByteArrayIntOutputStream(int size) {
@@ -24,17 +19,26 @@ public final class ByteArrayIntOutputStream extends IntOutputStream
     }
 
     public void write(int n) {
-        this.intStream.write(n);
+        this.byteStream.write((n >>> 24) & 0xff);
+        this.byteStream.write((n >>> 16) & 0xff);
+        this.byteStream.write((n >>>  8) & 0xff);
+        this.byteStream.write((n >>>  0) & 0xff);
     }
 
     @Override
     public void write(int[] array) {
-        this.intStream.write(array);
+        write(array, 0, array.length);
     }
 
     @Override
     public void write(int[] array, int offset, int length) {
-        this.intStream.write(array, offset, length);
+        for (int i = offset, end = offset + length; i < end; ++i) {
+            int n = array[i];
+            this.byteStream.write((n >>> 24) & 0xff);
+            this.byteStream.write((n >>> 16) & 0xff);
+            this.byteStream.write((n >>>  8) & 0xff);
+            this.byteStream.write((n >>>  0) & 0xff);
+        }
     }
 
     public byte[] toByteArray() {
