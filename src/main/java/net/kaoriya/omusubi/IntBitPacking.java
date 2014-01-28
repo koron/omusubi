@@ -17,9 +17,12 @@ public class IntBitPacking extends IntCodec
 
     private final int blockNum;
 
+    private final int[] packBuf;
+
     public IntBitPacking(int blockLen, int blockNum) {
         this.blockLen = blockLen;
         this.blockNum = blockNum;
+        this.packBuf = new int[blockLen];
     }
 
     public IntBitPacking() {
@@ -73,7 +76,7 @@ public class IntBitPacking extends IntCodec
         return countMaxBits(buf, len, THROUGH_FILTER);
     }
 
-    public static void pack(
+    public void pack(
             IntBuffer src,
             IntOutputStream dst,
             int validBits,
@@ -82,7 +85,7 @@ public class IntBitPacking extends IntCodec
         pack(src, dst, validBits, len, THROUGH_FILTER);
     }
 
-    public static void pack(
+    public void pack(
             IntBuffer src,
             IntOutputStream dst,
             int validBits,
@@ -99,7 +102,7 @@ public class IntBitPacking extends IntCodec
         }
     }
 
-    public static void pack0(
+    public void pack0(
             IntBuffer src,
             IntOutputStream dst,
             int len)
@@ -107,7 +110,7 @@ public class IntBitPacking extends IntCodec
         src.position(src.position() + len);
     }
 
-    public static void packAny(
+    public void packAny(
             IntBuffer src,
             IntOutputStream dst,
             int validBits,
@@ -116,9 +119,7 @@ public class IntBitPacking extends IntCodec
         packAny(src, dst, validBits, len, THROUGH_FILTER);
     }
 
-    private static int[] packBuf = new int[32];
-
-    public static void packAny(
+    public void packAny(
             IntBuffer src,
             IntOutputStream dst,
             int validBits,
