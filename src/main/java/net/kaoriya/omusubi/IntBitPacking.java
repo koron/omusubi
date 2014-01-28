@@ -116,6 +116,8 @@ public class IntBitPacking extends IntCodec
         packAny(src, dst, validBits, len, THROUGH_FILTER);
     }
 
+    private static int[] packBuf = new int[32];
+
     public static void packAny(
             IntBuffer src,
             IntOutputStream dst,
@@ -126,26 +128,30 @@ public class IntBitPacking extends IntCodec
         int current = 0;
         int capacity = Integer.SIZE;
         int mask = MASKS[validBits];
+        int packIndex = 0;
         for (int i = len; i > 0; --i) {
             int n = filter.filterInt(src.get());
             if (capacity >= validBits) {
                 current |= (n & mask) << (capacity - validBits);
                 capacity -= validBits;
                 if (capacity == 0) {
-                    dst.write(current);
+                    packBuf[packIndex++] = current;
                     current = 0;
                     capacity = Integer.SIZE;
                 }
             } else {
                 int remain = validBits - capacity;
                 current |= (n >> remain) & MASKS[capacity];
-                dst.write(current);
+                packBuf[packIndex++] = current;
                 capacity = Integer.SIZE - remain;
                 current = (n & MASKS[remain]) << capacity;
             }
         }
         if (capacity < Integer.SIZE) {
-            dst.write(current);
+            packBuf[packIndex++] = current;
+        }
+        if (packIndex > 0) {
+            dst.write(packBuf, 0, packIndex);
         }
     }
 
