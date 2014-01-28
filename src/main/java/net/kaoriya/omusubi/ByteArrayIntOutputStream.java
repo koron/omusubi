@@ -44,7 +44,7 @@ public final class ByteArrayIntOutputStream extends IntOutputStream
             int outlen = this.intBuffer.remaining();
             if (outlen == 0) {
                 flush();
-                continue;
+                outlen = this.intBuffer.remaining();
             }
             if (outlen > length) {
                 outlen = length;
