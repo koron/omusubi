@@ -19,8 +19,7 @@ public abstract class IntCodec {
     }
 
     public final byte[] compress(int[] src) {
-        ByteArrayIntOutputStream dst =
-            new ByteArrayIntOutputStream(src.length * 4);
+        ByteArrayIntOutputStream dst = new ByteArrayIntOutputStream();
         compress(IntBuffer.wrap(src), dst);
         return dst.toByteArray();
     }

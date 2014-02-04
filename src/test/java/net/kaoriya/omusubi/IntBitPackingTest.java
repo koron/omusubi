@@ -50,8 +50,9 @@ public class IntBitPackingTest
     }
 
     private void checkPack(int[] src, int validBits, int[] expected) {
+        IntBitPacking packing = new IntBitPacking();
         IntBuffer buf = IntBuffer.allocate(expected.length);
-        IntBitPacking.pack(IntBuffer.wrap(src),
+        packing.pack(IntBuffer.wrap(src),
                 new IntBufferOutputStream(buf), validBits, src.length);
         assertArrayEquals(expected, buf.array());
     }
@@ -105,8 +106,9 @@ public class IntBitPackingTest
     }
 
     private void checkPackAny(int[] src, int validBits, int[] expected) {
+        IntBitPacking packing = new IntBitPacking();
         IntBuffer buf = IntBuffer.allocate(expected.length);
-        IntBitPacking.packAny(IntBuffer.wrap(src),
+        packing.packAny(IntBuffer.wrap(src),
                 new IntBufferOutputStream(buf), validBits, src.length);
         assertArrayEquals(expected, buf.array());
     }

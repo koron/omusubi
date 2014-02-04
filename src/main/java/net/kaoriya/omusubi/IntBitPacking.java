@@ -17,9 +17,12 @@ public class IntBitPacking extends IntCodec
 
     private final int blockNum;
 
+    private final int[] packBuf;
+
     public IntBitPacking(int blockLen, int blockNum) {
         this.blockLen = blockLen;
         this.blockNum = blockNum;
+        this.packBuf = new int[blockLen];
     }
 
     public IntBitPacking() {
@@ -73,7 +76,7 @@ public class IntBitPacking extends IntCodec
         return countMaxBits(buf, len, THROUGH_FILTER);
     }
 
-    public static void pack(
+    public void pack(
             IntBuffer src,
             IntOutputStream dst,
             int validBits,
@@ -82,7 +85,7 @@ public class IntBitPacking extends IntCodec
         pack(src, dst, validBits, len, THROUGH_FILTER);
     }
 
-    public static void pack(
+    public void pack(
             IntBuffer src,
             IntOutputStream dst,
             int validBits,
@@ -99,7 +102,7 @@ public class IntBitPacking extends IntCodec
         }
     }
 
-    public static void pack0(
+    public void pack0(
             IntBuffer src,
             IntOutputStream dst,
             int len)
@@ -107,7 +110,7 @@ public class IntBitPacking extends IntCodec
         src.position(src.position() + len);
     }
 
-    public static void packAny(
+    public void packAny(
             IntBuffer src,
             IntOutputStream dst,
             int validBits,
@@ -116,7 +119,7 @@ public class IntBitPacking extends IntCodec
         packAny(src, dst, validBits, len, THROUGH_FILTER);
     }
 
-    public static void packAny(
+    public void packAny(
             IntBuffer src,
             IntOutputStream dst,
             int validBits,
@@ -126,26 +129,30 @@ public class IntBitPacking extends IntCodec
         int current = 0;
         int capacity = Integer.SIZE;
         int mask = MASKS[validBits];
+        int packIndex = 0;
         for (int i = len; i > 0; --i) {
             int n = filter.filterInt(src.get());
             if (capacity >= validBits) {
                 current |= (n & mask) << (capacity - validBits);
                 capacity -= validBits;
                 if (capacity == 0) {
-                    dst.write(current);
+                    packBuf[packIndex++] = current;
                     current = 0;
                     capacity = Integer.SIZE;
                 }
             } else {
                 int remain = validBits - capacity;
                 current |= (n >> remain) & MASKS[capacity];
-                dst.write(current);
+                packBuf[packIndex++] = current;
                 capacity = Integer.SIZE - remain;
                 current = (n & MASKS[remain]) << capacity;
             }
         }
         if (capacity < Integer.SIZE) {
-            dst.write(current);
+            packBuf[packIndex++] = current;
+        }
+        if (packIndex > 0) {
+            dst.write(packBuf, 0, packIndex);
         }
     }
 
