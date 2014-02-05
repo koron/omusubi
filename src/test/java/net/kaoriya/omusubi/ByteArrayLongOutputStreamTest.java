@@ -39,4 +39,34 @@ public class ByteArrayLongOutputStreamTest
             0, 0, 0, 0, 0, 0, 0, 5,
         }, s.toByteArray());
     }
+
+    @Test
+    public void flushWhenWriteAValue() {
+        ByteArrayLongOutputStream s = new ByteArrayLongOutputStream(32, 4);
+        s.write(2);
+        s.write(3);
+        s.write(4);
+        s.write(5);
+        s.write(6);
+        assertArrayEquals(new byte[] {
+            0, 0, 0, 0, 0, 0, 0, 2,
+            0, 0, 0, 0, 0, 0, 0, 3,
+            0, 0, 0, 0, 0, 0, 0, 4,
+            0, 0, 0, 0, 0, 0, 0, 5,
+            0, 0, 0, 0, 0, 0, 0, 6,
+        }, s.toByteArray());
+    }
+
+    @Test
+    public void flushWhenWriteArray() {
+        ByteArrayLongOutputStream s = new ByteArrayLongOutputStream(32, 4);
+        s.write(new long[] { 0, 1, 2, 3, 4 });
+        assertArrayEquals(new byte[] {
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 1,
+            0, 0, 0, 0, 0, 0, 0, 2,
+            0, 0, 0, 0, 0, 0, 0, 3,
+            0, 0, 0, 0, 0, 0, 0, 4,
+        }, s.toByteArray());
+    }
 }
