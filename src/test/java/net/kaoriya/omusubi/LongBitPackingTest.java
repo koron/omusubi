@@ -50,8 +50,9 @@ public class LongBitPackingTest
     }
 
     private void checkPack(long[] src, int validBits, long[] expected) {
+        LongBitPacking packing = new LongBitPacking();
         LongBuffer buf = LongBuffer.allocate(expected.length);
-        LongBitPacking.pack(LongBuffer.wrap(src),
+        packing.pack(LongBuffer.wrap(src),
                 new LongBufferOutputStream(buf), validBits, src.length);
         assertArrayEquals(expected, buf.array());
     }
@@ -105,8 +106,9 @@ public class LongBitPackingTest
     }
 
     private void checkPackAny(long[] src, int validBits, long[] expected) {
+        LongBitPacking packing = new LongBitPacking();
         LongBuffer buf = LongBuffer.allocate(expected.length);
-        LongBitPacking.packAny(LongBuffer.wrap(src),
+        packing.packAny(LongBuffer.wrap(src),
                 new LongBufferOutputStream(buf), validBits, src.length);
         assertArrayEquals(expected, buf.array());
     }

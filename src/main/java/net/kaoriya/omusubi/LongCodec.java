@@ -19,8 +19,7 @@ public abstract class LongCodec {
     }
 
     public final byte[] compress(long[] src) {
-        ByteArrayLongOutputStream dst =
-            new ByteArrayLongOutputStream(src.length * 4);
+        ByteArrayLongOutputStream dst = new ByteArrayLongOutputStream();
         compress(LongBuffer.wrap(src), dst);
         return dst.toByteArray();
     }
