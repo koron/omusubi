@@ -118,6 +118,11 @@ public class LongBitPackingTest
         checkPackAny(new long[] { 1L }, 1, new long[] { 0x8000000000000000L });
     }
 
+    @Test
+    public void packAnyEmpty() {
+        checkPackAny(new long[0], 1, new long[0]);
+    }
+
     private void checkUnpack(long[] src, int validBits, long[] expected)
     {
         LongBuffer buf = LongBuffer.allocate(expected.length);

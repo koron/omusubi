@@ -18,16 +18,12 @@ public final class ByteArrayLongOutputStream extends LongOutputStream
         this.longBuffer = this.byteBuffer.asLongBuffer();
     }
 
-    public ByteArrayLongOutputStream(ByteArrayOutputStream s) {
-        this(s, 512);
-    }
-
-    public ByteArrayLongOutputStream(int size) {
-        this(new ByteArrayOutputStream(size));
+    public ByteArrayLongOutputStream(int size, int bufSize) {
+        this(new ByteArrayOutputStream(size), bufSize);
     }
 
     public ByteArrayLongOutputStream() {
-        this(new ByteArrayOutputStream());
+        this(new ByteArrayOutputStream(), 512);
     }
 
     public void write(long n) {
