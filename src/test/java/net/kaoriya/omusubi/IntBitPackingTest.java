@@ -118,6 +118,11 @@ public class IntBitPackingTest
         checkPackAny(new int[] { 1 }, 1, new int[] { 0x80000000 });
     }
 
+    @Test
+    public void packAnyEmpty() {
+        checkPackAny(new int[0], 1, new int[0]);
+    }
+
     private void checkUnpack(int[] src, int validBits, int[] expected)
     {
         IntBuffer buf = IntBuffer.allocate(expected.length);
