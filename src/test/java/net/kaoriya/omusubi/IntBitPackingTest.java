@@ -125,8 +125,9 @@ public class IntBitPackingTest
 
     private void checkUnpack(int[] src, int validBits, int[] expected)
     {
+        IntBitPacking packing = new IntBitPacking();
         IntBuffer buf = IntBuffer.allocate(expected.length);
-        IntBitPacking.unpack(IntBuffer.wrap(src),
+        packing.unpack(IntBuffer.wrap(src),
                 new IntBufferOutputStream(buf), validBits, expected.length);
         assertArrayEquals(expected, buf.array());
     }
