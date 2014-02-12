@@ -94,10 +94,10 @@ public class IntBitPacking extends IntCodec
     {
         switch (validBits) {
             case 0: pack0(src, dst, len); break;
-            case 1: pack1(src, dst, len); break;
-            case 2: pack2(src, dst, len); break;
-            case 3: pack3(src, dst, len); break;
-            case 4: pack4(src, dst, len); break;
+            case 1: pack1(src, dst, len, filter); break;
+            case 2: pack2(src, dst, len, filter); break;
+            case 3: pack3(src, dst, len, filter); break;
+            case 4: pack4(src, dst, len, filter); break;
             case 10: pack10(src, dst, len, filter); break;
             case 11: pack11(src, dst, len, filter); break;
             case 12: pack12(src, dst, len, filter); break;
