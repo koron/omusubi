@@ -200,4 +200,102 @@ public class IntBitPackingTest
         codec.setDebug(false);
         assertFalse(codec.getDebug());
     }
+
+    private void checkPack10(int[] src) {
+        IntBitPacking packing = new IntBitPacking();
+        IntArrayOutputStream dst = new IntArrayOutputStream(10);
+        packing.packAny(IntBuffer.wrap(src), dst, 10, src.length);
+        int[] expected = dst.toIntArray();
+        IntBuffer buf = IntBuffer.allocate(10);
+        packing.pack10(IntBuffer.wrap(src),
+                new IntBufferOutputStream(buf), src.length);
+        assertArrayEquals(expected, buf.array());
+    }
+
+    @Test
+    public void pack10() {
+        checkPack10(new int[] {
+            0, 1, 2, 4, 8, 16, 32, 64, 128, 256, 512,
+            0, 1, 2, 4, 8, 16, 32, 64, 128, 256, 512,
+            0, 1, 2, 4, 8, 16, 32, 64, 128, 256,
+        });
+        checkPack10(new int[] {
+            0, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000,
+            11000, 12000, 13000, 14000, 15000, 16000, 17000, 18000, 19000,
+            20000, 21000, 22000, 23000, 24000, 25000, 26000, 27000, 28000,
+            29000, 30000, 31000,
+        });
+    }
+
+    private void checkPack11(int[] src) {
+        IntBitPacking packing = new IntBitPacking();
+        IntArrayOutputStream dst = new IntArrayOutputStream(11);
+        packing.packAny(IntBuffer.wrap(src), dst, 11, src.length);
+        int[] expected = dst.toIntArray();
+        IntBuffer buf = IntBuffer.allocate(11);
+        packing.pack11(IntBuffer.wrap(src),
+                new IntBufferOutputStream(buf), src.length);
+        assertArrayEquals(expected, buf.array());
+    }
+
+    @Test
+    public void pack11() {
+        checkPack11(new int[] {
+            0, 1, 2, 4, 8, 16, 32, 64, 128, 256, 512,
+            0, 1, 2, 4, 8, 16, 32, 64, 128, 256, 512,
+            0, 1, 2, 4, 8, 16, 32, 64, 128, 256,
+        });
+        checkPack11(new int[] {
+            0, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000,
+            11000, 12000, 13000, 14000, 15000, 16000, 17000, 18000, 19000,
+            20000, 21000, 22000, 23000, 24000, 25000, 26000, 27000, 28000,
+            29000, 30000, 31000,
+        });
+    }
+
+    private void checkPack12(int[] src) {
+        IntBitPacking packing = new IntBitPacking();
+        IntArrayOutputStream dst = new IntArrayOutputStream(12);
+        packing.packAny(IntBuffer.wrap(src), dst, 12, src.length);
+        int[] expected = dst.toIntArray();
+        IntBuffer buf = IntBuffer.allocate(12);
+        packing.pack12(IntBuffer.wrap(src),
+                new IntBufferOutputStream(buf), src.length);
+        assertArrayEquals(expected, buf.array());
+    }
+
+    @Test
+    public void pack12() {
+        checkPack12(new int[] {
+            0, 1, 2, 4, 8, 16, 32, 64, 128, 256, 512,
+            0, 1, 2, 4, 8, 16, 32, 64, 128, 256, 512,
+            0, 1, 2, 4, 8, 16, 32, 64, 128, 256,
+        });
+        checkPack12(new int[] {
+            0, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000,
+            11000, 12000, 13000, 14000, 15000, 16000, 17000, 18000, 19000,
+            20000, 21000, 22000, 23000, 24000, 25000, 26000, 27000, 28000,
+            29000, 30000, 31000,
+        });
+    }
+
+    private void checkUnpack11(int[] src) {
+        IntBitPacking packing = new IntBitPacking();
+        IntBuffer buf = IntBuffer.allocate(11);
+        packing.pack11(IntBuffer.wrap(src),
+                new IntBufferOutputStream(buf), src.length);
+        IntBuffer dst = IntBuffer.allocate(src.length);
+        packing.unpack11(IntBuffer.wrap(buf.array()),
+                new IntBufferOutputStream(dst), src.length);
+        assertArrayEquals(src, dst.array());
+    }
+
+    @Test
+    public void unpack11() {
+        checkUnpack11(new int[] {
+            0, 1, 2, 4, 8, 16, 32, 64, 128, 256, 512,
+            0, 1, 2, 4, 8, 16, 32, 64, 128, 256, 512,
+            0, 1, 2, 4, 8, 16, 32, 64, 128, 256,
+        });
+    }
 }
