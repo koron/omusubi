@@ -19,10 +19,13 @@ public class IntBitPacking extends IntCodec
 
     private final int[] packBuf;
 
+    private final int[] unpackBuf;
+
     public IntBitPacking(int blockLen, int blockNum) {
         this.blockLen = blockLen;
         this.blockNum = blockNum;
         this.packBuf = new int[blockLen];
+        this.unpackBuf = new int[blockLen];
     }
 
     public IntBitPacking() {
@@ -187,7 +190,7 @@ public class IntBitPacking extends IntCodec
         compress(src, dst, THROUGH_FILTER);
     }
 
-    public static void unpack(
+    public void unpack(
             IntBuffer src,
             IntOutputStream dst,
             int validBits,
@@ -196,7 +199,7 @@ public class IntBitPacking extends IntCodec
         unpack(src, dst, validBits, len, THROUGH_FILTER);
     }
 
-    public static void unpack(
+    public void unpack(
             IntBuffer src,
             IntOutputStream dst,
             int validBits,
@@ -206,7 +209,7 @@ public class IntBitPacking extends IntCodec
         int fetchedData = 0;
         int fetchedBits = 0;
         int mask = MASKS[validBits];
-        for (int i = len; i > 0; --i) {
+        for (int i = 0; i < len; ++i) {
             int n;
             if (fetchedBits < validBits) {
                 int n0 = fetchedBits > 0 ?
@@ -218,8 +221,9 @@ public class IntBitPacking extends IntCodec
                 fetchedBits -= validBits;
                 n = (fetchedData >>> fetchedBits) & mask;
             }
-            dst.write(filter.filterInt(n));
+            this.unpackBuf[i] = filter.filterInt(n);
         }
+        dst.write(this.unpackBuf, 0, len);
     }
 
     protected void decompress(
