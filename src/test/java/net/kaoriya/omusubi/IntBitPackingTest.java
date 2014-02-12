@@ -278,4 +278,24 @@ public class IntBitPackingTest
             29000, 30000, 31000,
         });
     }
+
+    private void checkUnpack11(int[] src) {
+        IntBitPacking packing = new IntBitPacking();
+        IntBuffer buf = IntBuffer.allocate(11);
+        packing.pack11(IntBuffer.wrap(src),
+                new IntBufferOutputStream(buf), src.length);
+        IntBuffer dst = IntBuffer.allocate(src.length);
+        packing.unpack11(IntBuffer.wrap(buf.array()),
+                new IntBufferOutputStream(dst), src.length);
+        assertArrayEquals(src, dst.array());
+    }
+
+    @Test
+    public void unpack11() {
+        checkUnpack11(new int[] {
+            0, 1, 2, 4, 8, 16, 32, 64, 128, 256, 512,
+            0, 1, 2, 4, 8, 16, 32, 64, 128, 256, 512,
+            0, 1, 2, 4, 8, 16, 32, 64, 128, 256,
+        });
+    }
 }

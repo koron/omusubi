@@ -661,6 +661,178 @@ public class IntBitPacking extends IntCodec
             int len,
             IntFilter filter)
     {
+        switch (validBits) {
+            //case 10: unpack10(src, dst, len, filter); break;
+            case 11: unpack11(src, dst, len, filter); break;
+            default:
+                unpackAny(src, dst, validBits, len, filter);
+                break;
+        }
+    }
+
+    public void unpack10(
+            IntBuffer src,
+            IntOutputStream dst,
+            int len,
+            IntFilter filter)
+    {
+        final int m = MASKS[10];
+        int n;
+
+        n = src.get();
+        this.unpackBuf[ 0] = n >> 22 & m;
+        this.unpackBuf[ 1] = n >> 12 & m;
+        this.unpackBuf[ 2] = n >>  2 & m;
+        this.unpackBuf[ 3] = n <<  8 & m;
+
+        n = src.get();
+        this.unpackBuf[ 3] |= n >>> 24;
+        this.unpackBuf[ 4] = n >> 14 & m;
+        this.unpackBuf[ 5] = n >>  4 & m;
+        this.unpackBuf[ 6] = n <<  6 & m;
+
+        n = src.get();
+        this.unpackBuf[ 6] |= n >>> 26;
+        this.unpackBuf[ 7] = n >> 16 & m;
+        this.unpackBuf[ 8] = n >>  6 & m;
+        this.unpackBuf[ 9] = n <<  4 & m;
+
+        n = src.get();
+        this.unpackBuf[ 9] |= n >>> 28;
+        this.unpackBuf[10] = n >> 18 & m;
+        this.unpackBuf[11] = n >>  8 & m;
+        this.unpackBuf[12] = n <<  2 & m;
+
+        n = src.get();
+        this.unpackBuf[12] |= n >>> 30;
+        this.unpackBuf[13] = n >> 20 & m;
+        this.unpackBuf[14] = n >> 10 & m;
+        this.unpackBuf[15] = n <<  0 & m;
+
+        n = src.get();
+        this.unpackBuf[ 0] = n >> 22 & m;
+        this.unpackBuf[ 1] = n >> 12 & m;
+        this.unpackBuf[ 2] = n >>  2 & m;
+        this.unpackBuf[ 3] = n <<  8 & m;
+
+        n = src.get();
+        this.unpackBuf[ 3] |= n >>> 24;
+        this.unpackBuf[ 4] = n >> 14 & m;
+        this.unpackBuf[ 5] = n >>  4 & m;
+        this.unpackBuf[ 6] = n <<  6 & m;
+
+        n = src.get();
+        this.unpackBuf[ 6] |= n >>> 26;
+        this.unpackBuf[ 7] = n >> 16 & m;
+        this.unpackBuf[ 8] = n >>  6 & m;
+        this.unpackBuf[ 9] = n <<  4 & m;
+
+        n = src.get();
+        this.unpackBuf[ 9] |= n >>> 28;
+        this.unpackBuf[10] = n >> 18 & m;
+        this.unpackBuf[11] = n >>  8 & m;
+        this.unpackBuf[12] = n <<  2 & m;
+
+        n = src.get();
+        this.unpackBuf[12] |= n >>> 30;
+        this.unpackBuf[13] = n >> 20 & m;
+        this.unpackBuf[14] = n >> 10 & m;
+        this.unpackBuf[15] = n <<  0 & m;
+
+        dst.write(this.unpackBuf);
+    }
+
+    public void unpack11(
+            IntBuffer src,
+            IntOutputStream dst,
+            int len)
+    {
+        unpack11(src, dst, len, THROUGH_FILTER);
+    }
+
+    public void unpack11(
+            IntBuffer src,
+            IntOutputStream dst,
+            int len,
+            IntFilter filter)
+    {
+        final int m = MASKS[11];
+        int n, c;
+
+        n = src.get();
+        this.unpackBuf[ 0] = filter.filterInt(n >>> 21 & m);
+        this.unpackBuf[ 1] = filter.filterInt(n >>> 10 & m);
+        c = n <<  1 & m;
+
+        n = src.get();
+        this.unpackBuf[ 2] = filter.filterInt(c | n >>> 31);
+        this.unpackBuf[ 3] = filter.filterInt(n >>> 20 & m);
+        this.unpackBuf[ 4] = filter.filterInt(n >>>  9 & m);
+        c = n <<  2 & m;
+
+        n = src.get();
+        this.unpackBuf[ 5] = filter.filterInt(c | n >>> 30);
+        this.unpackBuf[ 6] = filter.filterInt(n >>> 19 & m);
+        this.unpackBuf[ 7] = filter.filterInt(n >>>  8 & m);
+        c = n <<  3 & m;
+
+        n = src.get();
+        this.unpackBuf[ 8] = filter.filterInt(c | n >>> 29);
+        this.unpackBuf[ 9] = filter.filterInt(n >>> 18 & m);
+        this.unpackBuf[10] = filter.filterInt(n >>>  7 & m);
+        c = n <<  4 & m;
+
+        n = src.get();
+        this.unpackBuf[11] = filter.filterInt(c | n >>> 28);
+        this.unpackBuf[12] = filter.filterInt(n >>> 17 & m);
+        this.unpackBuf[13] = filter.filterInt(n >>>  6 & m);
+        c = n <<  5 & m;
+
+        n = src.get();
+        this.unpackBuf[14] = filter.filterInt(c | n >>> 27);
+        this.unpackBuf[15] = filter.filterInt(n >>> 16 & m);
+        this.unpackBuf[16] = filter.filterInt(n >>>  5 & m);
+        c = n <<  6 & m;
+
+        n = src.get();
+        this.unpackBuf[17] = filter.filterInt(c | n >>> 26);
+        this.unpackBuf[18] = filter.filterInt(n >>> 15 & m);
+        this.unpackBuf[19] = filter.filterInt(n >>>  4 & m);
+        c = n <<  7 & m;
+
+        n = src.get();
+        this.unpackBuf[20] = filter.filterInt(c | n >>> 25);
+        this.unpackBuf[21] = filter.filterInt(n >>> 14 & m);
+        this.unpackBuf[22] = filter.filterInt(n >>>  3 & m);
+        c = n <<  8 & m;
+
+        n = src.get();
+        this.unpackBuf[23] = filter.filterInt(c | n >>> 24);
+        this.unpackBuf[24] = filter.filterInt(n >>> 13 & m);
+        this.unpackBuf[25] = filter.filterInt(n >>>  2 & m);
+        c = n <<  9 & m;
+
+        n = src.get();
+        this.unpackBuf[26] = filter.filterInt(c | n >>> 23);
+        this.unpackBuf[27] = filter.filterInt(n >>> 12 & m);
+        this.unpackBuf[28] = filter.filterInt(n >>>  1 & m);
+        c = n << 10 & m;
+
+        n = src.get();
+        this.unpackBuf[29] = filter.filterInt(c | n >>> 22);
+        this.unpackBuf[30] = filter.filterInt(n >>> 11 & m);
+        this.unpackBuf[31] = filter.filterInt(n >>>  0 & m);
+
+        dst.write(this.unpackBuf);
+    }
+
+    public void unpackAny(
+            IntBuffer src,
+            IntOutputStream dst,
+            int validBits,
+            int len,
+            IntFilter filter)
+    {
         int fetchedData = 0;
         int fetchedBits = 0;
         int mask = MASKS[validBits];
