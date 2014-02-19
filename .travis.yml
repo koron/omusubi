@@ -2,18 +2,21 @@ language: java
 
 jdk:
   - oraclejdk7
-  - oraclejdk8
   - openjdk7
   - openjdk6
 
 env:
-  - TERM=dumb
-  - COVERAGE=no
+  - TERM=dumb COVERAGE=no
+  - TERM=dumb COVERAGE=yes
 
 matrix:
   exclude:
     - jdk: oraclejdk7
-      env: COVERAGE=yes
+      env: TERM=dumb COVERAGE=no
+    - jdk: openjdk7
+      env: TERM=dumb COVERAGE=yes
+    - jdk: openjdk6
+      env: TERM=dumb COVERAGE=yes
 
 before_install:
   - wget http://services.gradle.org/distributions/gradle-1.8-bin.zip
