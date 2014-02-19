@@ -18,13 +18,13 @@ public abstract class LongCodec {
         return -1;
     }
 
-    public final byte[] compress(long[] src) {
+    public byte[] compress(long[] src) {
         ByteArrayLongOutputStream dst = new ByteArrayLongOutputStream();
         compress(LongBuffer.wrap(src), dst);
         return dst.toByteArray();
     }
 
-    public final long[] decompress(byte[] src) {
+    public long[] decompress(byte[] src) {
         LongBuffer srcBuf = ByteBuffer.wrap(src).asLongBuffer();
         int len = decompressLength(srcBuf);
         LongArrayOutputStream dst = (len < 0)

@@ -18,13 +18,13 @@ public abstract class IntCodec {
         return -1;
     }
 
-    public final byte[] compress(int[] src) {
+    public byte[] compress(int[] src) {
         ByteArrayIntOutputStream dst = new ByteArrayIntOutputStream();
         compress(IntBuffer.wrap(src), dst);
         return dst.toByteArray();
     }
 
-    public final int[] decompress(byte[] src) {
+    public int[] decompress(byte[] src) {
         IntBuffer srcBuf = ByteBuffer.wrap(src).asIntBuffer();
         int len = decompressLength(srcBuf);
         IntArrayOutputStream dst = (len < 0)

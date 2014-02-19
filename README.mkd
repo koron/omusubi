@@ -114,3 +114,9 @@ long[] decompressed = LongDZBP.fromBytes(compressed);
 *   LongBitPacking
     *   LongBitPacking#toBytes
     *   LongBitPacking#fromBytes
+*   IntJustCopy
+    *   IntJustCopy#toBytes
+    *   IntJustCopy#fromBytes
+*   LongJustCopy
+    *   LongJustCopy#toBytes
+    *   LongJustCopy#fromBytes
