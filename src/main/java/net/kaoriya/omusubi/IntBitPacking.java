@@ -891,4 +891,11 @@ public class IntBitPacking extends IntCodec
         decompress(src, dst, THROUGH_FILTER);
     }
 
+    public static byte[] toBytes(int[] src) {
+        return (new IntBitPacking()).compress(src);
+    }
+
+    public static int[] fromBytes(byte[] src) {
+        return (new IntBitPacking()).decompress(src);
+    }
 }

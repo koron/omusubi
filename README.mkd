@@ -99,3 +99,18 @@ long[] decompressed = LongDZBP.fromBytes(compressed);
 *   Header: holding length of each 4 blocks.
 *   Block: cotains compressed data, size is multiply of 8 bytes. (0-128 bytes)
     *   A block have 16 long values.  So a chunk have 64 (=16*4) long values.
+
+## Utility methods
+
+*   IntDZBP
+    *   IntDZBP#toBytes
+    *   IntDZBP#fromBytes
+*   LongDZBP
+    *   LongDZBP#toBytes
+    *   LongDZBP#fromBytes
+*   IntBitPacking
+    *   IntBitPacking#toBytes
+    *   IntBitPacking#fromBytes
+*   LongBitPacking
+    *   LongBitPacking#toBytes
+    *   LongBitPacking#fromBytes

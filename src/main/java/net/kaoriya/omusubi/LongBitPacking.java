@@ -260,4 +260,11 @@ public class LongBitPacking extends LongCodec
         decompress(src, dst, THROUGH_FILTER);
     }
 
+    public static byte[] toBytes(long[] src) {
+        return (new LongBitPacking()).compress(src);
+    }
+
+    public static long[] fromBytes(byte[] src) {
+        return (new LongBitPacking()).decompress(src);
+    }
 }
