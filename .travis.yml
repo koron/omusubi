@@ -25,5 +25,4 @@ before_install:
   - export PATH=$GRADLE_HOME/bin:$PATH
 
 after_success:
-  - gradle cobertura
-  - if [ x"$COVERAGE" == "xyes" ] ; then gradle coveralls ; fi
+  - if [ x"$COVERAGE" == "xyes" ] ; then gradle cobertura && gradle coveralls ; fi
