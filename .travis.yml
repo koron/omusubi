@@ -2,11 +2,18 @@ language: java
 
 jdk:
   - oraclejdk7
-#  - openjdk7
-#  - openjdk6
+  - oraclejdk8
+  - openjdk7
+  - openjdk6
 
 env:
   - TERM=dumb
+  - COVERAGE=no
+
+matrix:
+  exclude:
+    - jdk: oraclejdk7
+      env: COVERAGE=yes
 
 before_install:
   - wget http://services.gradle.org/distributions/gradle-1.8-bin.zip
@@ -16,4 +23,4 @@ before_install:
 
 after_success:
   - gradle cobertura
-  - gradle coveralls
+  - if [ x"$COVERAGE" == "xyes" ] ; then gradle coveralls ; fi
