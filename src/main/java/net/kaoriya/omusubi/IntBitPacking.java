@@ -97,8 +97,8 @@ public class IntBitPacking extends IntCodec
     {
         switch (validBits) {
             case 0: pack0(src, dst, len); break;
-            case 1: pack1(src, dst, len, filter); break;
-            case 2: pack2(src, dst, len, filter); break;
+            case 1: pack1(src, dst, filter); break;
+            case 2: pack2(src, dst, filter); break;
             case 3: pack3(src, dst, len, filter); break;
             case 4: pack4(src, dst, len, filter); break;
             case 10: pack10(src, dst, len, filter); break;
@@ -121,15 +121,6 @@ public class IntBitPacking extends IntCodec
     public void pack1(
             IntBuffer src,
             IntOutputStream dst,
-            int len)
-    {
-        pack1(src, dst, len, THROUGH_FILTER);
-    }
-
-    public void pack1(
-            IntBuffer src,
-            IntOutputStream dst,
-            int len,
             IntFilter filter)
     {
         final int m = MASKS[1];
@@ -174,15 +165,6 @@ public class IntBitPacking extends IntCodec
     public void pack2(
             IntBuffer src,
             IntOutputStream dst,
-            int len)
-    {
-        pack2(src, dst, len, THROUGH_FILTER);
-    }
-
-    public void pack2(
-            IntBuffer src,
-            IntOutputStream dst,
-            int len,
             IntFilter filter)
     {
         final int m = MASKS[2];

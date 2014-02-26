@@ -1,6 +1,7 @@
 package net.kaoriya.omusubi;
 
 import java.nio.IntBuffer;
+import java.util.Random;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -299,26 +300,37 @@ public class IntBitPackingTest
         });
     }
 
-    private int[] randomInts(int n) {
+    private int[] randomInts(Random r, int n) {
         int[] d = new int[n];
         for (int i = 0; i < d.length; ++i) {
-            // TODO:
+            d[i] = r.nextInt();
         }
+        return d;
     }
 
+    /**
+     * allBits test all validBits for pack()/unpack().
+     */
     @Test
     public void allBits() {
         IntBitPacking p = new IntBitPacking();
-        masks = IntBitPacking.newMasks();
+        Random r = new Random();
+        int[] masks = IntBitPacking.newMasks();
         for (int i = 0; i <= 32; ++i) {
             for (int j = 0; j < 100; ++j) {
                 // generate random data with bits mask.
-                int[] indata = randomInts(IntBitPacking.BLOCK_LEN);
+                int[] indata = randomInts(r, IntBitPacking.BLOCK_LEN);
                 for (int k = 0; k < indata.length; ++k) {
                     indata[k] &= masks[i];
                 }
-                // TODO: pack and unpack with IntBitPacking
-                int[] outdata = null;
+                // pack and unpack with IntBitPacking
+                IntArrayOutputStream dst1 = new IntArrayOutputStream(i);
+                p.pack(IntBuffer.wrap(indata), dst1, i, indata.length);
+                IntArrayOutputStream dst2 =
+                    new IntArrayOutputStream(indata.length);
+                p.unpack(IntBuffer.wrap(dst1.toIntArray()), dst2, i,
+                        indata.length);
+                int[] outdata = dst2.toIntArray();
                 // check equality.
                 assertArrayEquals(indata, outdata);
             }
