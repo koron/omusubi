@@ -298,4 +298,30 @@ public class IntBitPackingTest
             0, 1, 2, 4, 8, 16, 32, 64, 128, 256,
         });
     }
+
+    private int[] randomInts(int n) {
+        int[] d = new int[n];
+        for (int i = 0; i < d.length; ++i) {
+            // TODO:
+        }
+    }
+
+    @Test
+    public void allBits() {
+        IntBitPacking p = new IntBitPacking();
+        masks = IntBitPacking.newMasks();
+        for (int i = 0; i <= 32; ++i) {
+            for (int j = 0; j < 100; ++j) {
+                // generate random data with bits mask.
+                int[] indata = randomInts(IntBitPacking.BLOCK_LEN);
+                for (int k = 0; k < indata.length; ++k) {
+                    indata[k] &= masks[i];
+                }
+                // TODO: pack and unpack with IntBitPacking
+                int[] outdata = null;
+                // check equality.
+                assertArrayEquals(indata, outdata);
+            }
+        }
+    }
 }
