@@ -211,6 +211,27 @@ public class IntBitPackingTest
     }
 
     /**
+     * pack with packN(), compare with result of packAny(), then unpackN().
+     */
+    private int[] packAndUnpack(IntBitPacking p, int[] src, int validBits) {
+        // pack.
+        IntArrayOutputStream packed = new IntArrayOutputStream(validBits);
+        p.pack(IntBuffer.wrap(src), packed, validBits, src.length);
+
+        // compare with packAny.
+        IntArrayOutputStream packedEx = new IntArrayOutputStream(validBits);
+        p.packAny(IntBuffer.wrap(src), packedEx, validBits, src.length);
+        assertArrayEquals("pack() returns different from packAny()",
+                packedEx.toIntArray(), packed.toIntArray());
+
+        // unpack.
+        IntArrayOutputStream unpacked = new IntArrayOutputStream(src.length);
+        p.unpack(IntBuffer.wrap(packed.toIntArray()), unpacked, validBits,
+                src.length);
+        return unpacked.toIntArray();
+    }
+
+    /**
      * allBits test all validBits for pack()/unpack().
      */
     @Test
@@ -226,14 +247,9 @@ public class IntBitPackingTest
                     indata[k] &= masks[i];
                 }
                 // pack and unpack with IntBitPacking
-                IntArrayOutputStream dst1 = new IntArrayOutputStream(i);
-                p.pack(IntBuffer.wrap(indata), dst1, i, indata.length);
-                IntArrayOutputStream dst2 =
-                    new IntArrayOutputStream(indata.length);
-                p.unpack(IntBuffer.wrap(dst1.toIntArray()), dst2, i,
-                        indata.length);
-                int[] outdata = dst2.toIntArray();
+                int[] outdata = packAndUnpack(p, indata, i);
                 // check equality.
+                // FIXME: better outputs.
                 assertArrayEquals(indata, outdata);
             }
         }

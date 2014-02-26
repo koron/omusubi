@@ -101,7 +101,7 @@ public class IntBitPacking extends IntCodec
             case 2: pack2(src, dst, filter); break;
             case 3: pack3(src, dst, filter); break;
             case 4: pack4(src, dst, filter); break;
-            //case 5: pack5(src, dst, filter); break;
+            case 5: pack5(src, dst, filter); break;
             //case 6: pack6(src, dst, filter); break;
             //case 7: pack7(src, dst, filter); break;
             case 8: pack8(src, dst, filter); break;
@@ -385,6 +385,7 @@ public class IntBitPacking extends IntCodec
             (filter.filterInt(src.get()) & m) << 20 |
             (filter.filterInt(src.get()) & m) << 15 |
             (filter.filterInt(src.get()) & m) << 10 |
+            (filter.filterInt(src.get()) & m) <<  5 |
             (filter.filterInt(src.get()) & m);
 
         dst.write(this.packBuf, 0, 5);
