@@ -97,13 +97,13 @@ public class IntBitPacking extends IntCodec
     {
         switch (validBits) {
             case 0: pack0(src, dst, len); break;
-            case 1: pack1(src, dst, len, filter); break;
-            case 2: pack2(src, dst, len, filter); break;
-            case 3: pack3(src, dst, len, filter); break;
-            case 4: pack4(src, dst, len, filter); break;
-            case 10: pack10(src, dst, len, filter); break;
-            case 11: pack11(src, dst, len, filter); break;
-            case 12: pack12(src, dst, len, filter); break;
+            case 1: pack1(src, dst, filter); break;
+            case 2: pack2(src, dst, filter); break;
+            case 3: pack3(src, dst, filter); break;
+            case 4: pack4(src, dst, filter); break;
+            case 10: pack10(src, dst, filter); break;
+            case 11: pack11(src, dst, filter); break;
+            case 12: pack12(src, dst, filter); break;
             default:
                 packAny(src, dst, validBits, len, filter);
                 break;
@@ -121,15 +121,6 @@ public class IntBitPacking extends IntCodec
     public void pack1(
             IntBuffer src,
             IntOutputStream dst,
-            int len)
-    {
-        pack1(src, dst, len, THROUGH_FILTER);
-    }
-
-    public void pack1(
-            IntBuffer src,
-            IntOutputStream dst,
-            int len,
             IntFilter filter)
     {
         final int m = MASKS[1];
@@ -174,15 +165,6 @@ public class IntBitPacking extends IntCodec
     public void pack2(
             IntBuffer src,
             IntOutputStream dst,
-            int len)
-    {
-        pack2(src, dst, len, THROUGH_FILTER);
-    }
-
-    public void pack2(
-            IntBuffer src,
-            IntOutputStream dst,
-            int len,
             IntFilter filter)
     {
         final int m = MASKS[2];
@@ -229,15 +211,6 @@ public class IntBitPacking extends IntCodec
     public void pack3(
             IntBuffer src,
             IntOutputStream dst,
-            int len)
-    {
-        pack3(src, dst, len, THROUGH_FILTER);
-    }
-
-    public void pack3(
-            IntBuffer src,
-            IntOutputStream dst,
-            int len,
             IntFilter filter)
     {
         final int m = MASKS[3];
@@ -289,15 +262,6 @@ public class IntBitPacking extends IntCodec
     public void pack4(
             IntBuffer src,
             IntOutputStream dst,
-            int len)
-    {
-        pack4(src, dst, len, THROUGH_FILTER);
-    }
-
-    public void pack4(
-            IntBuffer src,
-            IntOutputStream dst,
-            int len,
             IntFilter filter)
     {
         final int m = MASKS[4];
@@ -348,15 +312,6 @@ public class IntBitPacking extends IntCodec
     public void pack10(
             IntBuffer src,
             IntOutputStream dst,
-            int len)
-    {
-        pack10(src, dst, len, THROUGH_FILTER);
-    }
-
-    public void pack10(
-            IntBuffer src,
-            IntOutputStream dst,
-            int len,
             IntFilter filter)
     {
         final int m = MASKS[10];
@@ -420,15 +375,6 @@ public class IntBitPacking extends IntCodec
     public void pack11(
             IntBuffer src,
             IntOutputStream dst,
-            int len)
-    {
-        pack11(src, dst, len, THROUGH_FILTER);
-    }
-
-    public void pack11(
-            IntBuffer src,
-            IntOutputStream dst,
-            int len,
             IntFilter filter)
     {
         final int m = MASKS[11];
@@ -494,15 +440,6 @@ public class IntBitPacking extends IntCodec
     public void pack12(
             IntBuffer src,
             IntOutputStream dst,
-            int len)
-    {
-        pack12(src, dst, len, THROUGH_FILTER);
-    }
-
-    public void pack12(
-            IntBuffer src,
-            IntOutputStream dst,
-            int len,
             IntFilter filter)
     {
         final int m = MASKS[12];
