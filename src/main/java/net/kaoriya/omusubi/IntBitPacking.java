@@ -101,9 +101,34 @@ public class IntBitPacking extends IntCodec
             case 2: pack2(src, dst, filter); break;
             case 3: pack3(src, dst, filter); break;
             case 4: pack4(src, dst, filter); break;
+            //case 5: pack5(src, dst, filter); break;
+            //case 6: pack6(src, dst, filter); break;
+            //case 7: pack7(src, dst, filter); break;
+            case 8: pack8(src, dst, filter); break;
+            //case 9: pack9(src, dst, filter); break;
             case 10: pack10(src, dst, filter); break;
             case 11: pack11(src, dst, filter); break;
             case 12: pack12(src, dst, filter); break;
+            //case 13: pack13(src, dst, filter); break;
+            //case 14: pack14(src, dst, filter); break;
+            //case 15: pack15(src, dst, filter); break;
+            case 16: pack16(src, dst, filter); break;
+            //case 17: pack17(src, dst, filter); break;
+            //case 18: pack18(src, dst, filter); break;
+            //case 19: pack19(src, dst, filter); break;
+            //case 20: pack20(src, dst, filter); break;
+            //case 21: pack21(src, dst, filter); break;
+            //case 22: pack22(src, dst, filter); break;
+            //case 23: pack23(src, dst, filter); break;
+            //case 24: pack24(src, dst, filter); break;
+            //case 25: pack25(src, dst, filter); break;
+            //case 26: pack26(src, dst, filter); break;
+            //case 27: pack27(src, dst, filter); break;
+            //case 28: pack28(src, dst, filter); break;
+            //case 29: pack29(src, dst, filter); break;
+            //case 30: pack30(src, dst, filter); break;
+            //case 31: pack31(src, dst, filter); break;
+            case 32: pack32(src, dst, filter); break;
             default:
                 packAny(src, dst, validBits, len, filter);
                 break;
@@ -309,6 +334,118 @@ public class IntBitPacking extends IntCodec
         dst.write(this.packBuf, 0, 4);
     }
 
+    public void pack5(
+            IntBuffer src,
+            IntOutputStream dst,
+            IntFilter filter)
+    {
+        final int m = MASKS[5];
+        int n;
+
+        this.packBuf[0] =
+            (filter.filterInt(src.get()) & m) << 27 |
+            (filter.filterInt(src.get()) & m) << 22 |
+            (filter.filterInt(src.get()) & m) << 17 |
+            (filter.filterInt(src.get()) & m) << 12 |
+            (filter.filterInt(src.get()) & m) <<  7 |
+            (filter.filterInt(src.get()) & m) <<  2 |
+            (n = filter.filterInt(src.get()) & m) >>> 3;
+
+        this.packBuf[1] =
+            (n << 29) |
+            (filter.filterInt(src.get()) & m) << 24 |
+            (filter.filterInt(src.get()) & m) << 19 |
+            (filter.filterInt(src.get()) & m) << 14 |
+            (filter.filterInt(src.get()) & m) <<  9 |
+            (filter.filterInt(src.get()) & m) <<  4 |
+            (n = filter.filterInt(src.get()) & m) >>> 1;
+
+        this.packBuf[2] =
+            (n << 31) |
+            (filter.filterInt(src.get()) & m) << 26 |
+            (filter.filterInt(src.get()) & m) << 21 |
+            (filter.filterInt(src.get()) & m) << 16 |
+            (filter.filterInt(src.get()) & m) << 11 |
+            (filter.filterInt(src.get()) & m) <<  6 |
+            (filter.filterInt(src.get()) & m) <<  1 |
+            (n = filter.filterInt(src.get()) & m) >>> 4;
+
+        this.packBuf[3] =
+            (n << 28) |
+            (filter.filterInt(src.get()) & m) << 23 |
+            (filter.filterInt(src.get()) & m) << 18 |
+            (filter.filterInt(src.get()) & m) << 13 |
+            (filter.filterInt(src.get()) & m) <<  8 |
+            (filter.filterInt(src.get()) & m) <<  3 |
+            (n = filter.filterInt(src.get()) & m) >>> 2;
+
+        this.packBuf[4] =
+            (n << 30) |
+            (filter.filterInt(src.get()) & m) << 25 |
+            (filter.filterInt(src.get()) & m) << 20 |
+            (filter.filterInt(src.get()) & m) << 15 |
+            (filter.filterInt(src.get()) & m) << 10 |
+            (filter.filterInt(src.get()) & m);
+
+        dst.write(this.packBuf, 0, 5);
+    }
+
+    // TODO: pack6
+    // TODO: pack7
+
+    public void pack8(
+            IntBuffer src,
+            IntOutputStream dst,
+            IntFilter filter)
+    {
+        final int m = MASKS[8];
+
+        this.packBuf[0] =
+            (filter.filterInt(src.get()) & m) << 24 |
+            (filter.filterInt(src.get()) & m) << 16 |
+            (filter.filterInt(src.get()) & m) <<  8 |
+            (filter.filterInt(src.get()) & m);
+        this.packBuf[1] =
+            (filter.filterInt(src.get()) & m) << 24 |
+            (filter.filterInt(src.get()) & m) << 16 |
+            (filter.filterInt(src.get()) & m) <<  8 |
+            (filter.filterInt(src.get()) & m);
+        this.packBuf[2] =
+            (filter.filterInt(src.get()) & m) << 24 |
+            (filter.filterInt(src.get()) & m) << 16 |
+            (filter.filterInt(src.get()) & m) <<  8 |
+            (filter.filterInt(src.get()) & m);
+        this.packBuf[3] =
+            (filter.filterInt(src.get()) & m) << 24 |
+            (filter.filterInt(src.get()) & m) << 16 |
+            (filter.filterInt(src.get()) & m) <<  8 |
+            (filter.filterInt(src.get()) & m);
+        this.packBuf[4] =
+            (filter.filterInt(src.get()) & m) << 24 |
+            (filter.filterInt(src.get()) & m) << 16 |
+            (filter.filterInt(src.get()) & m) <<  8 |
+            (filter.filterInt(src.get()) & m);
+        this.packBuf[5] =
+            (filter.filterInt(src.get()) & m) << 24 |
+            (filter.filterInt(src.get()) & m) << 16 |
+            (filter.filterInt(src.get()) & m) <<  8 |
+            (filter.filterInt(src.get()) & m);
+        this.packBuf[6] =
+            (filter.filterInt(src.get()) & m) << 24 |
+            (filter.filterInt(src.get()) & m) << 16 |
+            (filter.filterInt(src.get()) & m) <<  8 |
+            (filter.filterInt(src.get()) & m);
+        this.packBuf[7] =
+            (filter.filterInt(src.get()) & m) << 24 |
+            (filter.filterInt(src.get()) & m) << 16 |
+            (filter.filterInt(src.get()) & m) <<  8 |
+            (filter.filterInt(src.get()) & m);
+
+        dst.write(this.packBuf, 0, 8);
+    }
+
+    // TODO: pack9
+
     public void pack10(
             IntBuffer src,
             IntOutputStream dst,
@@ -504,6 +641,125 @@ public class IntBitPacking extends IntCodec
         dst.write(this.packBuf, 0, 12);
     }
 
+    // TODO: pack13
+    // TODO: pack14
+    // TODO: pack15
+
+    public void pack16(
+            IntBuffer src,
+            IntOutputStream dst,
+            IntFilter filter)
+    {
+        final int m = MASKS[16];
+
+        this.packBuf[0] =
+            (filter.filterInt(src.get()) & m) << 16 |
+            (filter.filterInt(src.get()) & m);
+        this.packBuf[1] =
+            (filter.filterInt(src.get()) & m) << 16 |
+            (filter.filterInt(src.get()) & m);
+        this.packBuf[2] =
+            (filter.filterInt(src.get()) & m) << 16 |
+            (filter.filterInt(src.get()) & m);
+        this.packBuf[3] =
+            (filter.filterInt(src.get()) & m) << 16 |
+            (filter.filterInt(src.get()) & m);
+        this.packBuf[4] =
+            (filter.filterInt(src.get()) & m) << 16 |
+            (filter.filterInt(src.get()) & m);
+        this.packBuf[5] =
+            (filter.filterInt(src.get()) & m) << 16 |
+            (filter.filterInt(src.get()) & m);
+        this.packBuf[6] =
+            (filter.filterInt(src.get()) & m) << 16 |
+            (filter.filterInt(src.get()) & m);
+        this.packBuf[7] =
+            (filter.filterInt(src.get()) & m) << 16 |
+            (filter.filterInt(src.get()) & m);
+        this.packBuf[8] =
+            (filter.filterInt(src.get()) & m) << 16 |
+            (filter.filterInt(src.get()) & m);
+        this.packBuf[9] =
+            (filter.filterInt(src.get()) & m) << 16 |
+            (filter.filterInt(src.get()) & m);
+        this.packBuf[10] =
+            (filter.filterInt(src.get()) & m) << 16 |
+            (filter.filterInt(src.get()) & m);
+        this.packBuf[11] =
+            (filter.filterInt(src.get()) & m) << 16 |
+            (filter.filterInt(src.get()) & m);
+        this.packBuf[12] =
+            (filter.filterInt(src.get()) & m) << 16 |
+            (filter.filterInt(src.get()) & m);
+        this.packBuf[13] =
+            (filter.filterInt(src.get()) & m) << 16 |
+            (filter.filterInt(src.get()) & m);
+        this.packBuf[14] =
+            (filter.filterInt(src.get()) & m) << 16 |
+            (filter.filterInt(src.get()) & m);
+        this.packBuf[15] =
+            (filter.filterInt(src.get()) & m) << 16 |
+            (filter.filterInt(src.get()) & m);
+
+        dst.write(this.packBuf, 0, 16);
+    }
+
+    // TODO: pack17
+    // TODO: pack18
+    // TODO: pack19
+    // TODO: pack20
+    // TODO: pack21
+    // TODO: pack22
+    // TODO: pack23
+    // TODO: pack24
+    // TODO: pack25
+    // TODO: pack26
+    // TODO: pack27
+    // TODO: pack28
+    // TODO: pack29
+    // TODO: pack30
+    // TODO: pack31
+
+    public void pack32(
+            IntBuffer src,
+            IntOutputStream dst,
+            IntFilter filter)
+    {
+        this.packBuf[ 0] = filter.filterInt(src.get());
+        this.packBuf[ 1] = filter.filterInt(src.get());
+        this.packBuf[ 2] = filter.filterInt(src.get());
+        this.packBuf[ 3] = filter.filterInt(src.get());
+        this.packBuf[ 4] = filter.filterInt(src.get());
+        this.packBuf[ 5] = filter.filterInt(src.get());
+        this.packBuf[ 6] = filter.filterInt(src.get());
+        this.packBuf[ 7] = filter.filterInt(src.get());
+        this.packBuf[ 8] = filter.filterInt(src.get());
+        this.packBuf[ 9] = filter.filterInt(src.get());
+        this.packBuf[10] = filter.filterInt(src.get());
+        this.packBuf[11] = filter.filterInt(src.get());
+        this.packBuf[12] = filter.filterInt(src.get());
+        this.packBuf[13] = filter.filterInt(src.get());
+        this.packBuf[14] = filter.filterInt(src.get());
+        this.packBuf[15] = filter.filterInt(src.get());
+        this.packBuf[16] = filter.filterInt(src.get());
+        this.packBuf[17] = filter.filterInt(src.get());
+        this.packBuf[18] = filter.filterInt(src.get());
+        this.packBuf[19] = filter.filterInt(src.get());
+        this.packBuf[20] = filter.filterInt(src.get());
+        this.packBuf[21] = filter.filterInt(src.get());
+        this.packBuf[22] = filter.filterInt(src.get());
+        this.packBuf[23] = filter.filterInt(src.get());
+        this.packBuf[24] = filter.filterInt(src.get());
+        this.packBuf[25] = filter.filterInt(src.get());
+        this.packBuf[26] = filter.filterInt(src.get());
+        this.packBuf[27] = filter.filterInt(src.get());
+        this.packBuf[28] = filter.filterInt(src.get());
+        this.packBuf[29] = filter.filterInt(src.get());
+        this.packBuf[30] = filter.filterInt(src.get());
+        this.packBuf[31] = filter.filterInt(src.get());
+
+        dst.write(this.packBuf, 0, 32);
+    }
 
     public void packAny(
             IntBuffer src,
