@@ -49,7 +49,7 @@ class IntBitPackingUnpacks
         buf[30] = filter.filterInt(n >>>  1 & m);
         buf[31] = filter.filterInt(n >>>  0 & m);
 
-        dst.write(buf, 0, 1);
+        dst.write(buf, 0, 32);
     }
 
     static void unpack2(
@@ -96,7 +96,7 @@ class IntBitPackingUnpacks
         buf[30] = filter.filterInt(n >>>  2 & m);
         buf[31] = filter.filterInt(n >>>  0 & m);
 
-        dst.write(buf, 0, 2);
+        dst.write(buf, 0, 32);
     }
 
     static void unpack3(
@@ -146,7 +146,7 @@ class IntBitPackingUnpacks
         buf[30] = filter.filterInt(n >>>  3 & m);
         buf[31] = filter.filterInt(n >>>  0 & m);
 
-        dst.write(buf, 0, 3);
+        dst.write(buf, 0, 32);
     }
 
     static void unpack4(
@@ -195,7 +195,7 @@ class IntBitPackingUnpacks
         buf[30] = filter.filterInt(n >>>  4 & m);
         buf[31] = filter.filterInt(n >>>  0 & m);
 
-        dst.write(buf, 0, 4);
+        dst.write(buf, 0, 32);
     }
 
     static void unpack5(
@@ -249,7 +249,7 @@ class IntBitPackingUnpacks
         buf[30] = filter.filterInt(n >>>  5 & m);
         buf[31] = filter.filterInt(n >>>  0 & m);
 
-        dst.write(buf, 0, 5);
+        dst.write(buf, 0, 32);
     }
 
     static void unpack6(
@@ -304,7 +304,7 @@ class IntBitPackingUnpacks
         buf[30] = filter.filterInt(n >>>  6 & m);
         buf[31] = filter.filterInt(n >>>  0 & m);
 
-        dst.write(buf, 0, 6);
+        dst.write(buf, 0, 32);
     }
 
     static void unpack7(
@@ -362,7 +362,7 @@ class IntBitPackingUnpacks
         buf[30] = filter.filterInt(n >>>  7 & m);
         buf[31] = filter.filterInt(n >>>  0 & m);
 
-        dst.write(buf, 0, 7);
+        dst.write(buf, 0, 32);
     }
 
     static void unpack8(
@@ -415,7 +415,7 @@ class IntBitPackingUnpacks
         buf[30] = filter.filterInt(n >>>  8 & m);
         buf[31] = filter.filterInt(n >>>  0 & m);
 
-        dst.write(buf, 0, 8);
+        dst.write(buf, 0, 32);
     }
 
     static void unpack9(
@@ -477,7 +477,7 @@ class IntBitPackingUnpacks
         buf[30] = filter.filterInt(n >>>  9 & m);
         buf[31] = filter.filterInt(n >>>  0 & m);
 
-        dst.write(buf, 0, 9);
+        dst.write(buf, 0, 32);
     }
 
     static void unpack10(
@@ -540,7 +540,7 @@ class IntBitPackingUnpacks
         buf[30] = filter.filterInt(n >>> 10 & m);
         buf[31] = filter.filterInt(n >>>  0 & m);
 
-        dst.write(buf, 0, 10);
+        dst.write(buf, 0, 32);
     }
 
     static void unpack11(
@@ -606,7 +606,7 @@ class IntBitPackingUnpacks
         buf[30] = filter.filterInt(n >>> 11 & m);
         buf[31] = filter.filterInt(n >>>  0 & m);
 
-        dst.write(buf, 0, 11);
+        dst.write(buf, 0, 32);
     }
 
     static void unpack12(
@@ -671,7 +671,7 @@ class IntBitPackingUnpacks
         buf[30] = filter.filterInt(n >>> 12 & m);
         buf[31] = filter.filterInt(n >>>  0 & m);
 
-        dst.write(buf, 0, 12);
+        dst.write(buf, 0, 32);
     }
 
     static void unpack13(
@@ -741,7 +741,7 @@ class IntBitPackingUnpacks
         buf[30] = filter.filterInt(n >>> 13 & m);
         buf[31] = filter.filterInt(n >>>  0 & m);
 
-        dst.write(buf, 0, 13);
+        dst.write(buf, 0, 32);
     }
 
     static void unpack14(
@@ -812,7 +812,7 @@ class IntBitPackingUnpacks
         buf[30] = filter.filterInt(n >>> 14 & m);
         buf[31] = filter.filterInt(n >>>  0 & m);
 
-        dst.write(buf, 0, 14);
+        dst.write(buf, 0, 32);
     }
 
     static void unpack15(
@@ -886,7 +886,7 @@ class IntBitPackingUnpacks
         buf[30] = filter.filterInt(n >>> 15 & m);
         buf[31] = filter.filterInt(n >>>  0 & m);
 
-        dst.write(buf, 0, 15);
+        dst.write(buf, 0, 32);
     }
 
     static void unpack16(
@@ -947,7 +947,7 @@ class IntBitPackingUnpacks
         buf[30] = filter.filterInt(n >>> 16 & m);
         buf[31] = filter.filterInt(n >>>  0 & m);
 
-        dst.write(buf, 0, 16);
+        dst.write(buf, 0, 32);
     }
 
     static void unpack17(
@@ -1025,7 +1025,7 @@ class IntBitPackingUnpacks
         buf[30] = filter.filterInt(c | n >>> 17);
         buf[31] = filter.filterInt(n >>>  0 & m);
 
-        dst.write(buf, 0, 17);
+        dst.write(buf, 0, 32);
     }
 
     static void unpack18(
@@ -1104,7 +1104,7 @@ class IntBitPackingUnpacks
         buf[30] = filter.filterInt(c | n >>> 18);
         buf[31] = filter.filterInt(n >>>  0 & m);
 
-        dst.write(buf, 0, 18);
+        dst.write(buf, 0, 32);
     }
 
     static void unpack19(
@@ -1186,7 +1186,7 @@ class IntBitPackingUnpacks
         buf[30] = filter.filterInt(c | n >>> 19);
         buf[31] = filter.filterInt(n >>>  0 & m);
 
-        dst.write(buf, 0, 19);
+        dst.write(buf, 0, 32);
     }
 
     static void unpack20(
@@ -1267,7 +1267,7 @@ class IntBitPackingUnpacks
         buf[30] = filter.filterInt(c | n >>> 20);
         buf[31] = filter.filterInt(n >>>  0 & m);
 
-        dst.write(buf, 0, 20);
+        dst.write(buf, 0, 32);
     }
 
     static void unpack21(
@@ -1353,7 +1353,7 @@ class IntBitPackingUnpacks
         buf[30] = filter.filterInt(c | n >>> 21);
         buf[31] = filter.filterInt(n >>>  0 & m);
 
-        dst.write(buf, 0, 21);
+        dst.write(buf, 0, 32);
     }
 
     static void unpack22(
@@ -1440,7 +1440,7 @@ class IntBitPackingUnpacks
         buf[30] = filter.filterInt(c | n >>> 22);
         buf[31] = filter.filterInt(n >>>  0 & m);
 
-        dst.write(buf, 0, 22);
+        dst.write(buf, 0, 32);
     }
 
     static void unpack23(
@@ -1530,7 +1530,7 @@ class IntBitPackingUnpacks
         buf[30] = filter.filterInt(c | n >>> 23);
         buf[31] = filter.filterInt(n >>>  0 & m);
 
-        dst.write(buf, 0, 23);
+        dst.write(buf, 0, 32);
     }
 
     static void unpack24(
@@ -1615,7 +1615,7 @@ class IntBitPackingUnpacks
         buf[30] = filter.filterInt(c | n >>> 24);
         buf[31] = filter.filterInt(n >>>  0 & m);
 
-        dst.write(buf, 0, 24);
+        dst.write(buf, 0, 32);
     }
 
     static void unpack25(
@@ -1709,7 +1709,7 @@ class IntBitPackingUnpacks
         buf[30] = filter.filterInt(c | n >>> 25);
         buf[31] = filter.filterInt(n >>>  0 & m);
 
-        dst.write(buf, 0, 25);
+        dst.write(buf, 0, 32);
     }
 
     static void unpack26(
@@ -1804,7 +1804,7 @@ class IntBitPackingUnpacks
         buf[30] = filter.filterInt(c | n >>> 26);
         buf[31] = filter.filterInt(n >>>  0 & m);
 
-        dst.write(buf, 0, 26);
+        dst.write(buf, 0, 32);
     }
 
     static void unpack27(
@@ -1902,7 +1902,7 @@ class IntBitPackingUnpacks
         buf[30] = filter.filterInt(c | n >>> 27);
         buf[31] = filter.filterInt(n >>>  0 & m);
 
-        dst.write(buf, 0, 27);
+        dst.write(buf, 0, 32);
     }
 
     static void unpack28(
@@ -1999,7 +1999,7 @@ class IntBitPackingUnpacks
         buf[30] = filter.filterInt(c | n >>> 28);
         buf[31] = filter.filterInt(n >>>  0 & m);
 
-        dst.write(buf, 0, 28);
+        dst.write(buf, 0, 32);
     }
 
     static void unpack29(
@@ -2101,7 +2101,7 @@ class IntBitPackingUnpacks
         buf[30] = filter.filterInt(c | n >>> 29);
         buf[31] = filter.filterInt(n >>>  0 & m);
 
-        dst.write(buf, 0, 29);
+        dst.write(buf, 0, 32);
     }
 
     static void unpack30(
@@ -2204,7 +2204,7 @@ class IntBitPackingUnpacks
         buf[30] = filter.filterInt(c | n >>> 30);
         buf[31] = filter.filterInt(n >>>  0 & m);
 
-        dst.write(buf, 0, 30);
+        dst.write(buf, 0, 32);
     }
 
     static void unpack31(
@@ -2310,7 +2310,7 @@ class IntBitPackingUnpacks
         buf[30] = filter.filterInt(c | n >>> 31);
         buf[31] = filter.filterInt(n >>>  0 & m);
 
-        dst.write(buf, 0, 31);
+        dst.write(buf, 0, 32);
     }
 
     static void unpack32(

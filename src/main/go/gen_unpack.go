@@ -27,7 +27,7 @@ func genUnpack(bits int) {
 	fmt.Printf(`
         dst.write(%s, 0, %d);
     }
-`, bufName, bits)
+`, bufName, 32)
 }
 
 func genUnpackBody(bits int, bufName string) {
