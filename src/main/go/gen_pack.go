@@ -64,6 +64,7 @@ func main() {
 
 import java.nio.IntBuffer;
 
+// This class was generated automatically, don't modify.
 class IntBitPackingPacks
 {
 `)
