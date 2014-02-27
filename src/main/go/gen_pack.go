@@ -12,7 +12,7 @@ func genPack(bits int) {
 	bufName := "buf"
 	fmt.Printf(`
     static void pack%d(
-			int[] %s,
+            int[] %s,
             IntBuffer src,
             IntOutputStream dst,
             IntFilter filter)

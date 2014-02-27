@@ -9,16 +9,16 @@ func getMask(bits int) uint32 {
 }
 
 func genUnpack(bits int) {
-	bufName := "this.unpackBuf"
+	bufName := "buf"
 	fmt.Printf(`
     static void unpack%d(
-			int[] %s,
+            int[] %s,
             IntBuffer src,
             IntOutputStream dst,
             IntFilter filter)
     {
         final int m = 0x%x;
-		int n, c;
+        int n, c;
 `, bits, bufName, getMask(bits))
 	fmt.Println("")
 
@@ -36,14 +36,14 @@ func genUnpackBody(bits int, bufName string) {
 	for i := 0; i < bits; i += 1 {
 		fmt.Println("        n = src.get();")
 		if remain > 0 {
-			fmt.Printf("        this.unpackBuf[%2d] = filter.filterInt(c | n >>> %2d);\n", idx, remain + 32 - bits)
+			fmt.Printf("        %s[%2d] = filter.filterInt(c | n >>> %2d);\n", bufName, idx, remain + 32 - bits)
 			idx += 1
 			remain -= bits
 		}
 		remain += 32
 		for remain >= bits {
 			remain -= bits
-			fmt.Printf("        this.unpackBuf[%2d] = filter.filterInt(n >>> %2d & m);\n", idx, remain)
+			fmt.Printf("        %s[%2d] = filter.filterInt(n >>> %2d & m);\n", bufName, idx, remain)
 			idx += 1
 		}
 		if remain > 0 {
