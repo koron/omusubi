@@ -204,7 +204,8 @@ public class LongBitPackingTest
 
     @Test
     public void checkBytes() {
-        long[] input = randomLongs(new Random(), 10000);
+        long[] input = randomLongs(new Random(),
+                LongBitPacking.BLOCK_LEN * LongBitPacking.BLOCK_NUM * 100);
         byte[] tmp = LongBitPacking.toBytes(input);
         long[] output = LongBitPacking.fromBytes(tmp);
         assertArrayEquals(input, output);

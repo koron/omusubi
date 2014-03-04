@@ -133,8 +133,7 @@ public class IntBitPacking extends IntCodec
             case 31: pack31(this.packBuf, src, dst, filter); break;
             case 32: pack32(this.packBuf, src, dst, filter); break;
             default:
-                packAny(src, dst, validBits, len, filter);
-                break;
+                throw new RuntimeException("Invalid bits: " + validBits);
         }
     }
 

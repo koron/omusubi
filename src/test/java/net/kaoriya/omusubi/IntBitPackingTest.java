@@ -3,11 +3,16 @@ package net.kaoriya.omusubi;
 import java.nio.IntBuffer;
 import java.util.Random;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import static org.junit.Assert.*;
 
 public class IntBitPackingTest
 {
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
     @Test
     public void newMasks() {
         int[] masks = IntBitPacking.newMasks();
@@ -259,9 +264,18 @@ public class IntBitPackingTest
 
     @Test
     public void checkBytes() {
-        int[] input = randomInts(new Random(), 10000);
+        int[] input = randomInts(new Random(),
+                IntBitPacking.BLOCK_LEN * IntBitPacking.BLOCK_NUM * 100);
         byte[] tmp = IntBitPacking.toBytes(input);
         int[] output = IntBitPacking.fromBytes(tmp);
         assertArrayEquals(input, output);
+    }
+
+    @Test
+    public void invalidBits() {
+        IntBitPacking codec = new IntBitPacking();
+        thrown.expect(RuntimeException.class);
+        thrown.expectMessage("Invalid bits: -1");
+        codec.pack(null, null, -1, 0);
     }
 }
