@@ -23,7 +23,7 @@ public class LongJustCopy extends LongCodec
             if (len > buf.length) {
                 len = buf.length;
             }
-            src.get(buf);
+            src.get(buf, 0, len);
             dst.write(buf, 0, len);
         }
     }

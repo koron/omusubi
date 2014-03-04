@@ -256,4 +256,12 @@ public class IntBitPackingTest
             }
         }
     }
+
+    @Test
+    public void checkBytes() {
+        int[] input = randomInts(new Random(), 10000);
+        byte[] tmp = IntBitPacking.toBytes(input);
+        int[] output = IntBitPacking.fromBytes(tmp);
+        assertArrayEquals(input, output);
+    }
 }

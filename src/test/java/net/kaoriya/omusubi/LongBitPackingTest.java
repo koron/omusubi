@@ -1,12 +1,21 @@
 package net.kaoriya.omusubi;
 
 import java.nio.LongBuffer;
+import java.util.Random;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class LongBitPackingTest
 {
+    public static long[] randomLongs(Random r, int len) {
+        long[] array = new long[len];
+        for (int i = 0; i < len; ++i) {
+            array[i] = r.nextLong();
+        }
+        return array;
+    }
+
     @Test
     public void newMasks() {
         long[] masks = LongBitPacking.newMasks();
@@ -191,5 +200,13 @@ public class LongBitPackingTest
         assertEquals(123, p2.getBlockLen());
         assertEquals(456, p2.getBlockNum());
         assertEquals(56088, p2.getBlockSize());
+    }
+
+    @Test
+    public void checkBytes() {
+        long[] input = randomLongs(new Random(), 10000);
+        byte[] tmp = LongBitPacking.toBytes(input);
+        long[] output = LongBitPacking.fromBytes(tmp);
+        assertArrayEquals(input, output);
     }
 }
