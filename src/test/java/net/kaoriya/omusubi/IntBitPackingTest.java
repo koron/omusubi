@@ -139,10 +139,15 @@ public class IntBitPackingTest
     }
 
     @Test
-    public void unpack() {
+    public void unpack0() {
         checkUnpack(new int[0], 0, new int[] {
-            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         });
+    }
+
+    @Test
+    public void unpack() {
         checkUnpack(new int[] { 0x01234567 }, 1, new int[] {
             0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1,
             0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 1, 1, 1,
@@ -235,6 +240,14 @@ public class IntBitPackingTest
         IntArrayOutputStream unpacked = new IntArrayOutputStream(src.length);
         p.unpack(IntBuffer.wrap(packed.toIntArray()), unpacked, validBits,
                 src.length);
+
+        // compare with unpackAny.
+        IntArrayOutputStream unpackedEx = new IntArrayOutputStream(src.length);
+        p.unpackAny(IntBuffer.wrap(packed.toIntArray()), unpackedEx, validBits,
+                src.length);
+        assertArrayEquals("unpack() returns different from unpackAny()",
+                unpackedEx.toIntArray(), unpacked.toIntArray());
+
         return unpacked.toIntArray();
     }
 
@@ -272,10 +285,18 @@ public class IntBitPackingTest
     }
 
     @Test
-    public void invalidBits() {
+    public void packInvalidBits() {
         IntBitPacking codec = new IntBitPacking();
         thrown.expect(RuntimeException.class);
         thrown.expectMessage("Invalid bits: -1");
         codec.pack(null, null, -1, 0);
+    }
+
+    @Test
+    public void unpackInvalidBits() {
+        IntBitPacking codec = new IntBitPacking();
+        thrown.expect(RuntimeException.class);
+        thrown.expectMessage("Invalid bits: -1");
+        codec.unpack(null, null, -1, 0);
     }
 }

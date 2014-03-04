@@ -1,6 +1,7 @@
 package net.kaoriya.omusubi;
 
 import java.nio.IntBuffer;
+import java.util.Arrays;
 
 import static net.kaoriya.omusubi.IntBitPackingPacks.*;
 import static net.kaoriya.omusubi.IntBitPackingUnpacks.*;
@@ -239,6 +240,7 @@ public class IntBitPacking extends IntCodec
             IntFilter filter)
     {
         switch (validBits) {
+            case 0: unpack0(dst); break;
             case 1: unpack1(this.unpackBuf, src, dst, filter); break;
             case 2: unpack2(this.unpackBuf, src, dst, filter); break;
             case 3: unpack3(this.unpackBuf, src, dst, filter); break;
@@ -272,9 +274,22 @@ public class IntBitPacking extends IntCodec
             case 31: unpack31(this.unpackBuf, src, dst, filter); break;
             case 32: unpack32(this.unpackBuf, src, dst, filter); break;
             default:
-                unpackAny(src, dst, validBits, len, filter);
-                break;
+                throw new RuntimeException("Invalid bits: " + validBits);
         }
+    }
+
+    private void unpack0(IntOutputStream dst) {
+        Arrays.fill(this.unpackBuf, 0);
+        dst.write(this.unpackBuf);
+    }
+
+    public void unpackAny(
+            IntBuffer src,
+            IntOutputStream dst,
+            int validBits,
+            int len)
+    {
+        unpackAny(src, dst, validBits, len, THROUGH_FILTER);
     }
 
     public void unpackAny(
