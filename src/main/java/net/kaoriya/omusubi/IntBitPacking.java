@@ -143,6 +143,7 @@ public class IntBitPacking extends IntCodec
             IntOutputStream dst,
             int len)
     {
+        // FIXME: update filter state by filterInt().
         src.position(src.position() + len);
     }
 
@@ -240,7 +241,7 @@ public class IntBitPacking extends IntCodec
             IntFilter filter)
     {
         switch (validBits) {
-            case 0: unpack0(dst); break;
+            case 0: unpack0(dst, filter); break;
             case 1: unpack1(this.unpackBuf, src, dst, filter); break;
             case 2: unpack2(this.unpackBuf, src, dst, filter); break;
             case 3: unpack3(this.unpackBuf, src, dst, filter); break;
@@ -278,8 +279,10 @@ public class IntBitPacking extends IntCodec
         }
     }
 
-    private void unpack0(IntOutputStream dst) {
-        Arrays.fill(this.unpackBuf, 0);
+    private void unpack0(IntOutputStream dst, IntFilter filter) {
+        for (int i = 0; i < this.blockLen; ++i) {
+            this.unpackBuf[i] = filter.filterInt(0);
+        }
         dst.write(this.unpackBuf);
     }
 
