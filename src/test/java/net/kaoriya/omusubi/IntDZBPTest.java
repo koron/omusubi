@@ -232,4 +232,17 @@ public class IntDZBPTest
                 new int[] { 9, 3, 0x00000000, },
                 new int[] { 3, 3, 3, 3, 3, 3, 3, 3, 3 }, true);
     }
+
+    @Test
+    public void decrementalData() {
+        checkCompress(
+                new IntDZBP(),
+                new int[] { 10, 9, 8, 7, 6, 5, 4, 3, 2 },
+                new int[] { 9, 10, 0x01000000, 0xff000000 });
+
+        checkDecompress(
+                new IntDZBP(),
+                new int[] { 9, 10, 0x01000000, 0xff000000 },
+                new int[] { 10, 9, 8, 7, 6, 5, 4, 3, 2 });
+    }
 }
