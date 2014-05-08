@@ -1,6 +1,7 @@
 package net.kaoriya.omusubi;
 
 import java.nio.IntBuffer;
+import java.util.Arrays;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -98,11 +99,22 @@ public class IntDZBPTest
             int[] src,
             int[] dst)
     {
+        checkDecompress(codec, src, dst, false);
+    }
+
+    private static void checkDecompress(
+            IntDZBP codec,
+            int[] src,
+            int[] dst,
+            boolean dump)
+    {
         IntBuffer srcBuf = IntBuffer.wrap(src);
         IntBuffer dstBuf = IntBuffer.allocate(dst.length);
         codec.decompress(srcBuf, new IntBufferOutputStream(dstBuf));
-        TestUtils.dumpInt("expected", dst);
-        TestUtils.dumpInt("actually", dst);
+        if (dump) {
+            TestUtils.dumpInt("expected", dst);
+            TestUtils.dumpInt("actually", dstBuf.array());
+        }
         assertArrayEquals(dst, dstBuf.array());
     }
 
@@ -206,5 +218,31 @@ public class IntDZBPTest
         }, codec.compress(new int[] {
             -1, -2,
         }));
+    }
+
+    @Test
+    public void flatData() {
+        checkCompress(
+                new IntDZBP(),
+                new int[] { 3, 3, 3, 3, 3, 3, 3, 3, 3 },
+                new int[] { 9, 3, 0x00000000, });
+
+        checkDecompress(
+                new IntDZBP(),
+                new int[] { 9, 3, 0x00000000, },
+                new int[] { 3, 3, 3, 3, 3, 3, 3, 3, 3 }, true);
+    }
+
+    @Test
+    public void decrementalData() {
+        checkCompress(
+                new IntDZBP(),
+                new int[] { 10, 9, 8, 7, 6, 5, 4, 3, 2 },
+                new int[] { 9, 10, 0x01000000, 0xff000000 });
+
+        checkDecompress(
+                new IntDZBP(),
+                new int[] { 9, 10, 0x01000000, 0xff000000 },
+                new int[] { 10, 9, 8, 7, 6, 5, 4, 3, 2 });
     }
 }
