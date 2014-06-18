@@ -24,7 +24,7 @@ public final class DeltaEncoding {
         }
     }
 
-    public static class IntDescendEncoder extends IntEncoder {
+    public static class IntDescendEncoder extends IntDecoder {
         public IntDescendEncoder(int contextValue) {
             super(contextValue);
         }
@@ -33,7 +33,7 @@ public final class DeltaEncoding {
             this(0);
         }
 
-        public int encodeInt(int value) {
+        public int dencodeInt(int value) {
             int n = this.contextValue - value;
             if (n < 0) {
                 throw new IllegalArgumentException(
