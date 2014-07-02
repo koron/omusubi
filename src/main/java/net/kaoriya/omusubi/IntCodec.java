@@ -14,6 +14,14 @@ public abstract class IntCodec {
 
     public abstract void decompress(IntBuffer src, IntOutputStream dst);
 
+    public IntInputStream newCompressStream(IntBuffer src) {
+        throw new UnsupportedOperationException();
+    }
+
+    public IntInputStream newDecompressStream(IntBuffer src) {
+        throw new UnsupportedOperationException();
+    }
+
     protected int decompressLength(IntBuffer src) {
         return -1;
     }

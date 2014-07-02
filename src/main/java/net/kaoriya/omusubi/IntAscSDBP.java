@@ -7,6 +7,36 @@ import java.nio.IntBuffer;
  */
 public class IntAscSDBP extends IntCodec
 {
+    static class CompressStream extends IntInputStream {
+
+        IntBuffer source;
+
+        CompressStream(IntBuffer source) {
+            this.source = source;
+            // TODO:
+        }
+
+        public Integer read() {
+            // TODO:
+            return null;
+        }
+    }
+
+    static class DecompressStream extends IntInputStream {
+
+        IntBuffer source;
+
+        DecompressStream(IntBuffer source) {
+            this.source = source;
+            // TODO:
+        }
+
+        public Integer read() {
+            // TODO:
+            return null;
+        }
+    }
+
     // @Implemnets: IntCodec
     public void compress(IntBuffer src, IntOutputStream dst) {
         // TODO:
@@ -23,6 +53,11 @@ public class IntAscSDBP extends IntCodec
 
     public static int[] fromBytes(byte[] src) {
         return (new IntDZBP()).decompress(src);
+    }
+
+    @Override
+    public IntInputStream newCompressStream(IntBuffer src) {
+        return new CompressStream(src);
     }
 
     public static byte[] union(byte[] a, byte[] b, byte[] ...others) {
