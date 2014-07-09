@@ -337,7 +337,6 @@ public class IntBitPacking extends IntCodec
             IntFilter filter,
             int numOfChunks)
     {
-        int[] maxBits = new int[this.blockNum];
         for (int i = numOfChunks; i > 0; --i) {
             int head = src.get();
             for (int j = (this.blockNum - 1) * 8; j >= 0; j -= 8) {
@@ -353,7 +352,6 @@ public class IntBitPacking extends IntCodec
             IntOutputStream dst,
             IntFilter filter)
     {
-        int[] maxBits = new int[this.blockNum];
         while (src.hasRemaining()) {
             int head = src.get();
             for (int i = (this.blockNum - 1) * 8; i >= 0; i -= 8) {
