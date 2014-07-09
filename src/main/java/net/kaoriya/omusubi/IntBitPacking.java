@@ -21,6 +21,8 @@ public class IntBitPacking extends IntCodec
 
     private final int blockNum;
 
+    private final int[] maxBits;
+
     private final int[] packBuf;
 
     private final int[] unpackBuf;
@@ -28,6 +30,7 @@ public class IntBitPacking extends IntCodec
     public IntBitPacking(int blockLen, int blockNum) {
         this.blockLen = blockLen;
         this.blockNum = blockNum;
+        this.maxBits = new int[blockNum];
         this.packBuf = new int[blockLen];
         this.unpackBuf = new int[blockLen];
     }
@@ -198,25 +201,31 @@ public class IntBitPacking extends IntCodec
             IntOutputStream dst, 
             IntFilter filter)
     {
-        int srclen = src.limit() - src.position();
-        int[] maxBits = new int[this.blockNum];
         while (src.remaining() >= this.blockLen * this.blockNum) {
-            src.mark();
-            filter.saveContext();
-            int head = 0;
-            for (int i = 0; i < this.blockNum; ++i) {
-                int n = maxBits[i] = countMaxBits(src, this.blockLen, filter);
-                head = (head << 8) | n;
-            }
-            filter.restoreContext();
-            src.reset();
-
-            dst.write(head);
-            for (int i = 0; i < this.blockNum; ++i) {
-                pack(src, dst, maxBits[i], this.blockLen, filter);
-            }
+            compressChunk(src, dst, filter);
         }
         return;
+    }
+
+    public void compressChunk(
+            IntBuffer src,
+            IntOutputStream dst, 
+            IntFilter filter)
+    {
+        src.mark();
+        filter.saveContext();
+        int head = 0;
+        for (int i = 0; i < this.blockNum; ++i) {
+            int n = this.maxBits[i] = countMaxBits(src, this.blockLen, filter);
+            head = (head << 8) | n;
+        }
+        filter.restoreContext();
+        src.reset();
+
+        dst.write(head);
+        for (int i = 0; i < this.blockNum; ++i) {
+            pack(src, dst, this.maxBits[i], this.blockLen, filter);
+        }
     }
 
     // @Implemnets: IntCodec
