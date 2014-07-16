@@ -5,6 +5,9 @@ import java.nio.ByteBuffer;
 import java.util.List;
 import java.util.LinkedList;
 
+import net.kaoriya.omusubi.encodings.DeltaEncoding;
+import net.kaoriya.omusubi.filters.IntEncodingFilter;
+
 /**
  * Int Ascending Sorted Delta Bit Packing.
  */
@@ -56,7 +59,8 @@ public class IntAscSDBP extends IntCodec
     static Reader newBytesDecompressReader(byte[] b) {
         IntDecompressStream ds = new IntDecompressStream(
                 ByteBuffer.wrap(b).asIntBuffer(),
-                null,
+                new IntEncodingFilter.Factory(
+                    new DeltaEncoding.IntAscendEncoder()),
                 new IntBitPacking());
         Reader r = new Reader(ds);
         r.read();
