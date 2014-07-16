@@ -64,24 +64,24 @@ public class IntAscSDBP extends IntCodec
     }
 
     static Integer fetchMinimumInt(List<Reader> readers) {
-        Reader min = null;
+        Reader minR = null;
         for (Reader r : readers) {
             Integer v = r.last();
             if (v == null) {
                 continue;
             }
-            if (min == null || v < min.last()) {
-                min = r;
+            if (minR == null || v < minR.last()) {
+                minR = r;
             }
         }
-        if (min == null) {
+        if (minR == null) {
             return null;
         }
         // skip same or less values.
-        Integer minV = min.last();
+        Integer minV = minR.last();
         for (Reader r : readers) {
             Integer v = r.last();
-            while (v != null & v <= minV) {
+            while (v != null && v <= minV) {
                 v = r.read();
             }
         }
