@@ -27,14 +27,11 @@ public class IntAscSDBP extends IntCodec
 
     @Override
     public IntInputStream newCompressStream(IntBuffer src) {
-        // Prepare other objects.
-        // TODO:
         return new IntCompressStream(src, null, null);
     }
 
     @Override
     public IntInputStream newDecompressStream(IntBuffer src) {
-        // TODO:
         return new IntDecompressStream(src, null, null);
     }
 

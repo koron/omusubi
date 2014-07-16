@@ -44,6 +44,5 @@ public class IntDecompressStream extends IntBlockedInputStream {
                     filter, 1);
             dst.write(last, 0, remain);
         }
-        // TODO: setup next block.
     }
 }
