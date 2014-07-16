@@ -13,22 +13,42 @@ import net.kaoriya.omusubi.filters.IntEncodingFilter;
  */
 public class IntAscSDBP extends IntCodec
 {
+    private final IntBitPacking bitPack;
+
+    private final IntFilterFactory encodeFilterFactory;
+
+    private final IntFilterFactory decodeFilterFactory;
+
+    public IntAscSDBP(IntBitPacking bitPack) {
+        this.bitPack = bitPack;
+        this.encodeFilterFactory = new IntEncodingFilter.Factory(
+                new DeltaEncoding.IntAscendEncoder());
+        this.decodeFilterFactory = new IntEncodingFilter.Factory(
+                new DeltaEncoding.IntAscendDecoder());
+    }
+
+    public IntAscSDBP() {
+        this(new IntBitPacking());
+    }
+
     // @Implemnets: IntCodec
     public void compress(IntBuffer src, IntOutputStream dst) {
-        // TODO:
+        CodecUtils.encodeBlockPack(src, this.encodeFilterFactory,
+                this.bitPack, dst);
     }
 
     // @Implemnets: IntCodec
     public void decompress(IntBuffer src, IntOutputStream dst) {
-        // TODO:
+        CodecUtils.decodeBlockPack(src, this.decodeFilterFactory,
+                this.bitPack, dst);
     }
 
     public static byte[] toBytes(int[] src) {
-        return (new IntDZBP()).compress(src);
+        return (new IntAscSDBP()).compress(src);
     }
 
     public static int[] fromBytes(byte[] src) {
-        return (new IntDZBP()).decompress(src);
+        return (new IntAscSDBP()).decompress(src);
     }
 
     @Override

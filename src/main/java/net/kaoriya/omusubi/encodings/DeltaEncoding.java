@@ -24,6 +24,26 @@ public final class DeltaEncoding {
         }
     }
 
+    public static class IntAscendDecoder extends IntEncoder {
+        public IntAscendDecoder(int contextValue) {
+            super(contextValue);
+        }
+
+        public IntAscendDecoder() {
+            this(0);
+        }
+
+        public int encodeInt(int value) {
+            if (value < 0) {
+                throw new IllegalArgumentException(
+                        String.format(
+                            "input:%1$d must be greater or equal than zero",
+                            value));
+            }
+            return this.contextValue += value;
+        }
+    }
+
     public static class IntDescendEncoder extends IntDecoder {
         public IntDescendEncoder(int contextValue) {
             super(contextValue);
