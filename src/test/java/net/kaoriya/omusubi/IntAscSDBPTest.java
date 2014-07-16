@@ -28,7 +28,7 @@ public class IntAscSDBPTest
     }
 
     static List<IntAscSDBP.Reader> newReaders(int[][] dataSet) {
-        List<IntAscSDBP.Reader> readers = new LinkedList<>();
+        List<IntAscSDBP.Reader> readers = new LinkedList<IntAscSDBP.Reader>();
         for (int[] data : dataSet) {
             IntAscSDBP.Reader r = new IntAscSDBP.Reader(
                     new IntArrayInputStream(data));

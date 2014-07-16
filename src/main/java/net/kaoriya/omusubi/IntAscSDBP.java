@@ -89,7 +89,7 @@ public class IntAscSDBP extends IntCodec
     }
 
     public static byte[] union(byte[] a, byte[] b, byte[] ...others) {
-        List<Reader> readers = new LinkedList<>();
+        List<Reader> readers = new LinkedList<Reader>();
         readers.add(newBytesDecompressReader(a));
         readers.add(newBytesDecompressReader(b));
         for (byte[] c : others) {
