@@ -124,7 +124,6 @@ public class IntAscSDBPTest
         assertFalse(IntAscSDBP.allReadersHaveInt(r, 4));
         assertFalse(IntAscSDBP.allReadersHaveInt(r, 5));
         assertTrue(IntAscSDBP.allReadersHaveInt(r, 6));
-        assertFalse(IntAscSDBP.allReadersHaveInt(r, 6));
         assertFalse(IntAscSDBP.allReadersHaveInt(r, 7));
         assertFalse(IntAscSDBP.allReadersHaveInt(r, 8));
         assertFalse(IntAscSDBP.allReadersHaveInt(r, 9));
@@ -134,4 +133,52 @@ public class IntAscSDBPTest
         assertFalse(IntAscSDBP.allReadersHaveInt(r, 13));
         assertFalse(IntAscSDBP.allReadersHaveInt(r, 999));
     }
+
+    @Test
+    public void anyReadersHaveInt_empty() {
+        List<IntAscSDBP.Reader> r = newReaders(new int[][]{
+            new int[]{},
+        });
+        assertFalse(IntAscSDBP.anyReadersHaveInt(r, 0));
+        assertFalse(IntAscSDBP.anyReadersHaveInt(r, 1));
+        assertFalse(IntAscSDBP.anyReadersHaveInt(r, 999));
+    }
+
+    @Test
+    public void anyReadersHaveInt_single() {
+        List<IntAscSDBP.Reader> r = newReaders(new int[][]{
+            new int[]{ 0, 0, 0, 1, 1, 1, 2, 2, 2 },
+        });
+        assertTrue(IntAscSDBP.anyReadersHaveInt(r, 0));
+        assertFalse(IntAscSDBP.anyReadersHaveInt(r, 0));
+        assertTrue(IntAscSDBP.anyReadersHaveInt(r, 1));
+        assertFalse(IntAscSDBP.anyReadersHaveInt(r, 1));
+        assertTrue(IntAscSDBP.anyReadersHaveInt(r, 2));
+        assertFalse(IntAscSDBP.anyReadersHaveInt(r, 2));
+        assertFalse(IntAscSDBP.anyReadersHaveInt(r, 999));
+    }
+
+    @Test
+    public void anyReadersHaveInt_dual() {
+        List<IntAscSDBP.Reader> r = newReaders(new int[][] {
+            new int[]{ 0, 2, 4, 6, 8, 10, 12 },
+            new int[]{ 0, 3, 6, 9, 12 },
+        });
+        assertTrue(IntAscSDBP.anyReadersHaveInt(r, 0));
+        assertFalse(IntAscSDBP.anyReadersHaveInt(r, 1));
+        assertTrue(IntAscSDBP.anyReadersHaveInt(r, 2));
+        assertTrue(IntAscSDBP.anyReadersHaveInt(r, 3));
+        assertTrue(IntAscSDBP.anyReadersHaveInt(r, 4));
+        assertFalse(IntAscSDBP.anyReadersHaveInt(r, 5));
+        assertTrue(IntAscSDBP.anyReadersHaveInt(r, 6));
+        assertFalse(IntAscSDBP.anyReadersHaveInt(r, 7));
+        assertTrue(IntAscSDBP.anyReadersHaveInt(r, 8));
+        assertTrue(IntAscSDBP.anyReadersHaveInt(r, 9));
+        assertTrue(IntAscSDBP.anyReadersHaveInt(r, 10));
+        assertFalse(IntAscSDBP.anyReadersHaveInt(r, 11));
+        assertTrue(IntAscSDBP.anyReadersHaveInt(r, 12));
+        assertFalse(IntAscSDBP.anyReadersHaveInt(r, 13));
+        assertFalse(IntAscSDBP.anyReadersHaveInt(r, 999));
+    }
+
 }

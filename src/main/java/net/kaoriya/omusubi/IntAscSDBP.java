@@ -130,6 +130,20 @@ public class IntAscSDBP extends IntCodec
         return retval;
     }
 
+    static boolean anyReadersHaveInt(List<Reader> readers, int n) {
+        boolean retval = false;
+        for (Reader r : readers) {
+            Integer v = r.last();
+            if (v != null && v.intValue() == n) {
+                retval = true;
+                break;
+            }
+        }
+        // skip same or less values.
+        skipEqualOrLessValues(readers, n);
+        return retval;
+    }
+
     public static byte[] union(byte[] a, byte[] b, byte[] ...others) {
         List<Reader> readers = new LinkedList<Reader>();
         readers.add(newBytesDecompressReader(a));
@@ -166,8 +180,25 @@ public class IntAscSDBP extends IntCodec
         return toBytes(os.toIntArray());
     }
 
-    public static byte[] difference(byte[] a, byte[] b) {
-        // TODO:
-        return null;
+    public static byte[] difference(byte[] a, byte[] b, byte[] ...others) {
+        Reader pivot = newBytesDecompressReader(a);
+        List<Reader> readers = new LinkedList<Reader>();
+        readers.add(newBytesDecompressReader(b));
+        for (byte[] c : others) {
+            readers.add(newBytesDecompressReader(c));
+        }
+        IntArrayOutputStream os = new IntArrayOutputStream();
+        Integer v = pivot.last;
+        while (v != null) {
+            if (!anyReadersHaveInt(readers, v)) {
+                os.write(v.intValue());
+            }
+            Integer w = pivot.read();
+            while (w != null && w <= v) {
+                w = pivot.read();
+            }
+            v = w;
+        }
+        return toBytes(os.toIntArray());
     }
 }
