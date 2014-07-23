@@ -87,6 +87,15 @@ public class IntAscSDBP extends IntCodec
         return r;
     }
 
+    static void skipEqualOrLessValues(List<Reader> readers, int n) {
+        for (Reader r : readers) {
+            Integer v = r.last();
+            while (v != null && v <= n) {
+                v = r.read();
+            }
+        }
+    }
+
     static Integer fetchMinimumInt(List<Reader> readers) {
         Reader minR = null;
         for (Reader r : readers) {
@@ -103,13 +112,22 @@ public class IntAscSDBP extends IntCodec
         }
         // skip same or less values.
         Integer minV = minR.last();
+        skipEqualOrLessValues(readers, minV.intValue());
+        return minV;
+    }
+
+    static boolean allReadersHaveInt(List<Reader> readers, int n) {
+        boolean retval = true;
         for (Reader r : readers) {
             Integer v = r.last();
-            while (v != null && v <= minV) {
-                v = r.read();
+            if (v == null || v.intValue() != n) {
+                retval = false;
+                break;
             }
         }
-        return minV;
+        // skip same or less values.
+        skipEqualOrLessValues(readers, n);
+        return retval;
     }
 
     public static byte[] union(byte[] a, byte[] b, byte[] ...others) {
@@ -131,8 +149,21 @@ public class IntAscSDBP extends IntCodec
     }
 
     public static byte[] intersect(byte[] a, byte[] b, byte[] ...others) {
-        // TODO:
-        return null;
+        Reader pivot = newBytesDecompressReader(a);
+        List<Reader> readers = new LinkedList<Reader>();
+        readers.add(newBytesDecompressReader(b));
+        for (byte[] c : others) {
+            readers.add(newBytesDecompressReader(c));
+        }
+        IntArrayOutputStream os = new IntArrayOutputStream();
+        Integer n = pivot.last;
+        while (n != null) {
+            if (allReadersHaveInt(readers, n)) {
+                os.write(n.intValue());
+            }
+            n = pivot.read();
+        }
+        return toBytes(os.toIntArray());
     }
 
     public static byte[] difference(byte[] a, byte[] b) {
