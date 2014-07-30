@@ -80,7 +80,7 @@ public class IntAscSDBP extends IntCodec
         IntDecompressStream ds = new IntDecompressStream(
                 ByteBuffer.wrap(b).asIntBuffer(),
                 new IntEncodingFilter.Factory(
-                    new DeltaEncoding.IntAscendEncoder()),
+                    new DeltaEncoding.IntAscendDecoder()),
                 new IntBitPacking());
         Reader r = new Reader(ds);
         r.read();
