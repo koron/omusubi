@@ -151,6 +151,10 @@ public class IntAscSDBP extends IntCodec
         for (byte[] c : others) {
             readers.add(newBytesDecompressReader(c));
         }
+        return toBytes(union(readers).toIntArray());
+    }
+
+    public static IntArrayOutputStream union(List<Reader> readers) {
         IntArrayOutputStream os = new IntArrayOutputStream();
         while (true) {
             Integer n = fetchMinimumInt(readers);
@@ -159,7 +163,7 @@ public class IntAscSDBP extends IntCodec
             }
             os.write(n.intValue());
         }
-        return toBytes(os.toIntArray());
+        return os;
     }
 
     public static byte[] intersect(byte[] a, byte[] b, byte[] ...others) {
@@ -169,6 +173,13 @@ public class IntAscSDBP extends IntCodec
         for (byte[] c : others) {
             readers.add(newBytesDecompressReader(c));
         }
+        return toBytes(intersect(pivot, readers).toIntArray());
+    }
+
+    public static IntArrayOutputStream intersect(
+            Reader pivot,
+            List<Reader> readers)
+    {
         IntArrayOutputStream os = new IntArrayOutputStream();
         Integer n = pivot.last;
         while (n != null) {
@@ -177,7 +188,7 @@ public class IntAscSDBP extends IntCodec
             }
             n = pivot.read();
         }
-        return toBytes(os.toIntArray());
+        return os;
     }
 
     public static byte[] difference(byte[] a, byte[] b, byte[] ...others) {
@@ -187,6 +198,13 @@ public class IntAscSDBP extends IntCodec
         for (byte[] c : others) {
             readers.add(newBytesDecompressReader(c));
         }
+        return toBytes(difference(pivot, readers).toIntArray());
+    }
+
+    public static IntArrayOutputStream difference(
+            Reader pivot,
+            List<Reader> readers)
+    {
         IntArrayOutputStream os = new IntArrayOutputStream();
         Integer v = pivot.last;
         while (v != null) {
@@ -199,6 +217,6 @@ public class IntAscSDBP extends IntCodec
             }
             v = w;
         }
-        return toBytes(os.toIntArray());
+        return os;
     }
 }
