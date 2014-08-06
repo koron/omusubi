@@ -61,17 +61,17 @@ public class IntAscSDBP extends IntCodec
         return new IntDecompressStream(src, null, null);
     }
 
-    static class Reader {
+    public static class Reader {
         IntInputStream stream;
         Integer last = null;
-        Reader(IntInputStream stream) {
+        public Reader(IntInputStream stream) {
             this.stream = stream;
         }
-        Integer read() {
+        public Integer read() {
             this.last = this.stream.read();
             return this.last;
         }
-        Integer last() {
+        public Integer last() {
             return this.last;
         }
     }
