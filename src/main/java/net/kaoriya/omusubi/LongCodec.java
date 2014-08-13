@@ -14,6 +14,14 @@ public abstract class LongCodec {
 
     public abstract void decompress(LongBuffer src, LongOutputStream dst);
 
+    public LongInputStream newCompressStream(LongBuffer src) {
+        throw new UnsupportedOperationException();
+    }
+
+    public LongInputStream newDecompressStream(LongBuffer src) {
+        throw new UnsupportedOperationException();
+    }
+
     protected int decompressLength(LongBuffer src) {
         return -1;
     }

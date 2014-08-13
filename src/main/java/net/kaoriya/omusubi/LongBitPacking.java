@@ -17,11 +17,14 @@ public class LongBitPacking extends LongCodec
 
     private final int blockNum;
 
+    private final int[] maxBits;
+
     private final long[] packBuf;
 
     public LongBitPacking(int blockLen, int blockNum) {
         this.blockLen = blockLen;
         this.blockNum = blockNum;
+        this.maxBits = new int[blockNum];
         this.packBuf = new long[blockLen];
     }
 
@@ -162,24 +165,31 @@ public class LongBitPacking extends LongCodec
             LongFilter filter)
     {
         int srclen = src.limit() - src.position();
-        int[] maxBits = new int[this.blockNum];
         while (src.remaining() >= this.blockLen * this.blockNum) {
-            src.mark();
-            filter.saveContext();
-            long head = 0;
-            for (int i = 0; i < this.blockNum; ++i) {
-                long n = maxBits[i] = countMaxBits(src, this.blockLen, filter);
-                head = (head << 8) | n;
-            }
-            filter.restoreContext();
-            src.reset();
-
-            dst.write(head);
-            for (int i = 0; i < this.blockNum; ++i) {
-                pack(src, dst, maxBits[i], this.blockLen, filter);
-            }
+            compressChunk(src, dst, filter);
         }
         return;
+    }
+
+    public void compressChunk(
+            LongBuffer src,
+            LongOutputStream dst, 
+            LongFilter filter)
+    {
+        src.mark();
+        filter.saveContext();
+        long head = 0;
+        for (int i = 0; i < this.blockNum; ++i) {
+            long n = this.maxBits[i] = countMaxBits(src, this.blockLen, filter);
+            head = (head << 8) | n;
+        }
+        filter.restoreContext();
+        src.reset();
+
+        dst.write(head);
+        for (int i = 0; i < this.blockNum; ++i) {
+            pack(src, dst, this.maxBits[i], this.blockLen, filter);
+        }
     }
 
     // @Implemnets: LongCodec

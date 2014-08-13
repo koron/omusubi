@@ -88,6 +88,26 @@ public final class DeltaEncoding {
         }
     }
 
+    public static class LongAscendDecoder extends LongEncoder {
+        public LongAscendDecoder(long contextValue) {
+            super(contextValue);
+        }
+
+        public LongAscendDecoder() {
+            this(0);
+        }
+
+        public long encodeLong(long value) {
+            if (value < 0) {
+                throw new IllegalArgumentException(
+                        String.format(
+                            "input:%1$d must be greater or equal than zero",
+                            value));
+            }
+            return this.contextValue += value;
+        }
+    }
+
     public static class LongDescendEncoder extends LongDecoder {
         public LongDescendEncoder(long contextValue) {
             super(contextValue);
