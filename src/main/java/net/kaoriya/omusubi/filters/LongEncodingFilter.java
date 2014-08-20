@@ -1,7 +1,5 @@
 package net.kaoriya.omusubi.filters;
 
-import net.kaoriya.omusubi.LongFilter;
-import net.kaoriya.omusubi.LongFilterFactory;
 import net.kaoriya.omusubi.encodings.LongEncoder;
 
 public class LongEncodingFilter implements LongFilter {
@@ -30,7 +28,7 @@ public class LongEncodingFilter implements LongFilter {
 
     private long savedContext = 0;
 
-    LongEncodingFilter(LongEncoder encoder) {
+    public LongEncodingFilter(LongEncoder encoder) {
         this.encoder = encoder;
     }
 

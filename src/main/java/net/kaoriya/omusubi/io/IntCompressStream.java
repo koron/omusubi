@@ -4,8 +4,8 @@ import java.nio.IntBuffer;
 import java.util.Arrays;
 
 import net.kaoriya.omusubi.IntBitPacking;
-import net.kaoriya.omusubi.IntFilter;
-import net.kaoriya.omusubi.IntFilterFactory;
+import net.kaoriya.omusubi.filters.IntFilter;
+import net.kaoriya.omusubi.filters.IntFilterFactory;
 
 public class IntCompressStream extends IntBlockedInputStream {
 

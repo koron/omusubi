@@ -5,6 +5,8 @@ import java.util.Arrays;
 
 import static net.kaoriya.omusubi.IntBitPackingPacks.*;
 import static net.kaoriya.omusubi.IntBitPackingUnpacks.*;
+import net.kaoriya.omusubi.filters.IntFilter;
+import net.kaoriya.omusubi.filters.ThroughIntFilter;
 import net.kaoriya.omusubi.io.IntOutputStream;
 
 public class IntBitPacking extends IntCodec

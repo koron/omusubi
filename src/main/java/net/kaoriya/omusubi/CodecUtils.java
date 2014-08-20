@@ -4,6 +4,10 @@ import java.nio.IntBuffer;
 import java.nio.LongBuffer;
 import java.util.Arrays;
 
+import net.kaoriya.omusubi.filters.IntFilter;
+import net.kaoriya.omusubi.filters.IntFilterFactory;
+import net.kaoriya.omusubi.filters.LongFilter;
+import net.kaoriya.omusubi.filters.LongFilterFactory;
 import net.kaoriya.omusubi.io.IntBufferOutputStream;
 import net.kaoriya.omusubi.io.IntOutputStream;
 import net.kaoriya.omusubi.io.LongBufferOutputStream;

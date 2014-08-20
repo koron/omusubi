@@ -7,6 +7,7 @@ import java.util.LinkedList;
 
 import net.kaoriya.omusubi.encodings.DeltaEncoding;
 import net.kaoriya.omusubi.filters.IntEncodingFilter;
+import net.kaoriya.omusubi.filters.IntFilterFactory;
 
 import net.kaoriya.omusubi.io.IntArrayOutputStream;
 import net.kaoriya.omusubi.io.IntCompressStream;

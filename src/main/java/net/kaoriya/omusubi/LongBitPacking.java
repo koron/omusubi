@@ -2,6 +2,8 @@ package net.kaoriya.omusubi;
 
 import java.nio.LongBuffer;
 
+import net.kaoriya.omusubi.filters.LongFilter;
+import net.kaoriya.omusubi.filters.ThroughLongFilter;
 import net.kaoriya.omusubi.io.LongOutputStream;
 
 public class LongBitPacking extends LongCodec
