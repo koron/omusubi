@@ -1,22 +1,6 @@
-package net.kaoriya.omusubi;
+package net.kaoriya.omusubi.encodings;
 
 public final class DeltaZigzagEncoding {
-
-    public static class IntContext {
-        protected int contextValue;
-
-        protected IntContext(int contextValue) {
-            this.contextValue = contextValue;
-        }
-
-        public void setContextValue(int contextValue) {
-            this.contextValue = contextValue;
-        }
-
-        public int getContextValue() {
-            return this.contextValue;
-        }
-    }
 
     public static class IntEncoder extends IntContext {
         public IntEncoder(int contextValue) {
@@ -102,25 +86,6 @@ public final class DeltaZigzagEncoding {
 
         public int[] decodeArray(int[] src) {
             return decodeArray(src, 0, src.length, new int[src.length], 0);
-        }
-    }
-
-    /**
-     * Context for long value.
-     */
-    public static class LongContext {
-        protected long contextValue;
-
-        protected LongContext(long contextValue) {
-            this.contextValue = contextValue;
-        }
-
-        public void setContextValue(long contextValue) {
-            this.contextValue = contextValue;
-        }
-
-        public long getContextValue() {
-            return this.contextValue;
         }
     }
 
