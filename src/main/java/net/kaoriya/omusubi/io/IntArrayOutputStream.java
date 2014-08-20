@@ -1,17 +1,17 @@
-package net.kaoriya.omusubi;
+package net.kaoriya.omusubi.io;
 
-public class LongArrayOutputStream extends LongOutputStream
+public class IntArrayOutputStream extends IntOutputStream
 {
-    private long[] array;
+    private int[] array;
 
     private int writtenCount;
 
-    public LongArrayOutputStream(int capacity) {
-        this.array = new long[capacity];
+    public IntArrayOutputStream(int capacity) {
+        this.array = new int[capacity];
         this.writtenCount = 0;
     }
 
-    public LongArrayOutputStream() {
+    public IntArrayOutputStream() {
         this(512);
     }
 
@@ -44,38 +44,38 @@ public class LongArrayOutputStream extends LongOutputStream
         if (newSize <= this.array.length) {
             return;
         }
-        long[] newArray = new long[newSize];
+        int[] newArray = new int[newSize];
         System.arraycopy(this.array, 0, newArray, 0, this.writtenCount);
         this.array = newArray;
     }
 
-    public void write(long n) {
+    public void write(int n) {
         extend(1);
         this.array[this.writtenCount++] = n;
     }
 
     @Override
-    public void write(long[] array, int offset, int length) {
+    public void write(int[] array, int offset, int length) {
         extend(length);
         System.arraycopy(array, offset, this.array, this.writtenCount, length);
         this.writtenCount += length;
     }
 
     /**
-     * Get count of written long values.
+     * Get count of written int values.
      */
     public int count() {
         return this.writtenCount;
     }
 
     /**
-     * Get long array.
+     * Get int array.
      */
-    public long[] toLongArray() {
+    public int[] toIntArray() {
         if (this.array.length == this.writtenCount) {
             return this.array;
         } else {
-            long[] newArray = new long[this.writtenCount];
+            int[] newArray = new int[this.writtenCount];
             System.arraycopy(this.array, 0, newArray, 0, this.writtenCount);
             return newArray;
         }

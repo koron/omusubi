@@ -2,6 +2,8 @@ package net.kaoriya.omusubi;
 
 import java.nio.IntBuffer;
 
+import net.kaoriya.omusubi.io.IntOutputStream;
+
 // This class was generated automatically, don't modify.
 class IntBitPackingPacks
 {

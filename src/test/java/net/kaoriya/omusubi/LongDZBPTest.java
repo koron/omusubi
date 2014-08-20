@@ -5,6 +5,8 @@ import java.nio.LongBuffer;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+import net.kaoriya.omusubi.io.LongBufferOutputStream;
+
 public class LongDZBPTest
 {
     @Test

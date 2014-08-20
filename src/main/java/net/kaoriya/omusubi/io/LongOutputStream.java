@@ -1,4 +1,4 @@
-package net.kaoriya.omusubi;
+package net.kaoriya.omusubi.io;
 
 /**
  * Output stream for long values..

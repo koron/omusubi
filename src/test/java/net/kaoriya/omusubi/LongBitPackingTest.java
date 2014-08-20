@@ -6,6 +6,8 @@ import java.util.Random;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+import net.kaoriya.omusubi.io.LongBufferOutputStream;
+
 public class LongBitPackingTest
 {
     public static long[] randomLongs(Random r, int len) {

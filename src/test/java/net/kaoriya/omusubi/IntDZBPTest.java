@@ -6,6 +6,8 @@ import java.util.Arrays;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+import net.kaoriya.omusubi.io.IntBufferOutputStream;
+
 public class IntDZBPTest
 {
     @Test

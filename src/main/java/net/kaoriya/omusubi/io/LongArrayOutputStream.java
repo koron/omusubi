@@ -1,17 +1,17 @@
-package net.kaoriya.omusubi;
+package net.kaoriya.omusubi.io;
 
-public class IntArrayOutputStream extends IntOutputStream
+public class LongArrayOutputStream extends LongOutputStream
 {
-    private int[] array;
+    private long[] array;
 
     private int writtenCount;
 
-    public IntArrayOutputStream(int capacity) {
-        this.array = new int[capacity];
+    public LongArrayOutputStream(int capacity) {
+        this.array = new long[capacity];
         this.writtenCount = 0;
     }
 
-    public IntArrayOutputStream() {
+    public LongArrayOutputStream() {
         this(512);
     }
 
@@ -44,38 +44,38 @@ public class IntArrayOutputStream extends IntOutputStream
         if (newSize <= this.array.length) {
             return;
         }
-        int[] newArray = new int[newSize];
+        long[] newArray = new long[newSize];
         System.arraycopy(this.array, 0, newArray, 0, this.writtenCount);
         this.array = newArray;
     }
 
-    public void write(int n) {
+    public void write(long n) {
         extend(1);
         this.array[this.writtenCount++] = n;
     }
 
     @Override
-    public void write(int[] array, int offset, int length) {
+    public void write(long[] array, int offset, int length) {
         extend(length);
         System.arraycopy(array, offset, this.array, this.writtenCount, length);
         this.writtenCount += length;
     }
 
     /**
-     * Get count of written int values.
+     * Get count of written long values.
      */
     public int count() {
         return this.writtenCount;
     }
 
     /**
-     * Get int array.
+     * Get long array.
      */
-    public int[] toIntArray() {
+    public long[] toLongArray() {
         if (this.array.length == this.writtenCount) {
             return this.array;
         } else {
-            int[] newArray = new int[this.writtenCount];
+            long[] newArray = new long[this.writtenCount];
             System.arraycopy(this.array, 0, newArray, 0, this.writtenCount);
             return newArray;
         }

@@ -6,6 +6,8 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import java.util.LinkedList;
 
+import net.kaoriya.omusubi.io.IntArrayInputStream;
+
 public class IntAscSDBPTest
 {
     @Test

@@ -3,6 +3,8 @@ package net.kaoriya.omusubi;
 import java.nio.IntBuffer;
 import java.util.Arrays;
 
+import net.kaoriya.omusubi.io.IntOutputStream;
+
 /**
  * Int Delta Zigzag Encoded Bit Packing.
  */

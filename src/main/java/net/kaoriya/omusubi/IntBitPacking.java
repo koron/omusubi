@@ -5,6 +5,7 @@ import java.util.Arrays;
 
 import static net.kaoriya.omusubi.IntBitPackingPacks.*;
 import static net.kaoriya.omusubi.IntBitPackingUnpacks.*;
+import net.kaoriya.omusubi.io.IntOutputStream;
 
 public class IntBitPacking extends IntCodec
 {
@@ -196,7 +197,7 @@ public class IntBitPacking extends IntCodec
         }
     }
 
-    protected void compress(
+    public void compress(
             IntBuffer src,
             IntOutputStream dst, 
             IntFilter filter)
@@ -331,7 +332,7 @@ public class IntBitPacking extends IntCodec
         dst.write(this.unpackBuf, 0, len);
     }
 
-    protected void decompress(
+    public void decompress(
             IntBuffer src,
             IntOutputStream dst,
             IntFilter filter,

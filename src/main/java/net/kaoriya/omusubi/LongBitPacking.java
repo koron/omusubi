@@ -2,6 +2,8 @@ package net.kaoriya.omusubi;
 
 import java.nio.LongBuffer;
 
+import net.kaoriya.omusubi.io.LongOutputStream;
+
 public class LongBitPacking extends LongCodec
 {
     public static final int BLOCK_LEN = 16;
@@ -159,7 +161,7 @@ public class LongBitPacking extends LongCodec
         }
     }
 
-    protected void compress(
+    public void compress(
             LongBuffer src,
             LongOutputStream dst, 
             LongFilter filter)
@@ -232,7 +234,7 @@ public class LongBitPacking extends LongCodec
         }
     }
 
-    protected void decompress(
+    public void decompress(
             LongBuffer src,
             LongOutputStream dst,
             LongFilter filter,

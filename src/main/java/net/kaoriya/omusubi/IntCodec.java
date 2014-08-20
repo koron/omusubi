@@ -3,6 +3,11 @@ package net.kaoriya.omusubi;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 
+import net.kaoriya.omusubi.io.ByteArrayIntOutputStream;
+import net.kaoriya.omusubi.io.IntArrayOutputStream;
+import net.kaoriya.omusubi.io.IntInputStream;
+import net.kaoriya.omusubi.io.IntOutputStream;
+
 /**
  * IntCodec interface.
  *

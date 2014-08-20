@@ -1,7 +1,11 @@
-package net.kaoriya.omusubi;
+package net.kaoriya.omusubi.io;
 
 import java.nio.IntBuffer;
 import java.util.Arrays;
+
+import net.kaoriya.omusubi.IntBitPacking;
+import net.kaoriya.omusubi.IntFilter;
+import net.kaoriya.omusubi.IntFilterFactory;
 
 public class IntCompressStream extends IntBlockedInputStream {
 

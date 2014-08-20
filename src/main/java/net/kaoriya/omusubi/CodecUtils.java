@@ -4,6 +4,11 @@ import java.nio.IntBuffer;
 import java.nio.LongBuffer;
 import java.util.Arrays;
 
+import net.kaoriya.omusubi.io.IntBufferOutputStream;
+import net.kaoriya.omusubi.io.IntOutputStream;
+import net.kaoriya.omusubi.io.LongBufferOutputStream;
+import net.kaoriya.omusubi.io.LongOutputStream;
+
 final class CodecUtils {
 
     static void encodeBlockPack(

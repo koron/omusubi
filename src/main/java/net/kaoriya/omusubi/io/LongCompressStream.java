@@ -1,10 +1,13 @@
-package net.kaoriya.omusubi;
+package net.kaoriya.omusubi.io;
 
 import java.nio.LongBuffer;
 import java.util.Arrays;
 
+import net.kaoriya.omusubi.LongBitPacking;
+import net.kaoriya.omusubi.LongFilter;
+import net.kaoriya.omusubi.LongFilterFactory;
 
-public class LongDecompressStream extends LongBlockedInputStream {
+public class LongCompressStream extends LongBlockedInputStream {
 
     private final LongBuffer source;
 
@@ -14,19 +17,19 @@ public class LongDecompressStream extends LongBlockedInputStream {
 
     private final int chunkSize;
 
-    public LongDecompressStream(
+    public LongCompressStream(
             LongBuffer source,
             LongFilterFactory factory,
             LongBitPacking packer)
     {
-        super(packer.getBlockSize());
+        super(packer.getBlockSize() + 1);
         this.source = source;
-        int outLen = this.source.remaining();
-        if (outLen == 0) {
+        int srcLen = this.source.remaining();
+        if (srcLen == 0) {
             this.filter = factory.newFilter(0);
         } else {
             long first = this.source.get();
-            updateBlock(new long[]{ first });
+            updateBlock(new long[]{ srcLen, first });
             this.filter = factory.newFilter(first);
         }
         this.packer = packer;
@@ -36,13 +39,12 @@ public class LongDecompressStream extends LongBlockedInputStream {
     public void fetchBlock(LongOutputStream dst) {
         int remain = this.source.remaining();
         if (remain >= this.chunkSize) {
-            this.packer.decompress(this.source, dst, this.filter, 1);
+            this.packer.compressChunk(this.source, dst, this.filter);
         } else if (remain > 0) {
             long[] last = new long[this.chunkSize];
-            LongBuffer buf = LongBuffer.wrap(last);
-            packer.decompress(this.source, new LongBufferOutputStream(buf),
-                    filter, 1);
-            dst.write(last, 0, remain);
+            this.source.get(last, 0, remain);
+            Arrays.fill(last, remain, last.length, last[remain - 1]);
+            this.packer.compress(LongBuffer.wrap(last), dst, this.filter);
         }
     }
 }

@@ -1,9 +1,13 @@
-package net.kaoriya.omusubi;
+package net.kaoriya.omusubi.io;
 
 import java.nio.LongBuffer;
 import java.util.Arrays;
 
-public class LongCompressStream extends LongBlockedInputStream {
+import net.kaoriya.omusubi.LongBitPacking;
+import net.kaoriya.omusubi.LongFilter;
+import net.kaoriya.omusubi.LongFilterFactory;
+
+public class LongDecompressStream extends LongBlockedInputStream {
 
     private final LongBuffer source;
 
@@ -13,19 +17,19 @@ public class LongCompressStream extends LongBlockedInputStream {
 
     private final int chunkSize;
 
-    public LongCompressStream(
+    public LongDecompressStream(
             LongBuffer source,
             LongFilterFactory factory,
             LongBitPacking packer)
     {
-        super(packer.getBlockSize() + 1);
+        super(packer.getBlockSize());
         this.source = source;
-        int srcLen = this.source.remaining();
-        if (srcLen == 0) {
+        int outLen = this.source.remaining();
+        if (outLen == 0) {
             this.filter = factory.newFilter(0);
         } else {
             long first = this.source.get();
-            updateBlock(new long[]{ srcLen, first });
+            updateBlock(new long[]{ first });
             this.filter = factory.newFilter(first);
         }
         this.packer = packer;
@@ -35,12 +39,13 @@ public class LongCompressStream extends LongBlockedInputStream {
     public void fetchBlock(LongOutputStream dst) {
         int remain = this.source.remaining();
         if (remain >= this.chunkSize) {
-            this.packer.compressChunk(this.source, dst, this.filter);
+            this.packer.decompress(this.source, dst, this.filter, 1);
         } else if (remain > 0) {
             long[] last = new long[this.chunkSize];
-            this.source.get(last, 0, remain);
-            Arrays.fill(last, remain, last.length, last[remain - 1]);
-            this.packer.compress(LongBuffer.wrap(last), dst, this.filter);
+            LongBuffer buf = LongBuffer.wrap(last);
+            packer.decompress(this.source, new LongBufferOutputStream(buf),
+                    filter, 1);
+            dst.write(last, 0, remain);
         }
     }
 }

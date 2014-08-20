@@ -3,6 +3,7 @@ package net.kaoriya.omusubi;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 
+import net.kaoriya.omusubi.io.IntOutputStream;
 
 public class IntJustCopy extends IntCodec
 {

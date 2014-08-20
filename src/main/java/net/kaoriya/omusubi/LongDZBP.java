@@ -3,6 +3,9 @@ package net.kaoriya.omusubi;
 import java.nio.LongBuffer;
 import java.util.Arrays;
 
+import net.kaoriya.omusubi.io.LongBufferOutputStream;
+import net.kaoriya.omusubi.io.LongOutputStream;
+
 /**
  * Long Delta Zigzag Encoded Bit Packing.
  */

@@ -1,4 +1,4 @@
-package net.kaoriya.omusubi;
+package net.kaoriya.omusubi.io;
 
 import java.io.ByteArrayOutputStream;
 import java.nio.ByteBuffer;

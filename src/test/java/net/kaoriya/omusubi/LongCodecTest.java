@@ -4,6 +4,8 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import java.nio.LongBuffer;
 
+import net.kaoriya.omusubi.io.LongOutputStream;
+
 public class LongCodecTest
 {
     public static class ThroughCodec extends LongCodec {
