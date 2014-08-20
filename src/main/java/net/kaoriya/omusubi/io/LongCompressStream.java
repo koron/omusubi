@@ -3,9 +3,9 @@ package net.kaoriya.omusubi.io;
 import java.nio.LongBuffer;
 import java.util.Arrays;
 
-import net.kaoriya.omusubi.LongBitPacking;
 import net.kaoriya.omusubi.filters.LongFilter;
 import net.kaoriya.omusubi.filters.LongFilterFactory;
+import net.kaoriya.omusubi.packers.LongBitPacking;
 
 public class LongCompressStream extends LongBlockedInputStream {
 

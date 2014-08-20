@@ -7,6 +7,7 @@ import net.kaoriya.omusubi.encodings.DeltaZigzagEncoding;
 import net.kaoriya.omusubi.filters.LongFilter;
 import net.kaoriya.omusubi.io.LongBufferOutputStream;
 import net.kaoriya.omusubi.io.LongOutputStream;
+import net.kaoriya.omusubi.packers.LongBitPacking;
 
 /**
  * Long Delta Zigzag Encoded Bit Packing.

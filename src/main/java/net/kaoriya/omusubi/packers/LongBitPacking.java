@@ -1,7 +1,8 @@
-package net.kaoriya.omusubi;
+package net.kaoriya.omusubi.packers;
 
 import java.nio.LongBuffer;
 
+import net.kaoriya.omusubi.LongCodec;
 import net.kaoriya.omusubi.filters.LongFilter;
 import net.kaoriya.omusubi.filters.ThroughLongFilter;
 import net.kaoriya.omusubi.io.LongOutputStream;
