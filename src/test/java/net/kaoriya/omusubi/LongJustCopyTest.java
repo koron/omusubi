@@ -6,6 +6,8 @@ import java.util.Random;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+import net.kaoriya.omusubi.io.LongArrayOutputStream;
+
 public class LongJustCopyTest
 {
     public static long[] randomLongs(Random r, int len) {

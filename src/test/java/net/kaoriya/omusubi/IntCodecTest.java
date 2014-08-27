@@ -4,6 +4,8 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import java.nio.IntBuffer;
 
+import net.kaoriya.omusubi.io.IntOutputStream;
+
 public class IntCodecTest
 {
     public static class ThroughCodec extends IntCodec {

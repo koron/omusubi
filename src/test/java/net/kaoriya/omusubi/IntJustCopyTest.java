@@ -6,6 +6,8 @@ import java.util.Random;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+import net.kaoriya.omusubi.io.IntArrayOutputStream;
+
 public class IntJustCopyTest
 {
     public static int[] randomInts(Random r, int len) {
