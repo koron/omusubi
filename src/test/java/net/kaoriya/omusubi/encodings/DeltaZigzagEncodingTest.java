@@ -1,4 +1,4 @@
-package net.kaoriya.omusubi;
+package net.kaoriya.omusubi.encodings;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -99,8 +99,7 @@ public class DeltaZigzagEncodingTest {
 
     @Test
     public void checkLongContext() {
-        DeltaZigzagEncoding.LongContext c =
-            new DeltaZigzagEncoding.LongContext(123);
+        LongContext c = new LongContext(123);
         assertEquals(123, c.getContextValue());
 
         c.setContextValue(456);

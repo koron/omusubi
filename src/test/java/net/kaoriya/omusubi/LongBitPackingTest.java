@@ -7,6 +7,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 import net.kaoriya.omusubi.io.LongBufferOutputStream;
+import net.kaoriya.omusubi.packers.LongBitPacking;
 
 public class LongBitPackingTest
 {
