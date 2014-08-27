@@ -1,4 +1,4 @@
-package net.kaoriya.omusubi;
+package net.kaoriya.omusubi.utils;
 
 import java.nio.IntBuffer;
 
@@ -6,10 +6,10 @@ import net.kaoriya.omusubi.filters.IntFilter;
 import net.kaoriya.omusubi.io.IntOutputStream;
 
 // This class was generated automatically, don't modify.
-class IntBitPackingUnpacks
+public class IntBitPackingUnpacks
 {
 
-    static void unpack1(
+    public static void unpack1(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,
@@ -55,7 +55,7 @@ class IntBitPackingUnpacks
         dst.write(buf, 0, 32);
     }
 
-    static void unpack2(
+    public static void unpack2(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,
@@ -102,7 +102,7 @@ class IntBitPackingUnpacks
         dst.write(buf, 0, 32);
     }
 
-    static void unpack3(
+    public static void unpack3(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,
@@ -152,7 +152,7 @@ class IntBitPackingUnpacks
         dst.write(buf, 0, 32);
     }
 
-    static void unpack4(
+    public static void unpack4(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,
@@ -201,7 +201,7 @@ class IntBitPackingUnpacks
         dst.write(buf, 0, 32);
     }
 
-    static void unpack5(
+    public static void unpack5(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,
@@ -255,7 +255,7 @@ class IntBitPackingUnpacks
         dst.write(buf, 0, 32);
     }
 
-    static void unpack6(
+    public static void unpack6(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,
@@ -310,7 +310,7 @@ class IntBitPackingUnpacks
         dst.write(buf, 0, 32);
     }
 
-    static void unpack7(
+    public static void unpack7(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,
@@ -368,7 +368,7 @@ class IntBitPackingUnpacks
         dst.write(buf, 0, 32);
     }
 
-    static void unpack8(
+    public static void unpack8(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,
@@ -421,7 +421,7 @@ class IntBitPackingUnpacks
         dst.write(buf, 0, 32);
     }
 
-    static void unpack9(
+    public static void unpack9(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,
@@ -483,7 +483,7 @@ class IntBitPackingUnpacks
         dst.write(buf, 0, 32);
     }
 
-    static void unpack10(
+    public static void unpack10(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,
@@ -546,7 +546,7 @@ class IntBitPackingUnpacks
         dst.write(buf, 0, 32);
     }
 
-    static void unpack11(
+    public static void unpack11(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,
@@ -612,7 +612,7 @@ class IntBitPackingUnpacks
         dst.write(buf, 0, 32);
     }
 
-    static void unpack12(
+    public static void unpack12(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,
@@ -677,7 +677,7 @@ class IntBitPackingUnpacks
         dst.write(buf, 0, 32);
     }
 
-    static void unpack13(
+    public static void unpack13(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,
@@ -747,7 +747,7 @@ class IntBitPackingUnpacks
         dst.write(buf, 0, 32);
     }
 
-    static void unpack14(
+    public static void unpack14(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,
@@ -818,7 +818,7 @@ class IntBitPackingUnpacks
         dst.write(buf, 0, 32);
     }
 
-    static void unpack15(
+    public static void unpack15(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,
@@ -892,7 +892,7 @@ class IntBitPackingUnpacks
         dst.write(buf, 0, 32);
     }
 
-    static void unpack16(
+    public static void unpack16(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,
@@ -953,7 +953,7 @@ class IntBitPackingUnpacks
         dst.write(buf, 0, 32);
     }
 
-    static void unpack17(
+    public static void unpack17(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,
@@ -1031,7 +1031,7 @@ class IntBitPackingUnpacks
         dst.write(buf, 0, 32);
     }
 
-    static void unpack18(
+    public static void unpack18(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,
@@ -1110,7 +1110,7 @@ class IntBitPackingUnpacks
         dst.write(buf, 0, 32);
     }
 
-    static void unpack19(
+    public static void unpack19(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,
@@ -1192,7 +1192,7 @@ class IntBitPackingUnpacks
         dst.write(buf, 0, 32);
     }
 
-    static void unpack20(
+    public static void unpack20(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,
@@ -1273,7 +1273,7 @@ class IntBitPackingUnpacks
         dst.write(buf, 0, 32);
     }
 
-    static void unpack21(
+    public static void unpack21(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,
@@ -1359,7 +1359,7 @@ class IntBitPackingUnpacks
         dst.write(buf, 0, 32);
     }
 
-    static void unpack22(
+    public static void unpack22(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,
@@ -1446,7 +1446,7 @@ class IntBitPackingUnpacks
         dst.write(buf, 0, 32);
     }
 
-    static void unpack23(
+    public static void unpack23(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,
@@ -1536,7 +1536,7 @@ class IntBitPackingUnpacks
         dst.write(buf, 0, 32);
     }
 
-    static void unpack24(
+    public static void unpack24(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,
@@ -1621,7 +1621,7 @@ class IntBitPackingUnpacks
         dst.write(buf, 0, 32);
     }
 
-    static void unpack25(
+    public static void unpack25(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,
@@ -1715,7 +1715,7 @@ class IntBitPackingUnpacks
         dst.write(buf, 0, 32);
     }
 
-    static void unpack26(
+    public static void unpack26(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,
@@ -1810,7 +1810,7 @@ class IntBitPackingUnpacks
         dst.write(buf, 0, 32);
     }
 
-    static void unpack27(
+    public static void unpack27(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,
@@ -1908,7 +1908,7 @@ class IntBitPackingUnpacks
         dst.write(buf, 0, 32);
     }
 
-    static void unpack28(
+    public static void unpack28(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,
@@ -2005,7 +2005,7 @@ class IntBitPackingUnpacks
         dst.write(buf, 0, 32);
     }
 
-    static void unpack29(
+    public static void unpack29(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,
@@ -2107,7 +2107,7 @@ class IntBitPackingUnpacks
         dst.write(buf, 0, 32);
     }
 
-    static void unpack30(
+    public static void unpack30(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,
@@ -2210,7 +2210,7 @@ class IntBitPackingUnpacks
         dst.write(buf, 0, 32);
     }
 
-    static void unpack31(
+    public static void unpack31(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,
@@ -2316,7 +2316,7 @@ class IntBitPackingUnpacks
         dst.write(buf, 0, 32);
     }
 
-    static void unpack32(
+    public static void unpack32(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,

@@ -1,4 +1,4 @@
-package net.kaoriya.omusubi;
+package net.kaoriya.omusubi.utils;
 
 import java.nio.IntBuffer;
 
@@ -6,10 +6,10 @@ import net.kaoriya.omusubi.filters.IntFilter;
 import net.kaoriya.omusubi.io.IntOutputStream;
 
 // This class was generated automatically, don't modify.
-class IntBitPackingPacks
+public class IntBitPackingPacks
 {
 
-    static void pack1(
+    public static void pack1(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,
@@ -54,7 +54,7 @@ class IntBitPackingPacks
         dst.write(buf, 0, 1);
     }
 
-    static void pack2(
+    public static void pack2(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,
@@ -100,7 +100,7 @@ class IntBitPackingPacks
         dst.write(buf, 0, 2);
     }
 
-    static void pack3(
+    public static void pack3(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,
@@ -150,7 +150,7 @@ class IntBitPackingPacks
         dst.write(buf, 0, 3);
     }
 
-    static void pack4(
+    public static void pack4(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,
@@ -198,7 +198,7 @@ class IntBitPackingPacks
         dst.write(buf, 0, 4);
     }
 
-    static void pack5(
+    public static void pack5(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,
@@ -252,7 +252,7 @@ class IntBitPackingPacks
         dst.write(buf, 0, 5);
     }
 
-    static void pack6(
+    public static void pack6(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,
@@ -307,7 +307,7 @@ class IntBitPackingPacks
         dst.write(buf, 0, 6);
     }
 
-    static void pack7(
+    public static void pack7(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,
@@ -365,7 +365,7 @@ class IntBitPackingPacks
         dst.write(buf, 0, 7);
     }
 
-    static void pack8(
+    public static void pack8(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,
@@ -417,7 +417,7 @@ class IntBitPackingPacks
         dst.write(buf, 0, 8);
     }
 
-    static void pack9(
+    public static void pack9(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,
@@ -479,7 +479,7 @@ class IntBitPackingPacks
         dst.write(buf, 0, 9);
     }
 
-    static void pack10(
+    public static void pack10(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,
@@ -542,7 +542,7 @@ class IntBitPackingPacks
         dst.write(buf, 0, 10);
     }
 
-    static void pack11(
+    public static void pack11(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,
@@ -608,7 +608,7 @@ class IntBitPackingPacks
         dst.write(buf, 0, 11);
     }
 
-    static void pack12(
+    public static void pack12(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,
@@ -673,7 +673,7 @@ class IntBitPackingPacks
         dst.write(buf, 0, 12);
     }
 
-    static void pack13(
+    public static void pack13(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,
@@ -743,7 +743,7 @@ class IntBitPackingPacks
         dst.write(buf, 0, 13);
     }
 
-    static void pack14(
+    public static void pack14(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,
@@ -814,7 +814,7 @@ class IntBitPackingPacks
         dst.write(buf, 0, 14);
     }
 
-    static void pack15(
+    public static void pack15(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,
@@ -888,7 +888,7 @@ class IntBitPackingPacks
         dst.write(buf, 0, 15);
     }
 
-    static void pack16(
+    public static void pack16(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,
@@ -948,7 +948,7 @@ class IntBitPackingPacks
         dst.write(buf, 0, 16);
     }
 
-    static void pack17(
+    public static void pack17(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,
@@ -1026,7 +1026,7 @@ class IntBitPackingPacks
         dst.write(buf, 0, 17);
     }
 
-    static void pack18(
+    public static void pack18(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,
@@ -1105,7 +1105,7 @@ class IntBitPackingPacks
         dst.write(buf, 0, 18);
     }
 
-    static void pack19(
+    public static void pack19(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,
@@ -1187,7 +1187,7 @@ class IntBitPackingPacks
         dst.write(buf, 0, 19);
     }
 
-    static void pack20(
+    public static void pack20(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,
@@ -1268,7 +1268,7 @@ class IntBitPackingPacks
         dst.write(buf, 0, 20);
     }
 
-    static void pack21(
+    public static void pack21(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,
@@ -1354,7 +1354,7 @@ class IntBitPackingPacks
         dst.write(buf, 0, 21);
     }
 
-    static void pack22(
+    public static void pack22(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,
@@ -1441,7 +1441,7 @@ class IntBitPackingPacks
         dst.write(buf, 0, 22);
     }
 
-    static void pack23(
+    public static void pack23(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,
@@ -1531,7 +1531,7 @@ class IntBitPackingPacks
         dst.write(buf, 0, 23);
     }
 
-    static void pack24(
+    public static void pack24(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,
@@ -1616,7 +1616,7 @@ class IntBitPackingPacks
         dst.write(buf, 0, 24);
     }
 
-    static void pack25(
+    public static void pack25(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,
@@ -1710,7 +1710,7 @@ class IntBitPackingPacks
         dst.write(buf, 0, 25);
     }
 
-    static void pack26(
+    public static void pack26(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,
@@ -1805,7 +1805,7 @@ class IntBitPackingPacks
         dst.write(buf, 0, 26);
     }
 
-    static void pack27(
+    public static void pack27(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,
@@ -1903,7 +1903,7 @@ class IntBitPackingPacks
         dst.write(buf, 0, 27);
     }
 
-    static void pack28(
+    public static void pack28(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,
@@ -2000,7 +2000,7 @@ class IntBitPackingPacks
         dst.write(buf, 0, 28);
     }
 
-    static void pack29(
+    public static void pack29(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,
@@ -2102,7 +2102,7 @@ class IntBitPackingPacks
         dst.write(buf, 0, 29);
     }
 
-    static void pack30(
+    public static void pack30(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,
@@ -2205,7 +2205,7 @@ class IntBitPackingPacks
         dst.write(buf, 0, 30);
     }
 
-    static void pack31(
+    public static void pack31(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,
@@ -2311,7 +2311,7 @@ class IntBitPackingPacks
         dst.write(buf, 0, 31);
     }
 
-    static void pack32(
+    public static void pack32(
             int[] buf,
             IntBuffer src,
             IntOutputStream dst,

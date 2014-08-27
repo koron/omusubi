@@ -1,4 +1,4 @@
-package net.kaoriya.omusubi;
+package net.kaoriya.omusubi.utils;
 
 import org.junit.Test;
 import static org.junit.Assert.*;

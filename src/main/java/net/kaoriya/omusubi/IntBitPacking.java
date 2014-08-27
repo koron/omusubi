@@ -3,8 +3,9 @@ package net.kaoriya.omusubi;
 import java.nio.IntBuffer;
 import java.util.Arrays;
 
-import static net.kaoriya.omusubi.IntBitPackingPacks.*;
-import static net.kaoriya.omusubi.IntBitPackingUnpacks.*;
+import static net.kaoriya.omusubi.utils.IntBitPackingPacks.*;
+import static net.kaoriya.omusubi.utils.IntBitPackingUnpacks.*;
+
 import net.kaoriya.omusubi.filters.IntFilter;
 import net.kaoriya.omusubi.filters.ThroughIntFilter;
 import net.kaoriya.omusubi.io.IntOutputStream;
