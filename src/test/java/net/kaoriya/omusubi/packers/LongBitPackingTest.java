@@ -1,4 +1,4 @@
-package net.kaoriya.omusubi;
+package net.kaoriya.omusubi.packers;
 
 import java.nio.LongBuffer;
 import java.util.Random;
@@ -6,8 +6,8 @@ import java.util.Random;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+import net.kaoriya.omusubi.TestUtils;
 import net.kaoriya.omusubi.io.LongBufferOutputStream;
-import net.kaoriya.omusubi.packers.LongBitPacking;
 
 public class LongBitPackingTest
 {
