@@ -1,4 +1,4 @@
-package net.kaoriya.omusubi;
+package net.kaoriya.omusubi.packers;
 
 import java.nio.IntBuffer;
 import java.util.Random;
@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import static org.junit.Assert.*;
 
+import net.kaoriya.omusubi.TestUtils;
 import net.kaoriya.omusubi.io.IntArrayOutputStream;
 import net.kaoriya.omusubi.io.IntBufferOutputStream;
 

@@ -12,6 +12,7 @@ import net.kaoriya.omusubi.io.IntBufferOutputStream;
 import net.kaoriya.omusubi.io.IntOutputStream;
 import net.kaoriya.omusubi.io.LongBufferOutputStream;
 import net.kaoriya.omusubi.io.LongOutputStream;
+import net.kaoriya.omusubi.packers.IntBitPacking;
 import net.kaoriya.omusubi.packers.LongBitPacking;
 
 final class CodecUtils {

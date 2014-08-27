@@ -7,6 +7,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 import net.kaoriya.omusubi.io.IntBufferOutputStream;
+import net.kaoriya.omusubi.packers.IntBitPacking;
 
 public class IntDZBPTest
 {

@@ -15,6 +15,8 @@ import net.kaoriya.omusubi.io.IntDecompressStream;
 import net.kaoriya.omusubi.io.IntInputStream;
 import net.kaoriya.omusubi.io.IntOutputStream;
 
+import net.kaoriya.omusubi.packers.IntBitPacking;
+
 /**
  * Int Ascending Sorted Delta Bit Packing.
  */

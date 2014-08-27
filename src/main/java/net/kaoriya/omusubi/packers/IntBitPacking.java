@@ -1,4 +1,4 @@
-package net.kaoriya.omusubi;
+package net.kaoriya.omusubi.packers;
 
 import java.nio.IntBuffer;
 import java.util.Arrays;
@@ -6,6 +6,7 @@ import java.util.Arrays;
 import static net.kaoriya.omusubi.utils.IntBitPackingPacks.*;
 import static net.kaoriya.omusubi.utils.IntBitPackingUnpacks.*;
 
+import net.kaoriya.omusubi.IntCodec;
 import net.kaoriya.omusubi.filters.IntFilter;
 import net.kaoriya.omusubi.filters.ThroughIntFilter;
 import net.kaoriya.omusubi.io.IntOutputStream;
