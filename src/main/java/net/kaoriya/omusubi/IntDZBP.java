@@ -8,6 +8,7 @@ import net.kaoriya.omusubi.filters.IntFilter;
 import net.kaoriya.omusubi.filters.IntFilterFactory;
 import net.kaoriya.omusubi.io.IntOutputStream;
 import net.kaoriya.omusubi.packers.IntBitPacking;
+import net.kaoriya.omusubi.utils.CodecUtils;
 
 /**
  * Int Delta Zigzag Encoded Bit Packing.

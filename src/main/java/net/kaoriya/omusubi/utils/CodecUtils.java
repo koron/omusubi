@@ -1,4 +1,4 @@
-package net.kaoriya.omusubi;
+package net.kaoriya.omusubi.utils;
 
 import java.nio.IntBuffer;
 import java.nio.LongBuffer;
@@ -15,9 +15,9 @@ import net.kaoriya.omusubi.io.LongOutputStream;
 import net.kaoriya.omusubi.packers.IntBitPacking;
 import net.kaoriya.omusubi.packers.LongBitPacking;
 
-final class CodecUtils {
+public final class CodecUtils {
 
-    static void encodeBlockPack(
+    public static void encodeBlockPack(
             IntBuffer src,
             IntFilterFactory filterFactory,
             IntBitPacking packer,
@@ -56,7 +56,7 @@ final class CodecUtils {
         }
     }
 
-    static void encodeBlockPack(
+    public static void encodeBlockPack(
             LongBuffer src,
             LongFilterFactory filterFactory,
             LongBitPacking packer,
@@ -95,7 +95,7 @@ final class CodecUtils {
         }
     }
 
-    static void decodeBlockPack(
+    public static void decodeBlockPack(
             IntBuffer src,
             IntFilterFactory filterFactory,
             IntBitPacking packer,
@@ -130,7 +130,7 @@ final class CodecUtils {
         }
     }
 
-    static void decodeBlockPack(
+    public static void decodeBlockPack(
             LongBuffer src,
             LongFilterFactory filterFactory,
             LongBitPacking packer,

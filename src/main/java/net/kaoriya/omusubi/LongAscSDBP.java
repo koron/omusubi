@@ -14,6 +14,7 @@ import net.kaoriya.omusubi.io.LongDecompressStream;
 import net.kaoriya.omusubi.io.LongInputStream;
 import net.kaoriya.omusubi.io.LongOutputStream;
 import net.kaoriya.omusubi.packers.LongBitPacking;
+import net.kaoriya.omusubi.utils.CodecUtils;
 
 /**
  * Long Ascending Sorted Delta Bit Packing.
