@@ -3,6 +3,11 @@ package net.kaoriya.omusubi;
 import java.nio.ByteBuffer;
 import java.nio.LongBuffer;
 
+import net.kaoriya.omusubi.io.ByteArrayLongOutputStream;
+import net.kaoriya.omusubi.io.LongArrayOutputStream;
+import net.kaoriya.omusubi.io.LongInputStream;
+import net.kaoriya.omusubi.io.LongOutputStream;
+
 /**
  * LongCodec interface.
  *

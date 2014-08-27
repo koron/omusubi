@@ -3,6 +3,7 @@ package net.kaoriya.omusubi;
 import java.nio.ByteBuffer;
 import java.nio.LongBuffer;
 
+import net.kaoriya.omusubi.io.LongOutputStream;
 
 public class LongJustCopy extends LongCodec
 {

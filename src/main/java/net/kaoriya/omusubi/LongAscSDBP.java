@@ -7,6 +7,14 @@ import java.util.LinkedList;
 
 import net.kaoriya.omusubi.encodings.DeltaEncoding;
 import net.kaoriya.omusubi.filters.LongEncodingFilter;
+import net.kaoriya.omusubi.filters.LongFilterFactory;
+import net.kaoriya.omusubi.io.LongArrayOutputStream;
+import net.kaoriya.omusubi.io.LongCompressStream;
+import net.kaoriya.omusubi.io.LongDecompressStream;
+import net.kaoriya.omusubi.io.LongInputStream;
+import net.kaoriya.omusubi.io.LongOutputStream;
+import net.kaoriya.omusubi.packers.LongBitPacking;
+import net.kaoriya.omusubi.utils.CodecUtils;
 
 /**
  * Long Ascending Sorted Delta Bit Packing.

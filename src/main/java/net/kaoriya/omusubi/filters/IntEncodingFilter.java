@@ -1,7 +1,5 @@
 package net.kaoriya.omusubi.filters;
 
-import net.kaoriya.omusubi.IntFilter;
-import net.kaoriya.omusubi.IntFilterFactory;
 import net.kaoriya.omusubi.encodings.IntEncoder;
 
 public class IntEncodingFilter implements IntFilter {
