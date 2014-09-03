@@ -9,6 +9,8 @@ Currently support only int and long array.
 
 ## Sample code
 
+### IntDZBP
+
 Using IntDZBP (int delta-zigzag binary packing).
 
 ```java
@@ -20,6 +22,8 @@ byte[] compressed = IntDZBP.toBytes(new int[] { 0, 1, 2, ... });
 // Decompress.
 int[] decompressed = IntDZBP.fromBytes(compressed);
 ```
+
+### LongDZBP
 
 Using LongDZBP (long delta-zigzag binary packing).
 
@@ -33,10 +37,55 @@ byte[] compressed = LongDZBP.toBytes(new long[] { 0, 1, 2, ... });
 long[] decompressed = LongDZBP.fromBytes(compressed);
 ```
 
+### IntAscSDBP
+
+Sample to use IntAscSDBP (int ascending sorted delta binary packing).
+
+```java
+import net.kaoriya.omusubi.IntAscSDBP;
+
+// Copress. (input array must be sorted)
+byte[] compressed = IntAscSDBP.toBytes(new int[] { 0, 1, 2, ... });
+
+// Decompress.
+int[] decompressed = IntAscSDBP.fromBytes(compressed);
+```
+
+### LongAscSDBP
+
+Sample to use LongAscSDBP (long ascending sorted delta binary packing).
+
+```java
+import net.kaoriya.omusubi.LongAscSDBP;
+
+// Copress. (input array must be sorted)
+byte[] compressed = LongAscSDBP.toBytes(new int[] { 0, 1, 2, ... });
+
+// Decompress.
+int[] decompressed = LongAscSDBP.fromBytes(compressed);
+```
+
+### decodeLength, decodeFirstValue
+
+```java
+import net.kaoriya.omusubi.IntDZBP;
+
+// Copress.
+byte[] compressed = IntDZBP.toBytes(new int[] { 101, 55, 298, 300 });
+
+// This will return 4.
+int len = IntDZBP.decodeLength(compressed);
+
+// This will return 101.
+int firstValue = IntDZBP.decodeFirstValue(compressed);
+```
+
+All classes `IntDZBP`, `LongDZBP`, `IntAscSDBP` and `LongAscSDBP` has both
+method `decodeLength` and `decodeFirstValue`, available.
 
 ## Formats
 
-### IntDZBP
+### IntDZBP, IntAscSDBP
 
 #### Header
 
@@ -68,7 +117,7 @@ long[] decompressed = LongDZBP.fromBytes(compressed);
 *   Block: cotains compressed data, size is multiply of 4 bytes. (0-128 bytes)
     * A block have 32 int values. So a chunk have 128 (=32*4) int values.
 
-### LongDZBP
+### LongDZBP, LongAscSDBP
 
 #### Header
 
