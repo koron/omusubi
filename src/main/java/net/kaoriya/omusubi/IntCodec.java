@@ -45,4 +45,15 @@ public abstract class IntCodec {
         decompress(srcBuf, dst);
         return dst.toIntArray();
     }
+
+    public static int decodeLength(byte[] src) {
+        IntBuffer srcBuf = ByteBuffer.wrap(src).asIntBuffer();
+        return srcBuf.get();
+    }
+
+    public static int decodeFirstValue(byte[] src) {
+        IntBuffer srcBuf = ByteBuffer.wrap(src).asIntBuffer();
+        srcBuf.get();
+        return srcBuf.get();
+    }
 }

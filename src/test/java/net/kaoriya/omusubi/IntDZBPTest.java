@@ -248,4 +248,20 @@ public class IntDZBPTest
                 new int[] { 9, 10, 0x01000000, 0xff000000 },
                 new int[] { 10, 9, 8, 7, 6, 5, 4, 3, 2 });
     }
+
+    @Test
+    public void decodeLength() {
+        int[] src = new int[] { 10, 11, 12, 13, 14, 15, 16, 17, 18 };
+        byte[] dst = IntDZBP.toBytes(src);
+
+        assertEquals(9, IntDZBP.decodeLength(dst));
+    }
+
+    @Test
+    public void decodeFirstValue() {
+        int[] src = new int[] { 10, 11, 12, 13, 14, 15, 16, 17, 18 };
+        byte[] dst = IntDZBP.toBytes(src);
+
+        assertEquals(10, IntDZBP.decodeFirstValue(dst));
+    }
 }

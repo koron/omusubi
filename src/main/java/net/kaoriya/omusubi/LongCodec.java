@@ -45,4 +45,15 @@ public abstract class LongCodec {
         decompress(srcBuf, dst);
         return dst.toLongArray();
     }
+
+    public static int decodeLength(byte[] src) {
+        LongBuffer srcBuf = ByteBuffer.wrap(src).asLongBuffer();
+        return (int)srcBuf.get();
+    }
+
+    public static long decodeFirstValue(byte[] src) {
+        LongBuffer srcBuf = ByteBuffer.wrap(src).asLongBuffer();
+        srcBuf.get();
+        return srcBuf.get();
+    }
 }
