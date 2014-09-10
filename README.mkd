@@ -59,10 +59,10 @@ Sample to use LongAscSDBP (long ascending sorted delta binary packing).
 import net.kaoriya.omusubi.LongAscSDBP;
 
 // Copress. (input array must be sorted)
-byte[] compressed = LongAscSDBP.toBytes(new int[] { 0, 1, 2, ... });
+byte[] compressed = LongAscSDBP.toBytes(new long[] { 0, 1, 2, ... });
 
 // Decompress.
-int[] decompressed = LongAscSDBP.fromBytes(compressed);
+long[] decompressed = LongAscSDBP.fromBytes(compressed);
 ```
 
 ### decodeLength, decodeFirstValue
@@ -82,6 +82,25 @@ int firstValue = IntDZBP.decodeFirstValue(compressed);
 
 All classes `IntDZBP`, `LongDZBP`, `IntAscSDBP` and `LongAscSDBP` has both
 method `decodeLength` and `decodeFirstValue`, available.
+
+### Set operations
+
+Both IntAscSDBP and LongAscSDBP provide methods for set operations.
+Those methods are [union](http://redis.io/commands/sunion), [intersect](http://redis.io/commands/sunion) and [difference](http://redis.io/commands/sdiff).
+
+```java
+import net.kaoriya.omusubi.IntAscSDBP;
+
+byte[] set1 = IntAscSDBP.toBytes(new int[] {1, 2, 3, 4});
+byte[] set2 = IntAscSDBP.toBytes(new int[] {3});
+byte[] set3 = IntAscSDBP.toBytes(new int[] {1, 3, 5});
+
+// Get the union in compressed form.
+byte[] r = IntAscSDBP.union(set1, set2);
+
+// Decompress, it should be [1, 2, 3, 4, 5].
+int[] array = IntAscSDBP.fromBytes(r);
+```
 
 ## Formats
 
