@@ -183,4 +183,75 @@ public class IntAscSDBPTest
         assertFalse(IntAscSDBP.anyReadersHaveInt(r, 999));
     }
 
+    private void check_toBytes(int[] src, byte[] dst) {
+        byte[] compressed = IntAscSDBP.toBytes(src);
+        assertArrayEquals(dst, compressed);
+        int[] decompressed = IntAscSDBP.fromBytes(dst);
+        assertArrayEquals(src, decompressed);
+    }
+
+    @Test
+    public void toBytes() {
+        check_toBytes(
+                new int[] { 10, 11, 12, 13, 14, 15, 16, 17, 18, },
+                new byte[] {
+                    0, 0, 0, 9,
+                    0, 0, 0, 10,
+                    1, 0, 0, 0,
+                    (byte)0xff, 0, 0, 0,
+                });
+    }
+
+    @Test
+    public void toBytes2() {
+        check_toBytes(
+                new int[] {1, 3, 5, 7, 9},
+                new byte[] {
+                    0, 0, 0, 5,
+                    0, 0, 0, 1,
+                    2, 0, 0, 0,
+                    (byte)0xaa, 0, 0, 0,
+                    0, 0, 0, 0,
+                });
+    }
+
+    @Test
+    public void toBytes3() {
+        check_toBytes(
+                new int[] {2, 4, 6, 8},
+                new byte[] {
+                    0, 0, 0, 4,
+                    0, 0, 0, 2,
+                    2, 0, 0, 0,
+                    (byte)0xa8, 0, 0, 0,
+                    0, 0, 0, 0,
+                });
+    }
+
+    @Test
+    public void toBytes4() {
+        check_toBytes(
+                new int[] {3, 6, 9},
+                new byte[] {
+                    0, 0, 0, 3,
+                    0, 0, 0, 3,
+                    2, 0, 0, 0,
+                    (byte)0xf0, 0, 0, 0,
+                    0, 0, 0, 0,
+                });
+    }
+
+    @Test
+    public void union() {
+        byte[] set1 = IntAscSDBP.toBytes(new int[] {1, 3, 5, 7, 9});
+        byte[] set2 = IntAscSDBP.toBytes(new int[] {2, 4, 6, 8});
+        byte[] set3 = IntAscSDBP.toBytes(new int[] {3, 6, 9});
+
+        byte[] compressed = IntAscSDBP.union(set1, set2, set3);
+        int[] decompressed = IntAscSDBP.fromBytes(compressed);
+
+        assertArrayEquals(
+                new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9},
+                decompressed);
+    }
 }
