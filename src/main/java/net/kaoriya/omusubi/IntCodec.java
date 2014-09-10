@@ -47,12 +47,20 @@ public abstract class IntCodec {
     }
 
     public static int decodeLength(byte[] src) {
-        IntBuffer srcBuf = ByteBuffer.wrap(src).asIntBuffer();
+        return decodeLength(ByteBuffer.wrap(src));
+    }
+
+    public static int decodeLength(ByteBuffer buf) {
+        IntBuffer srcBuf = buf.asIntBuffer();
         return srcBuf.get();
     }
 
     public static int decodeFirstValue(byte[] src) {
-        IntBuffer srcBuf = ByteBuffer.wrap(src).asIntBuffer();
+        return decodeFirstValue(ByteBuffer.wrap(src));
+    }
+
+    public static int decodeFirstValue(ByteBuffer buf) {
+        IntBuffer srcBuf = buf.asIntBuffer();
         srcBuf.get();
         return srcBuf.get();
     }
