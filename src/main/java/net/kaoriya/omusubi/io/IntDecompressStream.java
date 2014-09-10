@@ -17,6 +17,8 @@ public class IntDecompressStream extends IntBlockedInputStream {
 
     private final int chunkSize;
 
+    private int availableLen = 0;
+
     public IntDecompressStream(
             IntBuffer source,
             IntFilterFactory factory,
@@ -28,6 +30,7 @@ public class IntDecompressStream extends IntBlockedInputStream {
         if (outLen == 0) {
             this.filter = factory.newFilter(0);
         } else {
+            this.availableLen = this.source.get();
             int first = this.source.get();
             updateBlock(new int[]{ first });
             this.filter = factory.newFilter(first);
@@ -38,14 +41,16 @@ public class IntDecompressStream extends IntBlockedInputStream {
 
     public void fetchBlock(IntOutputStream dst) {
         int remain = this.source.remaining();
-        if (remain >= this.chunkSize) {
+        if (this.availableLen >= this.chunkSize) {
             this.packer.decompress(this.source, dst, this.filter, 1);
-        } else if (remain > 0) {
+            this.availableLen -= this.chunkSize;
+        } else if (this.availableLen > 0) {
             int[] last = new int[this.chunkSize];
             IntBuffer buf = IntBuffer.wrap(last);
             packer.decompress(this.source, new IntBufferOutputStream(buf),
                     filter, 1);
-            dst.write(last, 0, remain);
+            dst.write(last, 0, this.availableLen);
+            this.availableLen = 0;
         }
     }
 }

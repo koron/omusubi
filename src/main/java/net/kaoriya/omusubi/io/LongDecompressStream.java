@@ -17,6 +17,8 @@ public class LongDecompressStream extends LongBlockedInputStream {
 
     private final int chunkSize;
 
+    private int availableLen = 0;
+
     public LongDecompressStream(
             LongBuffer source,
             LongFilterFactory factory,
@@ -28,6 +30,7 @@ public class LongDecompressStream extends LongBlockedInputStream {
         if (outLen == 0) {
             this.filter = factory.newFilter(0);
         } else {
+            this.availableLen = (int)this.source.get();
             long first = this.source.get();
             updateBlock(new long[]{ first });
             this.filter = factory.newFilter(first);
@@ -37,15 +40,16 @@ public class LongDecompressStream extends LongBlockedInputStream {
     }
 
     public void fetchBlock(LongOutputStream dst) {
-        int remain = this.source.remaining();
-        if (remain >= this.chunkSize) {
+        if (this.availableLen >= this.chunkSize) {
             this.packer.decompress(this.source, dst, this.filter, 1);
-        } else if (remain > 0) {
+            this.availableLen -= this.chunkSize;
+        } else if (this.availableLen > 0) {
             long[] last = new long[this.chunkSize];
             LongBuffer buf = LongBuffer.wrap(last);
             packer.decompress(this.source, new LongBufferOutputStream(buf),
                     filter, 1);
-            dst.write(last, 0, remain);
+            dst.write(last, 0, this.availableLen);
+            this.availableLen = 0;
         }
     }
 }
