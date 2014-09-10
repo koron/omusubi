@@ -86,7 +86,7 @@ method `decodeLength` and `decodeFirstValue`, available.
 ### Set operations
 
 Both IntAscSDBP and LongAscSDBP provide methods for set operations.
-Those methods are [union](http://redis.io/commands/sunion), [intersect](http://redis.io/commands/sunion) and [difference](http://redis.io/commands/sdiff).
+Those methods are [union](http://redis.io/commands/sunion), [intersect](http://redis.io/commands/sinter) and [difference](http://redis.io/commands/sdiff).
 
 ```java
 import net.kaoriya.omusubi.IntAscSDBP;
