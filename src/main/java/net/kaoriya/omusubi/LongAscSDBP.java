@@ -84,9 +84,9 @@ public class LongAscSDBP extends LongCodec
         }
     }
 
-    static Reader newBytesDecompressReader(byte[] b) {
+    static Reader newBytesDecompressReader(ByteBuffer b) {
         LongDecompressStream ds = new LongDecompressStream(
-                ByteBuffer.wrap(b).asLongBuffer(),
+                b.asLongBuffer(),
                 new LongEncodingFilter.Factory(
                     new DeltaEncoding.LongAscendDecoder()),
                 new LongBitPacking());
@@ -152,11 +152,28 @@ public class LongAscSDBP extends LongCodec
         return retval;
     }
 
+    private static ByteBuffer[] toByteBufferArray(byte[][] bufArray) {
+        ByteBuffer[] results = new ByteBuffer[bufArray.length];
+        for (int i = 0; i < bufArray.length; ++i) {
+            results[i] = ByteBuffer.wrap(bufArray[i]);
+        }
+        return results;
+    }
+
     public static byte[] union(byte[] a, byte[] b, byte[] ...others) {
+        return union(ByteBuffer.wrap(a), ByteBuffer.wrap(b),
+                toByteBufferArray(others));
+    }
+
+    public static byte[] union(
+            ByteBuffer a,
+            ByteBuffer b,
+            ByteBuffer ...others)
+    {
         List<Reader> readers = new LinkedList<Reader>();
         readers.add(newBytesDecompressReader(a));
         readers.add(newBytesDecompressReader(b));
-        for (byte[] c : others) {
+        for (ByteBuffer c : others) {
             readers.add(newBytesDecompressReader(c));
         }
         return toBytes(union(readers).toLongArray());
@@ -175,10 +192,19 @@ public class LongAscSDBP extends LongCodec
     }
 
     public static byte[] intersect(byte[] a, byte[] b, byte[] ...others) {
+        return intersect(ByteBuffer.wrap(a), ByteBuffer.wrap(b),
+                toByteBufferArray(others));
+    }
+
+    public static byte[] intersect(
+            ByteBuffer a,
+            ByteBuffer b,
+            ByteBuffer ...others)
+    {
         Reader pivot = newBytesDecompressReader(a);
         List<Reader> readers = new LinkedList<Reader>();
         readers.add(newBytesDecompressReader(b));
-        for (byte[] c : others) {
+        for (ByteBuffer c : others) {
             readers.add(newBytesDecompressReader(c));
         }
         return toBytes(intersect(pivot, readers).toLongArray());
@@ -200,10 +226,19 @@ public class LongAscSDBP extends LongCodec
     }
 
     public static byte[] difference(byte[] a, byte[] b, byte[] ...others) {
+        return difference(ByteBuffer.wrap(a), ByteBuffer.wrap(b),
+                toByteBufferArray(others));
+    }
+
+    public static byte[] difference(
+            ByteBuffer a,
+            ByteBuffer b,
+            ByteBuffer ...others)
+    {
         Reader pivot = newBytesDecompressReader(a);
         List<Reader> readers = new LinkedList<Reader>();
         readers.add(newBytesDecompressReader(b));
-        for (byte[] c : others) {
+        for (ByteBuffer c : others) {
             readers.add(newBytesDecompressReader(c));
         }
         return toBytes(difference(pivot, readers).toLongArray());
