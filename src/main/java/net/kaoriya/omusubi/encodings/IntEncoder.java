@@ -6,10 +6,6 @@ public abstract class IntEncoder extends IntContext {
         super(contextValue);
     }
 
-    protected IntEncoder() {
-        this(0);
-    }
-
     public abstract int encodeInt(int value);
 
     public int[] encodeArray(int[] src, int srcoff, int length,

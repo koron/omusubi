@@ -44,7 +44,8 @@ public final class DeltaEncoding {
         }
     }
 
-    public static class IntDescendEncoder extends IntDecoder {
+    /*
+    public static class IntDescendEncoder extends IntEncoder {
         public IntDescendEncoder(int contextValue) {
             super(contextValue);
         }
@@ -53,7 +54,7 @@ public final class DeltaEncoding {
             this(0);
         }
 
-        public int dencodeInt(int value) {
+        public int encodeInt(int value) {
             int n = this.contextValue - value;
             if (n < 0) {
                 throw new IllegalArgumentException(
@@ -65,6 +66,7 @@ public final class DeltaEncoding {
             return n;
         }
     }
+    */
 
     public static class LongAscendEncoder extends LongEncoder {
         public LongAscendEncoder(long contextValue) {
@@ -108,7 +110,8 @@ public final class DeltaEncoding {
         }
     }
 
-    public static class LongDescendEncoder extends LongDecoder {
+    /*
+    public static class LongDescendEncoder extends LongEncoder {
         public LongDescendEncoder(long contextValue) {
             super(contextValue);
         }
@@ -129,4 +132,5 @@ public final class DeltaEncoding {
             return n;
         }
     }
+    */
 }
