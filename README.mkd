@@ -6,8 +6,11 @@
 Omusubi is compression library for Java.  It compress array of numbers.
 Currently support only int and long array.
 
+---
 
 ## Sample code
+
+### IntDZBP
 
 Using IntDZBP (int delta-zigzag binary packing).
 
@@ -21,6 +24,8 @@ byte[] compressed = IntDZBP.toBytes(new int[] { 0, 1, 2, ... });
 int[] decompressed = IntDZBP.fromBytes(compressed);
 ```
 
+### LongDZBP
+
 Using LongDZBP (long delta-zigzag binary packing).
 
 ```java
@@ -33,10 +38,110 @@ byte[] compressed = LongDZBP.toBytes(new long[] { 0, 1, 2, ... });
 long[] decompressed = LongDZBP.fromBytes(compressed);
 ```
 
+### IntAscSDBP
+
+Sample to use IntAscSDBP (int ascending sorted delta binary packing).
+
+```java
+import net.kaoriya.omusubi.IntAscSDBP;
+
+// Copress. (input array must be sorted)
+byte[] compressed = IntAscSDBP.toBytes(new int[] { 0, 1, 2, ... });
+
+// Decompress.
+int[] decompressed = IntAscSDBP.fromBytes(compressed);
+```
+
+### LongAscSDBP
+
+Sample to use LongAscSDBP (long ascending sorted delta binary packing).
+
+```java
+import net.kaoriya.omusubi.LongAscSDBP;
+
+// Copress. (input array must be sorted)
+byte[] compressed = LongAscSDBP.toBytes(new long[] { 0, 1, 2, ... });
+
+// Decompress.
+long[] decompressed = LongAscSDBP.fromBytes(compressed);
+```
+
+### decodeLength, decodeFirstValue
+
+```java
+import net.kaoriya.omusubi.IntDZBP;
+
+// Copress.
+byte[] compressed = IntDZBP.toBytes(new int[] { 101, 55, 298, 300 });
+
+// This will return 4.
+int len = IntDZBP.decodeLength(compressed);
+
+// This will return 101.
+int firstValue = IntDZBP.decodeFirstValue(compressed);
+```
+
+All classes `IntDZBP`, `LongDZBP`, `IntAscSDBP` and `LongAscSDBP` has both
+method `decodeLength` and `decodeFirstValue`, available.
+
+### Set operations
+
+Both IntAscSDBP and LongAscSDBP provide methods for set operations.
+Those methods are [union](http://redis.io/commands/sunion), [intersect](http://redis.io/commands/sinter) and [difference](http://redis.io/commands/sdiff).
+
+#### union example.
+
+```java
+import net.kaoriya.omusubi.IntAscSDBP;
+
+byte[] set1 = IntAscSDBP.toBytes(new int[] {1, 2, 3, 4});
+byte[] set2 = IntAscSDBP.toBytes(new int[] {3});
+byte[] set3 = IntAscSDBP.toBytes(new int[] {1, 3, 5});
+
+// Get the union in compressed form.
+byte[] r = IntAscSDBP.union(set1, set2, set3);
+
+// Decompress, it should be [1, 2, 3, 4, 5].
+int[] array = IntAscSDBP.fromBytes(r);
+```
+
+#### intersect example.
+
+```java
+import net.kaoriya.omusubi.IntAscSDBP;
+
+byte[] set1 = IntAscSDBP.toBytes(new int[] {1, 2, 3, 4});
+byte[] set2 = IntAscSDBP.toBytes(new int[] {3});
+byte[] set3 = IntAscSDBP.toBytes(new int[] {1, 3, 5});
+
+// Get the intersect in compressed form.
+byte[] r = IntAscSDBP.intersect(set1, set2, set3);
+
+// Decompress, it should be [3].
+int[] array = IntAscSDBP.fromBytes(r);
+```
+
+#### difference example.
+
+```java
+import net.kaoriya.omusubi.IntAscSDBP;
+
+byte[] set1 = IntAscSDBP.toBytes(new int[] {1, 2, 3, 4});
+byte[] set2 = IntAscSDBP.toBytes(new int[] {3});
+byte[] set3 = IntAscSDBP.toBytes(new int[] {1, 3, 5});
+
+// Get the difference in compressed form.
+byte[] r = IntAscSDBP.difference(set1, set2, set3);
+
+// Decompress, it should be [2, 4].
+int[] array = IntAscSDBP.fromBytes(r);
+```
+
+---
 
 ## Formats
 
-### IntDZBP
+### IntDZBP, IntAscSDBP
 
 #### Header
 
@@ -68,7 +173,7 @@ long[] decompressed = LongDZBP.fromBytes(compressed);
 *   Block: cotains compressed data, size is multiply of 4 bytes. (0-128 bytes)
     * A block have 32 int values. So a chunk have 128 (=32*4) int values.
 
-### LongDZBP
+### LongDZBP, LongAscSDBP
 
 #### Header
 

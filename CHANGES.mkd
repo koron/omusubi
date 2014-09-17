@@ -1,0 +1,8 @@
+# v1.1
+
+*   IntAscSDBP codec
+    *   Support set operations: union, intersect, difference
+*   LongAscSDBP codec
+    *   Support set operations: union, intersect, difference
+*   Utility method to get length and first value of decoded array.
+*   Refactoring

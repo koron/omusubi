@@ -3,6 +3,11 @@ package net.kaoriya.omusubi;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 
+import net.kaoriya.omusubi.io.ByteArrayIntOutputStream;
+import net.kaoriya.omusubi.io.IntArrayOutputStream;
+import net.kaoriya.omusubi.io.IntInputStream;
+import net.kaoriya.omusubi.io.IntOutputStream;
+
 /**
  * IntCodec interface.
  *
@@ -13,6 +18,14 @@ public abstract class IntCodec {
     public abstract void compress(IntBuffer src, IntOutputStream dst);
 
     public abstract void decompress(IntBuffer src, IntOutputStream dst);
+
+    public IntInputStream newCompressStream(IntBuffer src) {
+        throw new UnsupportedOperationException();
+    }
+
+    public IntInputStream newDecompressStream(IntBuffer src) {
+        throw new UnsupportedOperationException();
+    }
 
     protected int decompressLength(IntBuffer src) {
         return -1;
@@ -31,5 +44,24 @@ public abstract class IntCodec {
             ? new IntArrayOutputStream() : new IntArrayOutputStream(len);
         decompress(srcBuf, dst);
         return dst.toIntArray();
+    }
+
+    public static int decodeLength(byte[] src) {
+        return decodeLength(ByteBuffer.wrap(src));
+    }
+
+    public static int decodeLength(ByteBuffer buf) {
+        IntBuffer srcBuf = buf.asIntBuffer();
+        return srcBuf.get();
+    }
+
+    public static int decodeFirstValue(byte[] src) {
+        return decodeFirstValue(ByteBuffer.wrap(src));
+    }
+
+    public static int decodeFirstValue(ByteBuffer buf) {
+        IntBuffer srcBuf = buf.asIntBuffer();
+        srcBuf.get();
+        return srcBuf.get();
     }
 }

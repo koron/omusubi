@@ -5,6 +5,9 @@ import java.nio.LongBuffer;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+import net.kaoriya.omusubi.io.LongBufferOutputStream;
+import net.kaoriya.omusubi.packers.LongBitPacking;
+
 public class LongDZBPTest
 {
     @Test
@@ -224,5 +227,21 @@ public class LongDZBPTest
         }, codec.compress(new long[] {
             -1, -2,
         }));
+    }
+
+    @Test
+    public void decodeLength() {
+        long[] src = new long[] { 10, 11, 12, 13, 14, 15, 16, 17, 18 };
+        byte[] dst = LongDZBP.toBytes(src);
+
+        assertEquals(9, LongDZBP.decodeLength(dst));
+    }
+
+    @Test
+    public void decodeFirstValue() {
+        long[] src = new long[] { 10, 11, 12, 13, 14, 15, 16, 17, 18 };
+        byte[] dst = LongDZBP.toBytes(src);
+
+        assertEquals(10, LongDZBP.decodeFirstValue(dst));
     }
 }
