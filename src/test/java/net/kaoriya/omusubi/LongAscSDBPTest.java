@@ -183,4 +183,22 @@ public class LongAscSDBPTest
         assertFalse(LongAscSDBP.anyReadersHaveLong(r, 999));
     }
 
+    private void check_toBytes(long[] src, byte[] dst) {
+        byte[] compressed = LongAscSDBP.toBytes(src);
+        assertArrayEquals(dst, compressed);
+        long[] decompressed = LongAscSDBP.fromBytes(dst);
+        assertArrayEquals(src, decompressed);
+    }
+
+    @Test
+    public void toBytes() {
+        check_toBytes(
+                new long[] { 10, 11, 12, 13, 14, 15, 16, 17, 18, },
+                new byte[] {
+                    0, 0, 0, 0, 0, 0, 0, 9,
+                    0, 0, 0, 0, 0, 0, 0, 10,
+                    0, 0, 0, 0, 1, 0, 0, 0,
+                    (byte)0xff, 0, 0, 0, 0, 0, 0, 0,
+                });
+    }
 }

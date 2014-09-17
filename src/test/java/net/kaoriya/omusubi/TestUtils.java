@@ -41,4 +41,23 @@ public class TestUtils {
         }
         System.out.println("]");
     }
+
+    public static void dumpByte(String name, byte[] src) {
+        System.out.println(String.format("%s: [", name));
+        int col = 0;
+        for (int i = 0; i < src.length; ++i) {
+            if (col == 0) {
+                System.out.format(" ");
+            }
+            System.out.format(" %02x", (int)(src[i]) & 0xff);
+            col = (col + 1) % 16;
+            if (col == 0) {
+                System.out.println();
+            }
+        }
+        if (col != 0) {
+            System.out.println();
+        }
+        System.out.println("]");
+    }
 }
