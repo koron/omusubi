@@ -201,4 +201,46 @@ public class LongAscSDBPTest
                     (byte)0xff, 0, 0, 0, 0, 0, 0, 0,
                 });
     }
+
+    @Test
+    public void union() {
+        byte[] set1 = LongAscSDBP.toBytes(new long[] {1, 3, 5, 7, 9});
+        byte[] set2 = LongAscSDBP.toBytes(new long[] {2, 4, 6, 8});
+        byte[] set3 = LongAscSDBP.toBytes(new long[] {3, 6, 9});
+
+        byte[] compressed = LongAscSDBP.union(set1, set2, set3);
+        long[] decompressed = LongAscSDBP.fromBytes(compressed);
+
+        assertArrayEquals(
+                new long[] {1, 2, 3, 4, 5, 6, 7, 8, 9},
+                decompressed);
+    }
+
+    @Test
+    public void intersect() {
+        byte[] set1 = LongAscSDBP.toBytes(new long[] {1, 2, 3, 4});
+        byte[] set2 = LongAscSDBP.toBytes(new long[] {3, 4});
+        byte[] set3 = LongAscSDBP.toBytes(new long[] {1, 3, 5});
+
+        byte[] compressed = LongAscSDBP.intersect(set1, set2, set3);
+        long[] decompressed = LongAscSDBP.fromBytes(compressed);
+
+        assertArrayEquals(
+                new long[] {3},
+                decompressed);
+    }
+
+    @Test
+    public void difference() {
+        byte[] set1 = LongAscSDBP.toBytes(new long[] {1, 2, 3, 4});
+        byte[] set2 = LongAscSDBP.toBytes(new long[] {3, 4});
+        byte[] set3 = LongAscSDBP.toBytes(new long[] {1, 3, 5});
+
+        byte[] compressed = LongAscSDBP.difference(set1, set2, set3);
+        long[] decompressed = LongAscSDBP.fromBytes(compressed);
+
+        assertArrayEquals(
+                new long[] {2},
+                decompressed);
+    }
 }
