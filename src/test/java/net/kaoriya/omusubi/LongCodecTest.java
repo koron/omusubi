@@ -1,6 +1,8 @@
 package net.kaoriya.omusubi;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import static org.junit.Assert.*;
 import java.nio.LongBuffer;
 
@@ -58,5 +60,27 @@ public class LongCodecTest
         });
         assertArrayEquals(new long[] { 0, 1, 2, 3, 4, 5, 6, 7 }, l);
         assertEquals(8, c.decompressedLen);
+    }
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    public static class DummyCodec extends LongCodec {
+        public void compress(LongBuffer src, LongOutputStream dst) {}
+        public void decompress(LongBuffer src, LongOutputStream dst) {}
+    }
+
+    @Test
+    public void newCompressStream() {
+        thrown.expect(UnsupportedOperationException.class);
+        DummyCodec c = new DummyCodec();
+        c.newCompressStream(null);
+    }
+
+    @Test
+    public void newDecompressStream() {
+        thrown.expect(UnsupportedOperationException.class);
+        DummyCodec c = new DummyCodec();
+        c.newDecompressStream(null);
     }
 }

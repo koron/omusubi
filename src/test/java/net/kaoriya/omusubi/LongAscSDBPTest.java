@@ -231,6 +231,27 @@ public class LongAscSDBPTest
     }
 
     @Test
+    public void intersect2() {
+        long[] set1 = new long[201];
+        long[] set2 = new long[134];
+        long[] set3 = new long[67];
+        for (int i = 0; i < set1.length; ++i) {
+            set1[i] = i * 2;
+        }
+        for (int i = 0; i < set2.length; ++i) {
+            set2[i] = i * 3;
+        }
+        for (int i = 0; i < set3.length; ++i) {
+            set3[i] = i * 6;
+        }
+        byte compressed[] = LongAscSDBP.intersect(
+                LongAscSDBP.toBytes(set1),
+                LongAscSDBP.toBytes(set2));
+        long[] decompressed = LongAscSDBP.fromBytes(compressed);
+        assertArrayEquals(set3, decompressed);
+    }
+
+    @Test
     public void difference() {
         byte[] set1 = LongAscSDBP.toBytes(new long[] {1, 2, 3, 4});
         byte[] set2 = LongAscSDBP.toBytes(new long[] {3});

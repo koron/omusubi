@@ -1,7 +1,10 @@
 package net.kaoriya.omusubi;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import static org.junit.Assert.*;
+
 import java.nio.IntBuffer;
 
 import net.kaoriya.omusubi.io.IntOutputStream;
@@ -58,5 +61,27 @@ public class IntCodecTest
         });
         assertArrayEquals(new int[] { 0, 1, 2, 3, 4, 5, 6, 7 }, l);
         assertEquals(8, c.decompressedLen);
+    }
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    public static class DummyCodec extends IntCodec {
+        public void compress(IntBuffer src, IntOutputStream dst) {}
+        public void decompress(IntBuffer src, IntOutputStream dst) {}
+    }
+
+    @Test
+    public void newCompressStream() {
+        thrown.expect(UnsupportedOperationException.class);
+        DummyCodec c = new DummyCodec();
+        c.newCompressStream(null);
+    }
+
+    @Test
+    public void newDecompressStream() {
+        thrown.expect(UnsupportedOperationException.class);
+        DummyCodec c = new DummyCodec();
+        c.newDecompressStream(null);
     }
 }
