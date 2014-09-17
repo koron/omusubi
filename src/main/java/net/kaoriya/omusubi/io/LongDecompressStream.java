@@ -1,5 +1,6 @@
 package net.kaoriya.omusubi.io;
 
+import java.nio.BufferUnderflowException;
 import java.nio.LongBuffer;
 import java.util.Arrays;
 
@@ -41,15 +42,23 @@ public class LongDecompressStream extends LongBlockedInputStream {
 
     public void fetchBlock(LongOutputStream dst) {
         if (this.availableLen >= this.chunkSize) {
-            this.packer.decompress(this.source, dst, this.filter, 1);
-            this.availableLen -= this.chunkSize;
+            try {
+                this.packer.decompress(this.source, dst, this.filter, 1);
+                this.availableLen -= this.chunkSize;
+            } catch (BufferUnderflowException e) {
+                // FIXME: adjust availableLen.
+            }
         } else if (this.availableLen > 0) {
             long[] last = new long[this.chunkSize];
             LongBuffer buf = LongBuffer.wrap(last);
-            packer.decompress(this.source, new LongBufferOutputStream(buf),
-                    filter, 1);
-            dst.write(last, 0, this.availableLen);
-            this.availableLen = 0;
+            try {
+                packer.decompress(this.source, new LongBufferOutputStream(buf),
+                        filter, 1);
+                dst.write(last, 0, this.availableLen);
+                this.availableLen = 0;
+            } catch (BufferUnderflowException e) {
+                // FIXME: adjust availableLen.
+            }
         }
     }
 }

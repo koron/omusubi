@@ -272,14 +272,14 @@ public class IntAscSDBPTest
     @Test
     public void difference() {
         byte[] set1 = IntAscSDBP.toBytes(new int[] {1, 2, 3, 4});
-        byte[] set2 = IntAscSDBP.toBytes(new int[] {3, 4});
+        byte[] set2 = IntAscSDBP.toBytes(new int[] {3});
         byte[] set3 = IntAscSDBP.toBytes(new int[] {1, 3, 5});
 
         byte[] compressed = IntAscSDBP.difference(set1, set2, set3);
         int[] decompressed = IntAscSDBP.fromBytes(compressed);
 
         assertArrayEquals(
-                new int[] {2},
+                new int[] {2, 4},
                 decompressed);
     }
 }

@@ -233,14 +233,14 @@ public class LongAscSDBPTest
     @Test
     public void difference() {
         byte[] set1 = LongAscSDBP.toBytes(new long[] {1, 2, 3, 4});
-        byte[] set2 = LongAscSDBP.toBytes(new long[] {3, 4});
+        byte[] set2 = LongAscSDBP.toBytes(new long[] {3});
         byte[] set3 = LongAscSDBP.toBytes(new long[] {1, 3, 5});
 
         byte[] compressed = LongAscSDBP.difference(set1, set2, set3);
         long[] decompressed = LongAscSDBP.fromBytes(compressed);
 
         assertArrayEquals(
-                new long[] {2},
+                new long[] {2, 4},
                 decompressed);
     }
 }
