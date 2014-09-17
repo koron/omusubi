@@ -59,16 +59,6 @@ public class LongAscSDBP extends LongCodec
         return (new LongAscSDBP()).decompress(src);
     }
 
-    @Override
-    public LongInputStream newCompressStream(LongBuffer src) {
-        return new LongCompressStream(src, null, null);
-    }
-
-    @Override
-    public LongInputStream newDecompressStream(LongBuffer src) {
-        return new LongDecompressStream(src, null, null);
-    }
-
     public static class Reader {
         LongInputStream stream;
         Long last = null;

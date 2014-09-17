@@ -61,16 +61,6 @@ public class IntAscSDBP extends IntCodec
         return (new IntAscSDBP()).decompress(src);
     }
 
-    @Override
-    public IntInputStream newCompressStream(IntBuffer src) {
-        return new IntCompressStream(src, null, null);
-    }
-
-    @Override
-    public IntInputStream newDecompressStream(IntBuffer src) {
-        return new IntDecompressStream(src, null, null);
-    }
-
     public static class Reader {
         IntInputStream stream;
         Integer last = null;
