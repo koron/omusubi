@@ -22,9 +22,9 @@ matrix:
       env: TERM=dumb COVERAGE=yes
 
 before_install:
-  - wget http://services.gradle.org/distributions/gradle-1.11-bin.zip
-  - unzip gradle-1.11-bin.zip
-  - export GRADLE_HOME=$PWD/gradle-1.11
+  - wget http://services.gradle.org/distributions/gradle-2.2.1-bin.zip
+  - unzip gradle-2.2.1-bin.zip
+  - export GRADLE_HOME=$PWD/gradle-2.2.1
   - export PATH=$GRADLE_HOME/bin:$PATH
 
 after_success:
