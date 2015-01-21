@@ -299,6 +299,6 @@ public class IntDZBPTest
                     2, 2, 0xfffffffa, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                 },
-                new int[]{ 0, 1, 2, Integer.MAX_VALUE }, true);
+                new int[]{ 0, 1, 2, Integer.MAX_VALUE });
     }
 }
