@@ -22,4 +22,4 @@ matrix:
       env: TERM=dumb COVERAGE=yes
 
 after_success:
-  - if [ x"$COVERAGE" == "xyes" ] ; then ./gradlew cobertura && ./gradlew coveralls ; fi
+  - if [ x"$COVERAGE" == "xyes" ] ; then ./gradlew cobertura coveralls ; fi
