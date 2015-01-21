@@ -12,9 +12,9 @@ env:
 
 matrix:
   exclude:
-    - jdk: oraclejdk7
-      env: TERM=dumb COVERAGE=no
     - jdk: oraclejdk8
+      env: TERM=dumb COVERAGE=no
+    - jdk: oraclejdk7
       env: TERM=dumb COVERAGE=yes
     - jdk: openjdk7
       env: TERM=dumb COVERAGE=yes
