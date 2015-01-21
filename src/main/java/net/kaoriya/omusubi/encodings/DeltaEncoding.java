@@ -17,7 +17,7 @@ public final class DeltaEncoding {
                 throw new IllegalArgumentException(
                         String.format(
                             "input:%1$d must be greater than or equals %2$d",
-                            value, n));
+                            value, this.contextValue));
             }
             this.contextValue = value;
             return n;
@@ -37,7 +37,7 @@ public final class DeltaEncoding {
             if (value < 0) {
                 throw new IllegalArgumentException(
                         String.format(
-                            "input:%1$d must be greater or equal than zero",
+                            "input:%1$d must be greater than or equal zero",
                             value));
             }
             return this.contextValue += value;
@@ -83,7 +83,7 @@ public final class DeltaEncoding {
                 throw new IllegalArgumentException(
                         String.format(
                             "input:%1$d must be greater than or equals %2$d",
-                            value, n));
+                            value, this.contextValue));
             }
             this.contextValue = value;
             return n;
@@ -103,7 +103,7 @@ public final class DeltaEncoding {
             if (value < 0) {
                 throw new IllegalArgumentException(
                         String.format(
-                            "input:%1$d must be greater or equal than zero",
+                            "input:%1$d must be greater than or equal zero",
                             value));
             }
             return this.contextValue += value;

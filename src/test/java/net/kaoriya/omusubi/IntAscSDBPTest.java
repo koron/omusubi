@@ -270,6 +270,27 @@ public class IntAscSDBPTest
     }
 
     @Test
+    public void intersect2() {
+        int[] set1 = new int[201];
+        int[] set2 = new int[134];
+        int[] set3 = new int[67];
+        for (int i = 0; i < set1.length; ++i) {
+            set1[i] = i * 2;
+        }
+        for (int i = 0; i < set2.length; ++i) {
+            set2[i] = i * 3;
+        }
+        for (int i = 0; i < set3.length; ++i) {
+            set3[i] = i * 6;
+        }
+        byte compressed[] = IntAscSDBP.intersect(
+                IntAscSDBP.toBytes(set1),
+                IntAscSDBP.toBytes(set2));
+        int[] decompressed = IntAscSDBP.fromBytes(compressed);
+        assertArrayEquals(set3, decompressed);
+    }
+
+    @Test
     public void difference() {
         byte[] set1 = IntAscSDBP.toBytes(new int[] {1, 2, 3, 4});
         byte[] set2 = IntAscSDBP.toBytes(new int[] {3});

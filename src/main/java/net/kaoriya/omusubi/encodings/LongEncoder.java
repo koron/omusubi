@@ -6,10 +6,6 @@ public abstract class LongEncoder extends LongContext {
         super(contextValue);
     }
 
-    protected LongEncoder() {
-        this(0);
-    }
-
     public abstract long encodeLong(long value);
 
     public long[] encodeArray(long[] src, int srcoff, int length,
