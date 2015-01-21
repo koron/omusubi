@@ -55,7 +55,7 @@ public final class DeltaZigzagEncoding {
         }
 
         public int decodeInt(int value) {
-            int n = (value >> 1) ^ ((value & 1) * -1);
+            int n = (value >>> 1) ^ ((value & 1) * -1);
             n += this.contextValue;
             this.contextValue = n;
             return n;
