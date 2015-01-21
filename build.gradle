@@ -39,3 +39,10 @@ configurations.all {
 }
 
 cobertura.coverageFormats = ['html', 'xml']
+
+////////////////////////////////////////////////////////////////////////////
+// gradle wrapper task
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.2.1'
+}

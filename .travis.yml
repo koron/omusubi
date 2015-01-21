@@ -21,11 +21,5 @@ matrix:
     - jdk: openjdk6
       env: TERM=dumb COVERAGE=yes
 
-before_install:
-  - wget http://services.gradle.org/distributions/gradle-2.2.1-bin.zip
-  - unzip gradle-2.2.1-bin.zip
-  - export GRADLE_HOME=$PWD/gradle-2.2.1
-  - export PATH=$GRADLE_HOME/bin:$PATH
-
 after_success:
-  - if [ x"$COVERAGE" == "xyes" ] ; then gradle cobertura && gradle coveralls ; fi
+  - if [ x"$COVERAGE" == "xyes" ] ; then gradlew cobertura && gradlew coveralls ; fi
