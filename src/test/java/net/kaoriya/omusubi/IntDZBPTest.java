@@ -73,9 +73,23 @@ public class IntDZBPTest
             int[] src,
             int[] dst)
     {
+        checkCompress(codec, src, dst, false);
+    }
+
+    private static void checkCompress(
+            IntDZBP codec,
+            int[] src,
+            int[] dst,
+            boolean dump)
+    {
         IntBuffer srcBuf = IntBuffer.wrap(src);
         IntBuffer dstBuf = IntBuffer.allocate(dst.length);
         codec.compress(srcBuf, new IntBufferOutputStream(dstBuf));
+        if (dump) {
+            System.out.println("*** checkCompress ***");
+            TestUtils.dumpInt("expected", dst);
+            TestUtils.dumpInt("actually", dstBuf.array());
+        }
         assertArrayEquals(dst, dstBuf.array());
     }
 
@@ -115,6 +129,7 @@ public class IntDZBPTest
         IntBuffer dstBuf = IntBuffer.allocate(dst.length);
         codec.decompress(srcBuf, new IntBufferOutputStream(dstBuf));
         if (dump) {
+            System.out.println("*** checkDecompress ***");
             TestUtils.dumpInt("expected", dst);
             TestUtils.dumpInt("actually", dstBuf.array());
         }
@@ -233,7 +248,7 @@ public class IntDZBPTest
         checkDecompress(
                 new IntDZBP(),
                 new int[] { 9, 3, 0x00000000, },
-                new int[] { 3, 3, 3, 3, 3, 3, 3, 3, 3 }, true);
+                new int[] { 3, 3, 3, 3, 3, 3, 3, 3, 3 });
     }
 
     @Test
@@ -263,5 +278,27 @@ public class IntDZBPTest
         byte[] dst = IntDZBP.toBytes(src);
 
         assertEquals(10, IntDZBP.decodeFirstValue(dst));
+    }
+
+    @Test
+    public void maxValue() {
+        IntDZBP codec = new IntDZBP();
+        codec.setDebug(true);
+
+        checkCompress(
+                codec,
+                new int[]{ 0, 1, 2, Integer.MAX_VALUE },
+                new int[]{ 4, 0, 0x20000000,
+                    2, 2, 0xfffffffa, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                });
+
+        checkDecompress(
+                codec,
+                new int[]{ 4, 0, 0x20000000,
+                    2, 2, 0xfffffffa, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                },
+                new int[]{ 0, 1, 2, Integer.MAX_VALUE });
     }
 }

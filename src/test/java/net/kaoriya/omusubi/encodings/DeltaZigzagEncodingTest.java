@@ -85,6 +85,24 @@ public class DeltaZigzagEncodingTest {
     }
 
     @Test
+    public void encodeMaxValue() {
+        DeltaZigzagEncoding.IntEncoder e =
+            new DeltaZigzagEncoding.IntEncoder();
+        checkEncode(e,
+                new int[]{ 0, 1, 2, Integer.MAX_VALUE },
+                new int[]{ 0, 2, 2, 0xFFFFFFFA});
+    }
+
+    @Test
+    public void decodeMaxValue() {
+        DeltaZigzagEncoding.IntDecoder d =
+            new DeltaZigzagEncoding.IntDecoder();
+        checkDecode(d,
+                new int[]{ 0, 2, 2, 0xFFFFFFFA},
+                new int[]{ 0, 1, 2, Integer.MAX_VALUE });
+    }
+
+    @Test
     public void checkIntialContext() {
         DeltaZigzagEncoding.IntEncoder e
             = new DeltaZigzagEncoding.IntEncoder(10);
