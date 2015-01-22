@@ -15,8 +15,8 @@ dependencies {
 ////////////////////////////////////////////////////////////////////////////
 // for https://coveralls.io/
 
-apply plugin: 'cobertura'
-apply plugin: 'coveralls'
+apply plugin: 'net.saliman.cobertura'
+apply plugin: 'com.github.kt3k.coveralls'
 
 buildscript {
     repositories {
@@ -24,9 +24,25 @@ buildscript {
     }
 
     dependencies {
-        classpath 'net.saliman:gradle-cobertura-plugin:2.2.2'
-        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:0.4.0'
+        classpath 'net.saliman:gradle-cobertura-plugin:2.2.5'
+        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.1.0'
+    }
+}
+
+configurations.all {
+    resolutionStrategy {
+        // Cobertura includes an ASM version that can't handle Java 8,
+        // ASM 5.0.3 handles Java8
+        force 'org.ow2.asm:asm:5.0.3'
+        forcedModules = [ 'org.ow2.asm:asm:5.0.3' ]
     }
 }
 
 cobertura.coverageFormats = ['html', 'xml']
+
+////////////////////////////////////////////////////////////////////////////
+// gradle wrapper task
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.2.1'
+}
