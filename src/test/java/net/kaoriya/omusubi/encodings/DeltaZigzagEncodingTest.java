@@ -58,6 +58,23 @@ public class DeltaZigzagEncodingTest {
         assertEquals(decoded[decoded.length - 1], d.getContextValue());
     }
 
+    public static void checkEncodeDecode(
+            long[] original,
+            long[] encoded)
+    {
+        DeltaZigzagEncoding.LongEncoder e =
+            new DeltaZigzagEncoding.LongEncoder();
+        long[] actual = e.encodeArray(original);
+        assertArrayEquals(encoded, actual);
+        assertEquals(original[original.length - 1], e.getContextValue());
+
+        DeltaZigzagEncoding.LongDecoder d =
+            new DeltaZigzagEncoding.LongDecoder();
+        long[] decoded = d.decodeArray(actual);
+        assertArrayEquals(original, decoded);
+        assertEquals(decoded[decoded.length - 1], d.getContextValue());
+    }
+
     @Test
     public void checkZigzagEncode() {
         DeltaZigzagEncoding.IntEncoder e =
@@ -153,6 +170,42 @@ public class DeltaZigzagEncodingTest {
         checkEncodeDecode(
                 new int[]{ Integer.MAX_VALUE, Integer.MIN_VALUE },
                 new int[]{ 0xFFFFFFFE, 2 });
+    }
+
+    @Test
+    public void longMinMax() {
+        checkEncodeDecode(
+                new long[]{ 1l, Long.MAX_VALUE },
+                new long[]{ 2l, 0xFFFFFFFFFFFFFFFCl });
+        checkEncodeDecode(
+                new long[]{ 0l, Long.MAX_VALUE },
+                new long[]{ 0l, 0xFFFFFFFFFFFFFFFEl });
+        checkEncodeDecode(
+                new long[]{ -1l, Long.MAX_VALUE },
+                new long[]{  1l, 0xFFFFFFFFFFFFFFFFl });
+        checkEncodeDecode(
+                new long[]{ -2l, Long.MAX_VALUE },
+                new long[]{  3l, 0xFFFFFFFFFFFFFFFDl });
+
+        checkEncodeDecode(
+                new long[]{ 1l, Long.MIN_VALUE },
+                new long[]{ 2l, 0xFFFFFFFFFFFFFFFEl });
+        checkEncodeDecode(
+                new long[]{ 0l, Long.MIN_VALUE },
+                new long[]{ 0l, 0xFFFFFFFFFFFFFFFFl });
+        checkEncodeDecode(
+                new long[]{ -1l, Long.MIN_VALUE },
+                new long[]{  1l, 0xFFFFFFFFFFFFFFFDl });
+        checkEncodeDecode(
+                new long[]{ -2l, Long.MIN_VALUE },
+                new long[]{  3l, 0xFFFFFFFFFFFFFFFBl });
+
+        checkEncodeDecode(
+                new long[]{ Long.MIN_VALUE, Long.MAX_VALUE },
+                new long[]{ 0xFFFFFFFFFFFFFFFFl, 1 });
+        checkEncodeDecode(
+                new long[]{ Long.MAX_VALUE, Long.MIN_VALUE },
+                new long[]{ 0xFFFFFFFFFFFFFFFEl, 2 });
     }
 
     @Test

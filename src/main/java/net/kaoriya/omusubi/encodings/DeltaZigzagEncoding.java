@@ -134,7 +134,7 @@ public final class DeltaZigzagEncoding {
         }
 
         public long decodeLong(long value) {
-            long n = (value >> 1) ^ ((value & 1L) * -1L);
+            long n = (value >>> 1) ^ ((value & 1L) * -1L);
             n += this.contextValue;
             this.contextValue = n;
             return n;
