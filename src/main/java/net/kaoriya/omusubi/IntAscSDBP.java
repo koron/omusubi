@@ -14,6 +14,7 @@ import net.kaoriya.omusubi.io.IntInputStream;
 import net.kaoriya.omusubi.io.IntOutputStream;
 import net.kaoriya.omusubi.packers.IntBitPacking;
 import net.kaoriya.omusubi.utils.CodecUtils;
+import net.kaoriya.omusubi.utils.Jaccard;
 
 /**
  * Int Ascending Sorted Delta Bit Packing.
@@ -56,6 +57,14 @@ public class IntAscSDBP extends IntCodec
 
     public static int[] fromBytes(byte[] src) {
         return (new IntAscSDBP()).decompress(src);
+    }
+
+    public static Iterable<Integer> toIterable(byte[] src) {
+        return new IntDecompressStream(
+                ByteBuffer.wrap(src).asIntBuffer(),
+                new IntEncodingFilter.Factory(
+                    new DeltaEncoding.IntAscendDecoder()),
+                new IntBitPacking());
     }
 
     public static class Reader {
@@ -250,5 +259,9 @@ public class IntAscSDBP extends IntCodec
             v = w;
         }
         return os;
+    }
+
+    public static double jaccard(byte[] a, byte[] b) {
+        return Jaccard.<Integer>jaccard(toIterable(a), toIterable(b));
     }
 }

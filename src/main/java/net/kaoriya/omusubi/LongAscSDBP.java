@@ -14,6 +14,7 @@ import net.kaoriya.omusubi.io.LongInputStream;
 import net.kaoriya.omusubi.io.LongOutputStream;
 import net.kaoriya.omusubi.packers.LongBitPacking;
 import net.kaoriya.omusubi.utils.CodecUtils;
+import net.kaoriya.omusubi.utils.Jaccard;
 
 /**
  * Long Ascending Sorted Delta Bit Packing.
@@ -56,6 +57,14 @@ public class LongAscSDBP extends LongCodec
 
     public static long[] fromBytes(byte[] src) {
         return (new LongAscSDBP()).decompress(src);
+    }
+
+    public static Iterable<Long> toIterable(byte[] src) {
+        return new LongDecompressStream(
+                ByteBuffer.wrap(src).asLongBuffer(),
+                new LongEncodingFilter.Factory(
+                    new DeltaEncoding.LongAscendDecoder()),
+                new LongBitPacking());
     }
 
     public static class Reader {
@@ -250,5 +259,9 @@ public class LongAscSDBP extends LongCodec
             v = w;
         }
         return os;
+    }
+
+    public static double jaccard(byte[] a, byte[] b) {
+        return Jaccard.<Long>jaccard(toIterable(a), toIterable(b));
     }
 }
