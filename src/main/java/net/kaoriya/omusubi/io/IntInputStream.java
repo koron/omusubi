@@ -1,6 +1,9 @@
 package net.kaoriya.omusubi.io;
 
-public abstract class IntInputStream
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+public abstract class IntInputStream implements Iterable<Integer>
 {
     public abstract Integer read();
 
@@ -19,5 +22,24 @@ public abstract class IntInputStream
             array[i] = n;
         }
         return i - offset;
+    }
+
+    public Iterator<Integer> iterator() {
+        return new StreamIterator();
+    }
+
+    class StreamIterator implements Iterator<Integer> {
+        Integer next = null;
+
+        public Integer next() {
+            if (this.next == null) {
+                throw new NoSuchElementException();
+            }
+            return this.next;
+        }
+
+        public boolean hasNext() {
+            return (this.next = read()) != null;
+        }
     }
 }

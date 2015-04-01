@@ -1,6 +1,9 @@
 package net.kaoriya.omusubi.io;
 
-public abstract class LongInputStream
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+public abstract class LongInputStream implements Iterable<Long>
 {
     public abstract Long read();
 
@@ -19,5 +22,24 @@ public abstract class LongInputStream
             array[i] = n;
         }
         return i - offset;
+    }
+
+    public Iterator<Long> iterator() {
+        return null;
+    }
+
+    class StreamIterator implements Iterator<Long> {
+        Long next = null;
+
+        public Long next() {
+            if (this.next == null) {
+                throw new NoSuchElementException();
+            }
+            return this.next;
+        }
+
+        public boolean hasNext() {
+            return (this.next = read()) != null;
+        }
     }
 }
