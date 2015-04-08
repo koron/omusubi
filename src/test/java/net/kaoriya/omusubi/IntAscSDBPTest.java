@@ -1,5 +1,6 @@
 package net.kaoriya.omusubi;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.junit.Test;
@@ -302,5 +303,65 @@ public class IntAscSDBPTest
         assertArrayEquals(
                 new int[] {2, 4},
                 decompressed);
+    }
+
+    static Iterator<Integer> toIter(int[] array) {
+        byte[] b = IntAscSDBP.toBytes(new int[] {1, 2, 3, 4});
+        return IntAscSDBP.toIterable(b).iterator();
+    }
+
+    @Test
+    public void intIteration() {
+        Iterator<Integer> iter = toIter(new int[] {1, 2, 3, 4});
+        assertEquals(Integer.valueOf(1), iter.next());
+        assertEquals(Integer.valueOf(2), iter.next());
+        assertEquals(Integer.valueOf(3), iter.next());
+        assertEquals(Integer.valueOf(4), iter.next());
+        assertFalse("iteration not finished",
+                iter.hasNext());
+    }
+
+    static void jaccardCheck(byte[] a, byte[] b, double value) {
+        assertEquals(value, IntAscSDBP.jaccard(a, b), 0.01);
+    }
+
+    @Test
+    public void jaccard0() {
+        byte[] set1 = IntAscSDBP.toBytes(new int[] {1, 2, 3, 4});
+        byte[] set2 = IntAscSDBP.toBytes(new int[] {});
+        jaccardCheck(set1, set2, 0);
+        jaccardCheck(set2, set1, 0);
+    }
+
+    @Test
+    public void jaccard25() {
+        byte[] set1 = IntAscSDBP.toBytes(new int[] {1, 2, 3, 4});
+        byte[] set2 = IntAscSDBP.toBytes(new int[] {1});
+        jaccardCheck(set1, set2, 0.25);
+        jaccardCheck(set2, set1, 0.25);
+    }
+
+    @Test
+    public void jaccard50() {
+        byte[] set1 = IntAscSDBP.toBytes(new int[] {1, 2, 3, 4});
+        byte[] set2 = IntAscSDBP.toBytes(new int[] {2, 4});
+        jaccardCheck(set1, set2, 0.5);
+        jaccardCheck(set2, set1, 0.5);
+    }
+
+    @Test
+    public void jaccard75() {
+        byte[] set1 = IntAscSDBP.toBytes(new int[] {1, 2, 3, 4});
+        byte[] set2 = IntAscSDBP.toBytes(new int[] {1, 2, 4});
+        jaccardCheck(set1, set2, 0.75);
+        jaccardCheck(set2, set1, 0.75);
+    }
+
+    @Test
+    public void jaccard100() {
+        byte[] set1 = IntAscSDBP.toBytes(new int[] {1, 2, 3, 4});
+        byte[] set2 = IntAscSDBP.toBytes(new int[] {1, 2, 3, 4});
+        jaccardCheck(set1, set2, 1.0);
+        jaccardCheck(set2, set1, 1.0);
     }
 }
