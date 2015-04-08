@@ -9,7 +9,7 @@ import java.util.List;
 public class JaccardTest {
 
     static List<Integer> asList(int[] a) {
-        ArrayList<Integer> l = new ArrayList<>(a.length);
+        ArrayList<Integer> l = new ArrayList<Integer>(a.length);
         for (int n : a) {
             l.add(n);
         }
