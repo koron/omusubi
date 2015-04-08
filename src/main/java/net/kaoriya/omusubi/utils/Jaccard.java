@@ -17,22 +17,22 @@ public final class Jaccard{
         }
     }
 
-    public static <E extends Comparable> double jaccard(
+    public static <E extends Comparable<E>> double jaccard(
             Iterable<E> a,
             Iterable<E> b)
     {
         return Jaccard.<E>jaccard(a.iterator(), b.iterator());
     }
 
-    public static <E extends Comparable> double jaccard(
+    public static <E extends Comparable<E>> double jaccard(
             Iterator<E> a,
             Iterator<E> b)
     {
         int match = 0;
         int uniq = 0;
 
-        IteratorReader<E> ra = new IteratorReader<>(a);
-        IteratorReader<E> rb = new IteratorReader<>(b);
+        IteratorReader<E> ra = new IteratorReader<E>(a);
+        IteratorReader<E> rb = new IteratorReader<E>(b);
 
         while (ra.hasCurrent() && rb.hasCurrent()) {
             int d = ra.current().compareTo(rb.current());
