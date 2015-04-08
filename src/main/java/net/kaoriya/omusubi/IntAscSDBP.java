@@ -2,6 +2,7 @@ package net.kaoriya.omusubi;
 
 import java.nio.IntBuffer;
 import java.nio.ByteBuffer;
+import java.util.Iterator;
 import java.util.List;
 import java.util.LinkedList;
 
@@ -15,6 +16,7 @@ import net.kaoriya.omusubi.io.IntOutputStream;
 import net.kaoriya.omusubi.packers.IntBitPacking;
 import net.kaoriya.omusubi.utils.CodecUtils;
 import net.kaoriya.omusubi.utils.Jaccard;
+import net.kaoriya.omusubi.utils.ReaderIterator;
 
 /**
  * Int Ascending Sorted Delta Bit Packing.
@@ -59,12 +61,19 @@ public class IntAscSDBP extends IntCodec
         return (new IntAscSDBP()).decompress(src);
     }
 
-    public static Iterable<Integer> toIterable(byte[] src) {
-        return new IntDecompressStream(
-                ByteBuffer.wrap(src).asIntBuffer(),
-                new IntEncodingFilter.Factory(
-                    new DeltaEncoding.IntAscendDecoder()),
-                new IntBitPacking());
+    public static Iterable<Integer> toIterable(final byte[] src) {
+        return new Iterable<Integer>() {
+            @Override
+            public Iterator<Integer> iterator() {
+                return new ReaderIterator<Integer, IntInputStream>(
+                        new IntDecompressStream(
+                            ByteBuffer.wrap(src).asIntBuffer(),
+                            new IntEncodingFilter.Factory(
+                                new DeltaEncoding.IntAscendDecoder()),
+                            new IntBitPacking())
+                        );
+            }
+        };
     }
 
     public static class Reader {

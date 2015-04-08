@@ -3,7 +3,9 @@ package net.kaoriya.omusubi.io;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public abstract class IntInputStream implements Iterable<Integer>
+import net.kaoriya.omusubi.utils.Reader;
+
+public abstract class IntInputStream implements Reader<Integer>
 {
     public abstract Integer read();
 
@@ -22,28 +24,5 @@ public abstract class IntInputStream implements Iterable<Integer>
             array[i] = n;
         }
         return i - offset;
-    }
-
-    public Iterator<Integer> iterator() {
-        return new StreamIterator();
-    }
-
-    class StreamIterator implements Iterator<Integer> {
-        Integer next = null;
-
-        public Integer next() {
-            if (this.next == null) {
-                throw new NoSuchElementException();
-            }
-            return this.next;
-        }
-
-        public boolean hasNext() {
-            return (this.next = read()) != null;
-        }
-
-        public void remove() {
-            throw new UnsupportedOperationException();
-        }
     }
 }

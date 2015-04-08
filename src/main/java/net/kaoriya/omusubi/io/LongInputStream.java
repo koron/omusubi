@@ -3,7 +3,10 @@ package net.kaoriya.omusubi.io;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public abstract class LongInputStream implements Iterable<Long>
+import net.kaoriya.omusubi.utils.Reader;
+
+public abstract class LongInputStream
+    implements Reader<Long>, Iterable<Long>
 {
     public abstract Long read();
 

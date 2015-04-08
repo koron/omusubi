@@ -2,6 +2,7 @@ package net.kaoriya.omusubi;
 
 import java.nio.LongBuffer;
 import java.nio.ByteBuffer;
+import java.util.Iterator;
 import java.util.List;
 import java.util.LinkedList;
 
@@ -15,6 +16,7 @@ import net.kaoriya.omusubi.io.LongOutputStream;
 import net.kaoriya.omusubi.packers.LongBitPacking;
 import net.kaoriya.omusubi.utils.CodecUtils;
 import net.kaoriya.omusubi.utils.Jaccard;
+import net.kaoriya.omusubi.utils.ReaderIterator;
 
 /**
  * Long Ascending Sorted Delta Bit Packing.
@@ -59,12 +61,19 @@ public class LongAscSDBP extends LongCodec
         return (new LongAscSDBP()).decompress(src);
     }
 
-    public static Iterable<Long> toIterable(byte[] src) {
-        return new LongDecompressStream(
-                ByteBuffer.wrap(src).asLongBuffer(),
-                new LongEncodingFilter.Factory(
-                    new DeltaEncoding.LongAscendDecoder()),
-                new LongBitPacking());
+    public static Iterable<Long> toIterable(final byte[] src) {
+        return new Iterable<Long>() {
+            @Override
+            public Iterator<Long> iterator() {
+                return new ReaderIterator<Long, LongInputStream>(
+                        new LongDecompressStream(
+                            ByteBuffer.wrap(src).asLongBuffer(),
+                            new LongEncodingFilter.Factory(
+                                new DeltaEncoding.LongAscendDecoder()),
+                            new LongBitPacking())
+                        );
+            }
+        };
     }
 
     public static class Reader {
