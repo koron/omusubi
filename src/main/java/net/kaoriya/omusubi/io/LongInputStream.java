@@ -1,7 +1,11 @@
 package net.kaoriya.omusubi.io;
 
-public abstract class LongInputStream
-{
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+import net.kaoriya.omusubi.utils.Reader;
+
+public abstract class LongInputStream implements Reader<Long> {
     public abstract Long read();
 
     public int read(long[] array) {
@@ -20,4 +24,5 @@ public abstract class LongInputStream
         }
         return i - offset;
     }
+
 }

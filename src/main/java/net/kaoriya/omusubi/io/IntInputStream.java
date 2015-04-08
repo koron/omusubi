@@ -1,6 +1,11 @@
 package net.kaoriya.omusubi.io;
 
-public abstract class IntInputStream
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+import net.kaoriya.omusubi.utils.Reader;
+
+public abstract class IntInputStream implements Reader<Integer>
 {
     public abstract Integer read();
 

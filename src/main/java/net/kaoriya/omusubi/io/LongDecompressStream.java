@@ -31,7 +31,7 @@ public class LongDecompressStream extends LongBlockedInputStream {
         if (outLen == 0) {
             this.filter = factory.newFilter(0);
         } else {
-            this.availableLen = (int)this.source.get();
+            this.availableLen = (int)this.source.get() - 1;
             long first = this.source.get();
             updateBlock(new long[]{ first });
             this.filter = factory.newFilter(first);

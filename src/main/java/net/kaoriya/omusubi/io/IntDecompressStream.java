@@ -31,7 +31,7 @@ public class IntDecompressStream extends IntBlockedInputStream {
         if (outLen == 0) {
             this.filter = factory.newFilter(0);
         } else {
-            this.availableLen = this.source.get();
+            this.availableLen = this.source.get() - 1;
             int first = this.source.get();
             updateBlock(new int[]{ first });
             this.filter = factory.newFilter(first);
