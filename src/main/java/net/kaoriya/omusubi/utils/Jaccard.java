@@ -2,7 +2,8 @@ package net.kaoriya.omusubi.utils;
 
 import java.util.Iterator;
 
-public final class Jaccard{
+public final class Jaccard
+{
 
     static <E> IteratorReader<E> remain(
             IteratorReader<E> a,
