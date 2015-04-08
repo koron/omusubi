@@ -2,7 +2,7 @@ package net.kaoriya.omusubi.utils;
 
 import java.util.Iterator;
 
-public class IteratorReader<T> implements Iterator<T> {
+public class IteratorReader<T> {
 
     private Iterator<T> iter;
     private T value;
@@ -18,14 +18,6 @@ public class IteratorReader<T> implements Iterator<T> {
 
     public T next() {
         return this.value = this.iter.hasNext() ? this.iter.next() : null;
-    }
-
-    public void remove() {
-        throw new UnsupportedOperationException();
-    }
-
-    public boolean hasNext() {
-        return this.iter.hasNext();
     }
 
     public boolean hasCurrent() {

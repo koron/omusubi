@@ -11,15 +11,25 @@ public class ReaderIterator<E, R extends Reader<E>> implements Iterator<E> {
         this.reader = r;
     }
 
+    private boolean readNext() {
+        if (this.next != null) {
+            return true;
+        }
+        this.next = this.reader.read();
+        return this.next != null;
+    }
+
     public E next() {
-        if (this.next == null) {
+        if (!readNext()) {
             throw new NoSuchElementException();
         }
-        return this.next;
+        E retval = this.next;
+        this.next = null;
+        return retval;
     }
 
     public boolean hasNext() {
-        return (this.next = this.reader.read()) != null;
+        return readNext();
     }
 
     public void remove() {

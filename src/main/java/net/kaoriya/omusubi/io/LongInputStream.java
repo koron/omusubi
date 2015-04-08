@@ -5,9 +5,7 @@ import java.util.NoSuchElementException;
 
 import net.kaoriya.omusubi.utils.Reader;
 
-public abstract class LongInputStream
-    implements Reader<Long>, Iterable<Long>
-{
+public abstract class LongInputStream implements Reader<Long> {
     public abstract Long read();
 
     public int read(long[] array) {
@@ -27,26 +25,4 @@ public abstract class LongInputStream
         return i - offset;
     }
 
-    public Iterator<Long> iterator() {
-        return null;
-    }
-
-    class StreamIterator implements Iterator<Long> {
-        Long next = null;
-
-        public Long next() {
-            if (this.next == null) {
-                throw new NoSuchElementException();
-            }
-            return this.next;
-        }
-
-        public boolean hasNext() {
-            return (this.next = read()) != null;
-        }
-
-        public void remove() {
-            throw new UnsupportedOperationException();
-        }
-    }
 }
