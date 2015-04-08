@@ -60,6 +60,7 @@ public final class Jaccard
         if (match == 0) {
             return 0.0;
         } else if (uniq == 0) {
+            // FIXME: nerver reached
             return Double.POSITIVE_INFINITY;
         } else {
             return (double)match / uniq;
