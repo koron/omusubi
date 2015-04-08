@@ -20,6 +20,10 @@ public class IteratorReader<T> implements Iterator<T> {
         return this.value = this.iter.hasNext() ? this.iter.next() : null;
     }
 
+    public void remove() {
+        throw new UnsupportedOperationException();
+    }
+
     public boolean hasNext() {
         return this.iter.hasNext();
     }
@@ -27,5 +31,4 @@ public class IteratorReader<T> implements Iterator<T> {
     public boolean hasCurrent() {
         return this.value != null;
     }
-
 }

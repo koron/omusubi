@@ -41,5 +41,9 @@ public abstract class IntInputStream implements Iterable<Integer>
         public boolean hasNext() {
             return (this.next = read()) != null;
         }
+
+        public void remove() {
+            throw new UnsupportedOperationException();
+        }
     }
 }

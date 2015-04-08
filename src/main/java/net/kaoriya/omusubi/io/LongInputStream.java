@@ -41,5 +41,9 @@ public abstract class LongInputStream implements Iterable<Long>
         public boolean hasNext() {
             return (this.next = read()) != null;
         }
+
+        public void remove() {
+            throw new UnsupportedOperationException();
+        }
     }
 }
