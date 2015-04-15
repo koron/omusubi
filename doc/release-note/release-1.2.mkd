@@ -1,0 +1,9 @@
+# Release Notes for 1.2
+
+*   JDK8/java8 as default
+*   New features
+    *   support for LongAscSDBP
+    *   `toIterable` method for `IntAscSDBP` and `LongAscSDBP`
+    *   `jaccard` method for `IntAscSDBP` and `LongAscSDBP`
+*   Add tests
+*   Add LICENSE
