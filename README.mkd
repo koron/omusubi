@@ -175,6 +175,23 @@ for (long n : iterable) {
 }
 ```
 
+### Jaccard Index
+
+`IntAscSDBP#jaccard` and `LongAscSDBP#jaccard` can calculate jaccard index from
+two `byte[]` directly.  Below example code shows how to get jaccard index.
+
+```java
+byte[] b1 = IntAscSDBP.toBytes(new int{1, 3, 5});
+byte[] b2 = IntAscSDBP.toBytes(new int{2, 3, 4});
+
+doubule ji = IntAscSDBP.jaccard(b1, b2);
+
+System.out.println(ji) // should be "0.2" (= 1/5)
+```
+
+See [wikipedia: Jaccard Index](http://en.wikipedia.org/wiki/Jaccard_index) for
+Jaccard Index details.
+
 ---
 
 ## Formats
