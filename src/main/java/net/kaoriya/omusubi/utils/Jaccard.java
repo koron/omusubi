@@ -9,12 +9,10 @@ public final class Jaccard
             IteratorReader<E> a,
             IteratorReader<E> b)
     {
-        if (a.hasCurrent() && !b.hasCurrent()) {
-            return a;
-        } else if (!a.hasCurrent() && b.hasCurrent()) {
-            return b;
+        if (a.hasCurrent()) {
+            return b.hasCurrent() ? null : a;
         } else {
-            return null;
+            return b.hasCurrent() ? b : null;
         }
     }
 
@@ -57,11 +55,9 @@ public final class Jaccard
             }
         }
 
+        // match is 0, whenever uniq is 0.
         if (match == 0) {
             return 0.0;
-        } else if (uniq == 0) {
-            // FIXME: nerver reached
-            return Double.POSITIVE_INFINITY;
         } else {
             return (double)match / uniq;
         }

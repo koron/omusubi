@@ -261,11 +261,7 @@ public class LongAscSDBP extends LongCodec
             if (!anyReadersHaveLong(readers, v)) {
                 os.write(v.longValue());
             }
-            Long w = pivot.read();
-            while (w != null && w <= v) {
-                w = pivot.read();
-            }
-            v = w;
+            v = pivot.read();
         }
         return os;
     }
