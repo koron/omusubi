@@ -137,6 +137,44 @@ byte[] r = IntAscSDBP.difference(set1, set2, set3);
 int[] array = IntAscSDBP.fromBytes(r);
 ```
 
+### Iterator
+
+`IntAscSDBP#toIterable` and `LongAscSDBP#toIterable` can generate
+`java.lang.Iterable` object from compressed `byte[]`.  Below example shows how
+to use `Iterable`.
+
+```java
+byte[] b = IntAscSDBP.toBytes(new int[]{10, 20, 30, 40, 50});
+for (int n : IntAscSDBP.toIterable(b)) {
+    System.out.println(n);
+}
+```
+
+This results output like below.
+
+```
+10
+20
+30
+40
+50
+```
+
+Of cource an instance of `Iterable` is reusable.
+
+```java
+byte[] b = LongAscSDBP.toBytes(new long[]{10, 20, 30, 40, 50});
+Iterable<Long> iterable = LongAscSDBP.toIterable(b);
+
+for (long n : iterable) {
+    // do first iteration.
+}
+
+for (long n : iterable) {
+    // do second iteration.
+}
+```
+
 ---
 
 ## Formats
