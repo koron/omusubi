@@ -8,6 +8,12 @@ import java.util.List;
 
 public class JaccardTest {
 
+    @Test
+    public void ctor() {
+        Jaccard j = new Jaccard();
+        assertNotNull(j);
+    }
+
     static List<Integer> asList(int[] a) {
         ArrayList<Integer> l = new ArrayList<Integer>(a.length);
         for (int n : a) {
@@ -63,5 +69,13 @@ public class JaccardTest {
         check(new int[]{1, 2, 4}, new int[]{1, 2, 3, 4}, 0.75);
         check(new int[]{1, 3, 4}, new int[]{1, 2, 3, 4}, 0.75);
         check(new int[]{2, 3, 4}, new int[]{1, 2, 3, 4}, 0.75);
+    }
+
+    @Test
+    public void remain() {
+        int[] a = new int[]{1, 2, 3};
+        assertNull(Jaccard.<Integer>remain(
+                    new IteratorReader<Integer>(asList(a).iterator()),
+                    new IteratorReader<Integer>(asList(a).iterator())));
     }
 }

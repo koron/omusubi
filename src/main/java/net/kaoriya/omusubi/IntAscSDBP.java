@@ -261,11 +261,7 @@ public class IntAscSDBP extends IntCodec
             if (!anyReadersHaveInt(readers, v)) {
                 os.write(v.intValue());
             }
-            Integer w = pivot.read();
-            while (w != null && w <= v) {
-                w = pivot.read();
-            }
-            v = w;
+            v = pivot.read();
         }
         return os;
     }

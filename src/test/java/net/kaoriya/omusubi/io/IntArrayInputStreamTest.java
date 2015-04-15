@@ -14,5 +14,6 @@ public class IntArrayInputStreamTest
         assertEquals(Integer.valueOf(10), s.read());
         assertEquals(Integer.valueOf(20), s.read());
         assertEquals(Integer.valueOf(100), s.read());
+        assertNull(s.read());
     }
 }
