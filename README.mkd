@@ -137,6 +137,33 @@ byte[] r = IntAscSDBP.difference(set1, set2, set3);
 int[] array = IntAscSDBP.fromBytes(r);
 ```
 
+#### Support ByteBuffer
+
+All methods of set operation can accept `ByteBuffer` instead of `byte[]`.
+
+For example, to calculate `union()` for files directly, you can write it like
+below:
+
+```java
+private static MappedByteBuffer mapFile(File file) throws IOException {
+    FileInputStream s = new FileInputStream(file);
+    try {
+        FileChannel c = s.getChannel();
+        return c.map(FileChannel.MapMode.READ_ONLY, 0, file.length());
+    } finally {
+        if (s != null) {
+            s.close();
+        }
+    }
+}
+
+public static byte[] unionFiles(File a, File b) throws IOException {
+    return IntAscSDBP.union(mapFile(a), mapFile(b));
+}
+```
+
+Please check [ExampleByteBufferTest.java](src/test/java/net/kaoriya/omusubi/ExampleByteBufferTest.java) for complete sample codes.
+
 ### Iterator
 
 `IntAscSDBP#toIterable` and `LongAscSDBP#toIterable` can generate
@@ -160,7 +187,7 @@ This results output like below.
 50
 ```
 
-Of cource an instance of `Iterable` is reusable.
+Of course an instance of `Iterable` is reusable.
 
 ```java
 byte[] b = LongAscSDBP.toBytes(new long[]{10, 20, 30, 40, 50});
@@ -225,7 +252,7 @@ Jaccard Index details.
 ```
 
 *   Header: holding length of each 4 blocks.
-*   Block: cotains compressed data, size is multiply of 4 bytes. (0-128 bytes)
+*   Block: contains compressed data, size is multiply of 4 bytes. (0-128 bytes)
     * A block have 32 int values. So a chunk have 128 (=32*4) int values.
 
 ### LongDZBP, LongAscSDBP
